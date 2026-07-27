@@ -199,6 +199,7 @@ export interface Product {
   price?: number; // referência de demonstração
   durationLabel: string;
   cover: "warm" | "green";
+  image?: string;
   longDescription: string;
   highlights: string[];
   includes: string[]; // o que está incluído
@@ -238,6 +239,7 @@ export const PRODUCTS: Product[] = [
     price: 19,
     durationLabel: "Consulta rápida · PDF",
     cover: "green",
+    image: "/imagens/biblioteca/chas-tonicos.webp.png",
     longDescription:
       "Um guia direto com chás e tônicos organizados por função, com quando usar, como preparar e cuidados de combinação.",
     highlights: [
@@ -260,6 +262,7 @@ export const PRODUCTS: Product[] = [
     price: 17,
     durationLabel: "24 horas · PDF + áudio",
     cover: "warm",
+    image: "/imagens/biblioteca/desinchar-24h.webp.png",
     longDescription:
       "O que comer e beber ao longo de um único dia, com sequência de drenagem express de 5 minutos e áudio do ritual noturno da véspera.",
     highlights: [
@@ -282,6 +285,7 @@ export const PRODUCTS: Product[] = [
     price: 67,
     durationLabel: "21 dias · cardápio completo",
     cover: "green",
+    image: "/imagens/biblioteca/cozinha-hormonal.webp.png",
     longDescription:
       "Um cardápio hormonal estruturado com apoio prático, lista de compras semanal e três áudios de ritual noturno.",
     highlights: [
@@ -306,6 +310,7 @@ export const PRODUCTS: Product[] = [
     price: 37,
     durationLabel: "21 dias · cardápio",
     cover: "warm",
+    image: "/imagens/biblioteca/cardapio-hormonal.webp.png",
     longDescription:
       "Uma alternativa focada apenas no Cardápio Hormonal de 21 Dias e na lista de compras correspondente.",
     highlights: [
@@ -330,6 +335,7 @@ export interface BonusItem {
   subtitle: string;
   type: "guide" | "checklist" | "diary";
   cover: "warm" | "green";
+  image?: string;
   description: string;
   note?: string;
 }
@@ -341,6 +347,7 @@ export const BONUSES: BonusItem[] = [
     subtitle: "Bônus 1 · PDF/Guia",
     type: "guide",
     cover: "green",
+    image: "/imagens/biblioteca/guia-superalimentos.webp.png",
     description: "Um guia prático com superalimentos organizados por função.",
   },
   {
@@ -349,6 +356,7 @@ export const BONUSES: BonusItem[] = [
     subtitle: "Bônus 2 · PDF/Checklist imprimível",
     type: "checklist",
     cover: "warm",
+    image: "/imagens/biblioteca/lista-8-pratos.webp.png",
     description: "A lista dos oito pratos incluídos no Front.",
     note: "Esta é apenas a lista dos oito pratos incluídos no Front. Não é o cardápio completo de 21 dias.",
   },
@@ -358,6 +366,7 @@ export const BONUSES: BonusItem[] = [
     subtitle: "Bônus 3 · PDF/Diário imprimível",
     type: "diary",
     cover: "warm",
+    image: "/imagens/biblioteca/diario-21-dias.webp.png",
     description: "A versão offline e imprimível do registro dos 21 dias.",
     note: "Versão imprimível. O registro dentro do app continua funcionando normalmente.",
   },
@@ -374,6 +383,7 @@ export interface GuideItem {
   subtitle: string;
   cta: string;
   cover: "warm" | "green";
+  image?: string;
   description: string;
 }
 
@@ -384,6 +394,7 @@ export const GUIDES: GuideItem[] = [
     subtitle: "Guia interativo",
     cta: "Abrir método",
     cover: "warm",
+    image: "/imagens/biblioteca/monta-prato.webp.png",
     description: "A base prática do Plano: como montar um prato equilibrado sem complicação.",
   },
   {
@@ -392,6 +403,7 @@ export const GUIDES: GuideItem[] = [
     subtitle: "Guia interativo",
     cta: "Consultar guia",
     cover: "green",
+    image: "/imagens/biblioteca/superalimentos.webp.png",
     description: "Trocas inteligentes que somam sem restringir.",
   },
   {
@@ -400,6 +412,7 @@ export const GUIDES: GuideItem[] = [
     subtitle: "Guia prático",
     cta: "Ver opções rápidas",
     cover: "warm",
+    image: "/imagens/biblioteca/refeicoes-rapidas.webp.png",
     description: "Opções práticas para quando o tempo é curto.",
   },
   {
@@ -408,6 +421,7 @@ export const GUIDES: GuideItem[] = [
     subtitle: "Guia/checklist prático",
     cta: "Abrir lista",
     cover: "green",
+    image: "/imagens/biblioteca/lista-compras.webp.png",
     description:
       "O que comprar e como manter uma alimentação saudável mesmo na correria do dia a dia.",
   },

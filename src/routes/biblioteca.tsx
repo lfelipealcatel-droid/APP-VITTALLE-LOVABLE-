@@ -83,7 +83,7 @@ function Biblioteca() {
                 params={{ id: g.id }}
                 className="group overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-0.5 hover:shadow-elevated"
               >
-                <MediaPlaceholder type="reading" cover={g.cover} label="Guia" />
+                <MediaPlaceholder type="reading" cover={g.cover} imageUrl={g.image} label="Guia" />
                 <div className="p-3">
                   <p className="text-sm font-medium">{g.title}</p>
                   <p className="text-xs text-text-secondary">{g.subtitle}</p>
@@ -102,7 +102,7 @@ function Biblioteca() {
                 params={{ id: b.id }}
                 className="overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-0.5 hover:shadow-elevated"
               >
-                <MediaPlaceholder type="download" cover={b.cover} label={b.type === "checklist" ? "Checklist" : b.type === "diary" ? "Diário" : "Guia"} />
+                <MediaPlaceholder type="download" cover={b.cover} imageUrl={b.image} label={b.type === "checklist" ? "Checklist" : b.type === "diary" ? "Diário" : "Guia"} />
                 <div className="p-3">
                   <p className="text-sm font-medium">{b.title}</p>
                   <p className="text-xs text-text-secondary">{b.subtitle}</p>

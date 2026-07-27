@@ -35,6 +35,10 @@ export function ProductCard({ product }: { product: Product }) {
       )}
     >
       <div className={cn("relative aspect-[16/9] w-full overflow-hidden", bg)}>
+        {product.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={product.image} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+        ) : null}
         <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-white/40" aria-hidden />
         <div className="absolute left-4 top-4">
           <span
