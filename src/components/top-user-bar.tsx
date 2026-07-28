@@ -1,16 +1,19 @@
 import { Link } from "@tanstack/react-router";
-import { Bell } from "lucide-react";
+import { Bell, Leaf } from "lucide-react";
+import type { ReactNode } from "react";
 import { useAppState } from "@/lib/store";
 import { USER } from "@/lib/mock-data";
 
-export function TopUserBar({ greeting }: { greeting?: string }) {
+export function TopUserBar({ message }: { message?: ReactNode }) {
   const [state] = useAppState();
   const unread = 4 - state.notificationsRead.length;
   return (
     <div className="flex items-center gap-3">
       <div className="min-w-0 flex-1">
-        {greeting ? <p className="text-xs text-text-secondary">{greeting}</p> : null}
-        <p className="font-editorial text-xl">Olá, {USER.firstName}</p>
+        <p className="flex items-center gap-1.5 font-editorial text-xl">
+          Olá, {USER.firstName} <Leaf size={16} className="text-secondary" aria-hidden />
+        </p>
+        {message ? <div className="mt-1 text-sm text-text-secondary">{message}</div> : null}
       </div>
       <Link
         to="/notificacoes"

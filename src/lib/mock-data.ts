@@ -183,6 +183,13 @@ export const WEEK_LABEL: Record<1 | 2 | 3, string> = {
   3: "Semana 3 — Firmar",
 };
 
+// Fotografia do Hero da Home, selecionada automaticamente pela semana do dia ativo.
+export const WEEK_HERO_IMAGE: Record<1 | 2 | 3, string> = {
+  1: "/imagens/biblioteca/hero-semana-1.webp.png",
+  2: "/imagens/biblioteca/hero-semana-2.webp.png",
+  3: "/imagens/biblioteca/hero-semana-3.webp.png",
+};
+
 export function dayById(id: number) {
   return DAYS.find((d) => d.id === id);
 }
@@ -214,6 +221,7 @@ export const PRODUCTS: Product[] = [
     category: "core",
     durationLabel: "21 dias · guiado",
     cover: "warm",
+    image: "/imagens/biblioteca/plano-barriga-hormonal-40.webp.png",
     longDescription:
       "Um protocolo de 21 dias pensado para mulheres 40+, com movimento de baixo impacto, alimentação prática, hábitos e check-ins.",
     highlights: [
