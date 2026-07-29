@@ -13,21 +13,24 @@ const QUICK_ACTIONS = [
   {
     to: "/alimentacao" as const,
     icon: Sprout,
-    iconBg: "bg-warm text-primary",
+    cardBg: "bg-warm",
+    iconColor: "text-primary",
     title: "Alimentação de hoje",
     description: "Veja seu plano alimentar",
   },
   {
     to: "/medidas" as const,
     icon: Ruler,
-    iconBg: "bg-soft-green text-secondary-dark",
+    cardBg: "bg-soft-green",
+    iconColor: "text-secondary-dark",
     title: "Registrar medida",
     description: "Acompanhe sua evolução",
   },
   {
     to: "/biblioteca" as const,
     icon: BookOpen,
-    iconBg: "bg-warm text-primary",
+    cardBg: "bg-warm",
+    iconColor: "text-primary",
     title: "Explorar biblioteca",
     description: "Acesse seus guias e bônus",
   },
@@ -99,9 +102,9 @@ function Home() {
               <Link
                 to="/jornada/$dia"
                 params={{ dia: String(dayId) }}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-elevated transition hover:bg-primary-dark"
+                className="inline-flex min-h-14 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-base font-semibold text-primary-foreground shadow-elevated transition hover:bg-primary-dark"
               >
-                {buttonLabel} <ArrowRight size={16} aria-hidden />
+                {buttonLabel} <ArrowRight size={18} aria-hidden />
               </Link>
               <div className="mt-4 flex items-center justify-between text-xs font-medium text-text-secondary">
                 <span>{done} de {total} etapas concluídas</span>
@@ -171,16 +174,21 @@ function Home() {
                 <Link
                   key={action.to}
                   to={action.to}
-                  className="flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4 shadow-soft transition hover:-translate-y-0.5 hover:shadow-elevated"
+                  className={cn(
+                    "group flex items-center gap-3 rounded-2xl p-3 shadow-soft transition-shadow duration-150 active:shadow-none",
+                    action.cardBg,
+                  )}
                 >
-                  <span className={cn("grid h-11 w-11 place-items-center rounded-full", action.iconBg)}>
-                    <Icon size={20} aria-hidden />
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface/70">
+                    <Icon size={20} className={action.iconColor} aria-hidden />
                   </span>
-                  <div>
-                    <p className="text-sm font-semibold leading-snug">{action.title}</p>
-                    <p className="mt-0.5 text-xs text-text-secondary">{action.description}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold leading-snug text-foreground">{action.title}</p>
+                    <p className="mt-0.5 truncate text-xs text-text-secondary">{action.description}</p>
                   </div>
-                  <ArrowRight size={16} className="text-primary" aria-hidden />
+                  <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-primary text-white transition-transform duration-150 group-active:scale-90 group-active:bg-primary-dark">
+                    <ArrowRight size={16} aria-hidden />
+                  </span>
                 </Link>
               );
             })}
