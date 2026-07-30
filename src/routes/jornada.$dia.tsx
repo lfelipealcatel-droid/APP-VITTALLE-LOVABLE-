@@ -1,8 +1,27 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, Book, Check, Dumbbell, HeartHandshake, Ruler, Salad, Sparkles, Undo2 } from "lucide-react";
+import {
+  ArrowRight,
+  Bell,
+  Book,
+  Calendar,
+  Check,
+  ClipboardCheck,
+  Clock,
+  Dumbbell,
+  Headphones,
+  Heart,
+  HeartHandshake,
+  Leaf,
+  Ruler,
+  Salad,
+  Sparkles,
+  Tag,
+  Undo2,
+  Video,
+} from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
-import { DAYS, WEEK_LABEL, sequenceById, readingByDay } from "@/lib/mock-data";
+import { USER, DAYS, WEEK_LABEL, WEEK_HERO_IMAGE, sequenceById } from "@/lib/mock-data";
 import type { DayActivityKey } from "@/lib/store";
 import {
   canOpenDay,
@@ -55,8 +74,9 @@ function DiaPage() {
   }
 
   const seq = sequenceById(day.sequenceId);
-  const reading = readingByDay(day.id);
   const complete = isDayCompleted(state, day.id);
+  const unread = 4 - state.notificationsRead.length;
+  const heroImage = WEEK_HERO_IMAGE[day.week as 1 | 2 | 3];
 
 
   const doAction = (key: DayActivityKey) => {
@@ -72,39 +92,82 @@ function DiaPage() {
   };
 
   return (
-    <AppShell title={`Dia ${day.id}`} subtitle={day.title} back="/jornada">
-      <div className="rounded-2xl border border-border bg-surface p-5">
-        <p className="text-[11px] uppercase tracking-wide text-text-muted">Foco de hoje</p>
-        <h2 className="mt-1 font-editorial text-xl">{day.title}</h2>
-        <p className="mt-2 text-sm text-text-secondary">
-          {day.week === 1
-            ? "Semana 1 · Desinchar — um passo suave por vez."
-            : day.week === 2
-              ? "Semana 2 · Ativar — o corpo começa a responder."
-              : "Semana 3 · Firmar — consolidar o que já é seu."}
-        </p>
-        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-secondary">
-          <span>Movimento de hoje: ~{seq?.durationMin ?? 8} min</span>
-          <span aria-hidden>·</span>
-          <span>Vá no seu ritmo, cada dia conta.</span>
+    <AppShell
+      title={`Dia ${day.id}`}
+      subtitle={WEEK_LABEL[day.week as 1 | 2 | 3]}
+      back="/jornada"
+      right={
+        <div className="flex items-center gap-1">
+          <Link
+            to="/notificacoes"
+            aria-label={`Notificações${unread > 0 ? `, ${unread} não lidas` : ""}`}
+            className="relative inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-surface-2"
+          >
+            <Bell size={20} aria-hidden />
+            {unread > 0 ? <span aria-hidden className="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary" /> : null}
+          </Link>
+          <Link
+            to="/perfil"
+            aria-label="Perfil"
+            className="grid h-11 w-11 place-items-center rounded-full bg-secondary-light font-semibold text-secondary-dark"
+          >
+            {USER.firstName.slice(0, 1)}
+          </Link>
         </div>
-      </div>
+      }
+    >
+      <section className="flex min-h-[220px] overflow-hidden rounded-3xl bg-surface shadow-soft">
+        <div className="min-w-0 flex-1 p-5 sm:p-6">
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-secondary-dark">
+            <Sparkles size={13} aria-hidden /> Foco de hoje
+          </div>
+          <h2 className="mt-2 font-editorial text-2xl font-medium leading-tight text-foreground">{day.title}</h2>
+          <p className="mt-2 text-sm text-text-secondary">{day.focus}</p>
+          <div className="mt-4 space-y-1 text-xs text-text-secondary">
+            <p className="flex items-center gap-1.5">
+              <Clock size={13} aria-hidden /> Movimento de hoje: cerca de {seq?.durationMin ?? 8} min
+            </p>
+            <p>Vá no seu ritmo. Cada dia conta.</p>
+          </div>
+        </div>
+        <div className="relative w-[36%] shrink-0 sm:w-[32%]">
+          <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover object-[70%_center]" loading="eager" />
+          <div className="absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-surface to-transparent" aria-hidden />
+        </div>
+      </section>
 
-      {day.id === 1 && !state.onboarding.medicaoInicial && !state.demoMode ? (
-        <div className="mt-4 rounded-2xl border border-primary/30 bg-warm p-5">
-          <p className="text-[11px] uppercase tracking-wide text-primary-dark">Chegada · Dia 1 — Parte A</p>
-          <h3 className="mt-1 font-editorial text-lg">Vamos preparar tudo com calma</h3>
-          <ol className="mt-3 grid gap-2 text-sm">
-            <ChegadaStep step="inaugural" label="Vídeo inaugural" openLabel="Assistir vídeo" />
-            <ChegadaStep step="absolvicao" label="Áudio da Absolvição" openLabel="Ouvir áudio" />
-            <ChegadaStep step="orientacaoMedicao" label="Como fazer sua medição" openLabel="Ver orientação" />
-            <ChegadaStep step="medicaoInicial" label="Medição inicial (obrigatória)" openLabel="Medir agora" href="/medidas" />
-            <ChegadaStep step="horario" label="Escolha seu horário" openLabel="Configurar horário" />
-            <ChegadaStep step="mapa" label="Mapa dos 21 dias" openLabel="Ver mapa" />
+      {day.id === 1 ? (
+        <div className="mt-4 rounded-3xl bg-warm p-5">
+          <div className="flex items-center gap-2">
+            <ClipboardCheck size={18} className="text-primary-dark" aria-hidden />
+            <h3 className="font-editorial text-lg text-foreground">Prepare seu primeiro dia</h3>
+          </div>
+          <p className="mt-1 text-sm text-text-secondary">Faça estes passos rápidos para começar com segurança.</p>
+          <ol className="mt-4 grid gap-2.5">
+            <ChegadaStep step="inaugural" icon={Video} label="Vídeo de boas-vindas" openLabel="Assistir" />
+            <ChegadaStep step="absolvicao" icon={Headphones} label="Áudio da Absolvição" openLabel="Ouvir" />
+            <ChegadaStep step="orientacaoMedicao" icon={Tag} label="Como fazer sua medição" openLabel="Ver orientação" />
+            <ChegadaStep step="medicaoInicial" icon={Ruler} label="Medição inicial" openLabel="Registrar" href="/medidas" />
+            <ChegadaStep step="horario" icon={Clock} label="Escolha seu melhor horário" openLabel="Configurar" />
+            <ChegadaStep step="mapa" icon={Calendar} label="Conheça sua jornada de 21 dias" openLabel="Ver jornada" />
           </ol>
-          <p className="mt-3 text-xs text-text-secondary">
-            Sem a medição inicial, a Parte B do Dia 1 não abre. Você pode voltar quando quiser.
-          </p>
+
+          <div className="relative mt-4 overflow-hidden rounded-2xl bg-soft-green p-5">
+            <Leaf size={72} className="pointer-events-none absolute -right-3 -top-3 text-secondary/15" aria-hidden />
+            <div className="relative flex items-start gap-3">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface/70 text-secondary-dark">
+                <Heart size={20} aria-hidden />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Acompanhe sua evolução</p>
+                <p className="mt-1 text-xs leading-relaxed text-text-secondary">
+                  Faça sua medição inicial para comparar seus resultados ao longo dos 21 dias.
+                  <br />
+                  Seus dados são pessoais e somente você verá sua evolução.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       ) : null}
 
@@ -131,7 +194,7 @@ function DiaPage() {
       <ul className="grid gap-3">
         <DayBlock
           icon={Book}
-          title={`Leitura do Dia — ${reading?.title ?? day.title}`}
+          title="Leitura do Dia"
           description="Leia agora ou ouça a narração oficial."
           durationMin={4}
           done={isDayActivityDone(state, day.id, "leitura")}
@@ -142,7 +205,7 @@ function DiaPage() {
 
         <DayBlock
           icon={Dumbbell}
-          title={day.id === 1 ? "Aula do Dia — Respirar e Soltar" : `Aula do Dia: ${seq?.name ?? "Movimento do dia"}`}
+          title="Aula do Dia"
           description={day.id === 1 ? "Uma abertura suave para o corpo e para a respiração." : (seq?.description ?? "Aula oficial de baixo impacto.")}
           durationMin={seq?.durationMin ?? 8}
           done={isDayActivityDone(state, day.id, "sequencia")}
@@ -160,17 +223,19 @@ function DiaPage() {
           onToggle={() => doAction("alimentacao")}
           ctaHref="/alimentacao"
           ctaLabel="Abrir"
+          accent="secondary"
         />
 
         <DayBlock
           icon={Sparkles}
-          title="Hábito/Âncora"
+          title="Hábito do dia"
           description={day.habit}
           durationMin={2}
           done={isDayActivityDone(state, day.id, "habito")}
           onToggle={() => doAction("habito")}
           ctaHref={`/habito/${day.id}`}
           ctaLabel="Ver hábito"
+          accent="secondary"
         />
 
         <DayBlock
@@ -199,6 +264,7 @@ function DiaPage() {
             onToggle={() => doAction("medicao")}
             ctaHref="/medidas"
             ctaLabel="Registrar medição"
+            accent="secondary"
           />
         ) : null}
       </ul>
@@ -210,47 +276,45 @@ function DiaPage() {
     label,
     openLabel,
     href,
+    icon: Icon,
   }: {
     step: keyof typeof state.onboarding;
     label: string;
     openLabel: string;
     href?: string;
+    icon: typeof Video;
   }) {
     const done = state.onboarding[step];
     const target = href ?? `/chegada/${step}`;
     return (
-      <li className="flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2">
+      <li className="flex min-w-0 items-center gap-3">
         <span
           className={cn(
-            "grid h-7 w-7 place-items-center rounded-full text-[11px] font-semibold",
-            done ? "bg-secondary-light text-secondary-dark" : "bg-surface-2 text-text-secondary",
+            "grid h-6 w-6 shrink-0 place-items-center rounded-full border-2",
+            done ? "border-secondary bg-secondary text-white" : "border-border-strong",
           )}
+          aria-hidden
         >
-          {done ? <Check size={14} aria-hidden /> : "•"}
+          {done ? <Check size={13} aria-hidden /> : null}
         </span>
-        <span className="flex-1 text-sm">{label}</span>
-        {done ? (
-          <>
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-secondary-dark">
-              Concluído
-            </span>
-            <button
-              type="button"
-              onClick={() => navigate({ to: target })}
-              className="text-xs text-text-secondary hover:underline"
-            >
-              Rever
-            </button>
-          </>
-        ) : (
-          <button
-            type="button"
-            onClick={() => navigate({ to: target })}
-            className="text-xs font-semibold text-primary hover:underline"
+        <button
+          type="button"
+          onClick={() => navigate({ to: target })}
+          className="flex min-w-0 flex-1 items-center gap-3 rounded-2xl bg-surface px-3 py-3 text-left shadow-soft transition-shadow duration-150 active:shadow-none sm:rounded-full sm:py-2.5"
+        >
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-warm text-primary">
+            <Icon size={16} aria-hidden />
+          </span>
+          <span className="min-w-0 flex-1 text-sm font-medium leading-snug text-foreground">{label}</span>
+          <span
+            className={cn(
+              "flex shrink-0 items-center gap-1 text-xs font-semibold",
+              done ? "text-text-secondary" : "text-primary",
+            )}
           >
-            {openLabel}
-          </button>
-        )}
+            {done ? "Rever" : openLabel} <ArrowRight size={13} aria-hidden />
+          </span>
+        </button>
       </li>
     );
   }
@@ -269,6 +333,7 @@ function DayBlock({
   disabled,
   disabledHint,
   onlyToggle,
+  accent = "primary",
 }: {
   icon: typeof Book;
   title: string;
@@ -281,65 +346,80 @@ function DayBlock({
   disabled?: boolean;
   disabledHint?: string;
   onlyToggle?: boolean;
+  accent?: "primary" | "secondary";
 }) {
   return (
     <li
       className={cn(
-        "rounded-2xl border border-border bg-surface p-4",
-        done && "bg-soft-green/40 border-secondary/30",
+        "rounded-2xl bg-surface p-4 shadow-soft",
+        done && "bg-soft-green/40",
         disabled && "opacity-70",
       )}
     >
-      <div className="flex items-start gap-3">
-        <span
-          className={cn(
-            "grid h-10 w-10 shrink-0 place-items-center rounded-full",
-            done ? "bg-secondary-light text-secondary-dark" : "bg-warm text-primary",
-          )}
-        >
-          {done ? <Check size={18} aria-hidden /> : <Icon size={18} aria-hidden />}
-        </span>
-        <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium">{title}</p>
-          <p className="text-xs text-text-secondary">{description}</p>
-          <p className="mt-1 text-[11px] uppercase tracking-wide text-text-muted">{durationMin} min</p>
-          {disabled && disabledHint ? (
-            <p className="mt-1 text-[11px] text-primary-dark">{disabledHint}</p>
-          ) : null}
+      <div className="flex flex-wrap items-start gap-4">
+        <div className="flex min-w-[190px] flex-1 items-start gap-3">
+          <span
+            className={cn(
+              "grid h-11 w-11 shrink-0 place-items-center rounded-full",
+              done
+                ? "bg-secondary-light text-secondary-dark"
+                : accent === "secondary"
+                  ? "bg-soft-green text-secondary-dark"
+                  : "bg-warm text-primary",
+            )}
+          >
+            {done ? <Check size={18} aria-hidden /> : <Icon size={18} aria-hidden />}
+          </span>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-semibold text-foreground">{title}</p>
+            <p className="text-xs text-text-secondary">{description}</p>
+            <p className="mt-1 flex items-center gap-1 text-[11px] text-text-muted">
+              <Clock size={12} aria-hidden /> {durationMin} min
+            </p>
+            {disabled && disabledHint ? (
+              <p className="mt-1 text-[11px] text-primary-dark">{disabledHint}</p>
+            ) : null}
+          </div>
         </div>
-      </div>
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        {!onlyToggle && ctaHref ? (
-          disabled ? (
-            <span className="inline-flex min-h-10 items-center rounded-xl bg-surface-2 px-4 text-xs font-medium text-text-muted">
-              {ctaLabel}
-            </span>
-          ) : (
-            <Link to={ctaHref} className="inline-flex min-h-10 items-center gap-1 rounded-xl bg-primary px-4 text-xs font-semibold text-primary-foreground">
-              {ctaLabel} <ArrowRight size={14} aria-hidden />
-            </Link>
-          )
-        ) : null}
-        <button
-          type="button"
-          onClick={onToggle}
-          disabled={disabled && !done}
-          className={cn(
-            "inline-flex min-h-10 items-center gap-1 rounded-xl border px-3 text-xs font-medium",
-            done ? "border-secondary/40 bg-secondary-light text-secondary-dark" : "border-border bg-surface hover:bg-surface-2",
-            disabled && !done && "cursor-not-allowed opacity-60",
-          )}
-        >
-          {done ? (
-            <>
-              <Undo2 size={14} aria-hidden /> Desfazer
-            </>
-          ) : (
-            <>
-              <Check size={14} aria-hidden /> Marcar como feito
-            </>
-          )}
-        </button>
+        <div className="flex w-full shrink-0 flex-col gap-2 sm:w-44">
+          {!onlyToggle && ctaHref ? (
+            disabled ? (
+              <span className="inline-flex min-h-10 items-center justify-center rounded-full bg-surface-2 px-4 text-xs font-medium text-text-muted">
+                {ctaLabel}
+              </span>
+            ) : (
+              <Link
+                to={ctaHref}
+                className={cn(
+                  "inline-flex min-h-10 items-center justify-center gap-1 rounded-full px-4 text-xs font-semibold text-white transition",
+                  accent === "secondary" ? "bg-secondary-dark hover:bg-secondary" : "bg-primary hover:bg-primary-dark",
+                )}
+              >
+                {ctaLabel} <ArrowRight size={14} aria-hidden />
+              </Link>
+            )
+          ) : null}
+          <button
+            type="button"
+            onClick={onToggle}
+            disabled={disabled && !done}
+            className={cn(
+              "inline-flex min-h-10 items-center justify-center gap-1 rounded-full border px-3 text-xs font-medium transition",
+              done ? "border-secondary/40 bg-secondary-light text-secondary-dark" : "border-border bg-surface text-text-secondary hover:bg-surface-2",
+              disabled && !done && "cursor-not-allowed opacity-60",
+            )}
+          >
+            {done ? (
+              <>
+                <Undo2 size={14} aria-hidden /> Desfazer
+              </>
+            ) : (
+              <>
+                <Check size={14} aria-hidden /> Marcar como feito
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </li>
   );
