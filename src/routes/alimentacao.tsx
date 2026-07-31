@@ -12,7 +12,7 @@ export const Route = createFileRoute("/alimentacao")({
   head: () => ({
     meta: [
       { title: "Alimentação — VITTALLE" },
-      { name: "description", content: "Prato de hoje, missão alimentar, SOS e Biblioteca Alimentar." },
+      { name: "description", content: "Missão alimentar, sugestão do dia, refeições-modelo e Biblioteca Alimentar." },
     ],
   }),
   component: Alimentacao,
@@ -30,27 +30,48 @@ function Alimentacao() {
   return (
     <AppShell title="Alimentação" subtitle="Sua Biblioteca Alimentar" back="/">
       <section className="rounded-3xl border border-primary/20 bg-warm p-5 shadow-soft">
-        <p className="text-[11px] uppercase tracking-wide text-primary-dark">Prato de hoje</p>
-        <h1 className="mt-1 font-editorial text-2xl">Uma escolha simples e prática</h1>
+        <h1 className="font-editorial text-2xl">Me ajude a escolher</h1>
         <p className="mt-2 text-sm text-text-secondary">
-          Adicionar, não restringir. Ensinar função, não impor alimento.
+          Encontre uma opção possível para o momento em que você está.
         </p>
         <div className="mt-4 flex flex-wrap gap-2">
-          <Link to="/alimentacao/decisao-rapida" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground">
-            <HelpCircle size={16} aria-hidden /> Não sei o que comer agora
+          <Link
+            to="/alimentacao/decisao-rapida"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
+          >
+            <HelpCircle size={16} aria-hidden /> Escolher uma opção
           </Link>
         </div>
-
       </section>
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-text-secondary">Escolha alimentar do dia</h2>
+        <h2 className="mb-3 text-sm font-semibold text-text-secondary">Faça hoje</h2>
         <ul className="grid gap-2">
-          <Row to="/alimentacao/sugestao-do-dia" icon={Salad} title="Sugestão do dia" description="Um prato simples, montado pelo Método Monta-Prato." />
-          <Row to="/alimentacao/missao-alimentar" icon={Sparkles} title="Missão alimentar" description="Um pequeno gesto para hoje." />
-          <Row to="/alimentacao/refeicoes-modelo" icon={ShoppingBasket} title="Refeições-modelo" description="Opções para café, almoço, jantar e lanches." />
+          <Row
+            to="/alimentacao/missao-alimentar"
+            icon={Sparkles}
+            title="Missão alimentar"
+            description="Uma ação simples para colocar em prática hoje."
+          />
+          <Row
+            to="/alimentacao/sugestao-do-dia"
+            icon={Salad}
+            title="Sugestão do dia"
+            description="Ideias práticas para facilitar a missão de hoje."
+          />
         </ul>
+      </section>
 
+      <section className="mt-6">
+        <h2 className="mb-3 text-sm font-semibold text-text-secondary">Para consultar quando precisar</h2>
+        <ul className="grid gap-2">
+          <Row
+            to="/alimentacao/refeicoes-modelo"
+            icon={ShoppingBasket}
+            title="Refeições-modelo"
+            description="Opções práticas para café da manhã, almoço, lanches e jantar."
+          />
+        </ul>
       </section>
 
       <section className="mt-6">

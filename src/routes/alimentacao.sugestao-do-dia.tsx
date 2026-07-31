@@ -1,8 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Check, Salad, Undo2 } from "lucide-react";
-import { toast } from "sonner";
+import { ArrowRight, Salad } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
-import { activeDay, isDayActivityDone, setDayActivity, useAppState } from "@/lib/store";
+import { activeDay, useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/alimentacao/sugestao-do-dia")({
   head: () => ({
@@ -17,12 +16,6 @@ export const Route = createFileRoute("/alimentacao/sugestao-do-dia")({
 function SugestaoPage() {
   const [state] = useAppState();
   const dayId = activeDay(state);
-  const done = isDayActivityDone(state, dayId, "alimentacao");
-
-  const toggle = () => {
-    setDayActivity(dayId, "alimentacao", !done);
-    toast.success(done ? "Sugestão desmarcada" : "Sugestão concluída");
-  };
 
   return (
     <AppShell title="Sugestão do dia" subtitle={`Dia ${dayId}`} back="/alimentacao">
@@ -50,13 +43,16 @@ function SugestaoPage() {
         ))}
       </section>
 
-      <button
-        type="button"
-        onClick={toggle}
-        className={`mt-6 inline-flex min-h-11 items-center gap-2 rounded-xl px-4 text-sm font-semibold ${done ? "bg-secondary-light text-secondary-dark" : "bg-primary text-primary-foreground"}`}
+      <p className="mt-6 text-xs text-text-secondary">
+        Isto é um apoio, não uma segunda tarefa. Quem conclui a Alimentação do dia é a Missão alimentar.
+      </p>
+
+      <Link
+        to="/alimentacao/refeicoes-modelo"
+        className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
       >
-        {done ? <><Undo2 size={16} aria-hidden /> Desfazer</> : <><Check size={16} aria-hidden /> Concluir sugestão</>}
-      </button>
+        Ver ideias de refeições <ArrowRight size={16} aria-hidden />
+      </Link>
 
       <Link to="/alimentacao" className="mt-6 block text-xs font-semibold text-primary hover:underline">
         Voltar para Alimentação

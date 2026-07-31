@@ -1,28 +1,52 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Coffee, Cookie, Salad, Soup } from "lucide-react";
+import { ChevronRight, Coffee, Cookie, Salad, Soup } from "lucide-react";
+import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
 
 export const Route = createFileRoute("/alimentacao/refeicoes-modelo")({
   head: () => ({
     meta: [
       { title: "Refeições-modelo — VITTALLE" },
-      { name: "description", content: "Opções organizadas para café, almoço, jantar e lanches." },
+      { name: "description", content: "Opções organizadas para café da manhã, almoço, lanches e jantar." },
     ],
   }),
   component: RefeicoesPage,
 });
 
 const SECTIONS = [
-  { icon: Coffee, title: "Café da manhã", items: ["Opção prática 1", "Opção prática 2", "Opção prática 3"] },
-  { icon: Salad, title: "Almoço", items: ["Prato-modelo 1", "Prato-modelo 2", "Prato-modelo 3"] },
-  { icon: Soup, title: "Jantar", items: ["Jantar leve 1", "Jantar leve 2", "Jantar leve 3"] },
-  { icon: Cookie, title: "Lanches", items: ["Lanche 1", "Lanche 2", "Lanche 3"] },
+  {
+    icon: Coffee,
+    title: "Café da manhã",
+    items: ["Ovos, fruta e café", "Iogurte com fruta e aveia", "Pão com ovo"],
+  },
+  {
+    icon: Salad,
+    title: "Almoço",
+    items: [
+      "Prato com arroz, feijão, proteína e vegetais",
+      "Frango, legumes e uma fonte de carboidrato",
+      "Omelete completa com acompanhamento",
+    ],
+  },
+  {
+    icon: Cookie,
+    title: "Lanches",
+    items: ["Iogurte com fruta", "Pão com queijo", "Fruta com aveia ou castanhas"],
+  },
+  {
+    icon: Soup,
+    title: "Jantar",
+    items: ["Sopa completa", "Omelete com vegetais", "Prato simples com proteína e legumes"],
+  },
 ];
 
 function RefeicoesPage() {
   return (
     <AppShell title="Refeições-modelo" subtitle="Referências práticas" back="/alimentacao">
-      <div className="grid gap-4">
+      <p className="text-sm text-text-secondary">
+        Ideias práticas para café da manhã, almoço, lanches e jantar. Use como referência, sem obrigação.
+      </p>
+      <div className="mt-4 grid gap-4">
         {SECTIONS.map((s) => (
           <section key={s.title} className="rounded-2xl border border-border bg-surface p-5">
             <div className="flex items-center gap-2">
@@ -31,8 +55,15 @@ function RefeicoesPage() {
             </div>
             <ul className="mt-3 grid gap-2">
               {s.items.map((it) => (
-                <li key={it} className="rounded-xl border border-border bg-surface-2 p-3 text-sm text-text-secondary">
-                  {it}
+                <li key={it}>
+                  <button
+                    type="button"
+                    onClick={() => toast.success("Detalhes desta opção em breve.")}
+                    className="flex w-full items-center justify-between gap-2 rounded-xl border border-border bg-surface-2 p-3 text-left text-sm text-text-secondary hover:bg-surface"
+                  >
+                    {it}
+                    <ChevronRight size={14} className="shrink-0 text-text-muted" aria-hidden />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -40,9 +71,6 @@ function RefeicoesPage() {
         ))}
       </div>
 
-      <p className="mt-6 text-xs text-text-muted">
-        As opções definitivas serão inseridas em uma etapa posterior.
-      </p>
       <Link to="/alimentacao" className="mt-2 inline-flex text-xs font-semibold text-primary hover:underline">
         Voltar para Alimentação
       </Link>
