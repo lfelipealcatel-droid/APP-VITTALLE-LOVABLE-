@@ -18,35 +18,31 @@ const SITUATIONS = [
     title: "Tenho apenas 5 minutos",
     guidance: "Escolha uma combinação simples com uma fonte de proteína e algo que forneça energia.",
     suggestions: ["Iogurte com fruta e aveia", "Pão com ovo ou queijo", "Shake de banana com leite ou whey"],
+    action: { label: "Ver opções rápidas", filtro: "rapidas" as const },
   },
   {
     title: "Estou com muita fome",
     guidance: "Procure montar uma refeição mais completa para não continuar beliscando pouco tempo depois.",
     suggestions: ["Arroz, feijão, proteína e vegetais", "Omelete completa com acompanhamento", "Frango, legumes e uma fonte de carboidrato"],
+    action: { label: "Ver refeições mais completas", filtro: "completas" as const },
   },
   {
     title: "Quero comer algo doce",
     guidance: "Você não precisa ignorar a vontade. Escolha uma opção simples e possível, sem transformar o momento em culpa.",
     suggestions: ["Iogurte com fruta e canela", "Banana com aveia e cacau", "Shake de banana com leite ou whey"],
-  },
-  {
-    title: "Vou pedir comida ou comer fora",
-    guidance: "Procure uma opção com proteína, vegetais e um acompanhamento que faça sentido para sua fome.",
-    suggestions: [
-      "Prato feito com arroz, feijão, proteína e salada",
-      "Comida por quilo montada pelo Método Monta-Prato",
-      "Sanduíche com proteína acompanhado de salada ou fruta",
-    ],
+    action: null,
   },
   {
     title: "Tenho poucos ingredientes em casa",
     guidance: "Não espere uma refeição perfeita. Combine dois ou três alimentos disponíveis e faça uma escolha possível.",
     suggestions: ["Pão com ovo", "Arroz, ovo e algum vegetal", "Fruta com iogurte ou leite"],
+    action: { label: "Ver opções com poucos ingredientes", filtro: "poucos-ingredientes" as const },
   },
   {
     title: "Quero algo mais leve",
     guidance: "Escolha algo simples, mas que ainda ofereça saciedade.",
     suggestions: ["Omelete com vegetais", "Sopa completa", "Iogurte com fruta e aveia"],
+    action: { label: "Ver opções mais leves", filtro: "leves" as const },
   },
 ];
 
@@ -70,12 +66,19 @@ function DecisaoRapida() {
                   </li>
                 ))}
               </ul>
-              <Link
-                to="/alimentacao/refeicoes-modelo"
-                className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-xl bg-primary px-4 text-xs font-semibold text-primary-foreground"
-              >
-                Ver refeições-modelo <ArrowRight size={14} aria-hidden />
-              </Link>
+              {s.action ? (
+                <Link
+                  to="/alimentacao/refeicoes-modelo"
+                  search={{ filtro: s.action.filtro }}
+                  className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-xl bg-primary px-4 text-xs font-semibold text-primary-foreground"
+                >
+                  {s.action.label} <ArrowRight size={14} aria-hidden />
+                </Link>
+              ) : (
+                <Link to="/alimentacao" className="mt-3 inline-flex text-xs font-semibold text-primary hover:underline">
+                  Voltar para Alimentação
+                </Link>
+              )}
             </AccordionContent>
           </AccordionItem>
         ))}
