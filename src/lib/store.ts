@@ -212,7 +212,18 @@ export function isDayActivityDone(state: AppState, dayId: number, key: DayActivi
   return !!state.dayActivities[`${dayId}:${key}`];
 }
 
-const DAY_KEYS: DayActivityKey[] = ["leitura", "sequencia", "alimentacao", "habito", "checkin"];
+export const DAY_KEYS: DayActivityKey[] = ["leitura", "sequencia", "alimentacao", "habito", "checkin"];
+
+// Remove somente as chaves de dayActivities do dia informado (uso: painel /demo). Não toca outros dias, onboarding, medições ou produtos.
+export function clearDayActivities(dayId: number) {
+  setState((prev) => {
+    const next = { ...prev.dayActivities };
+    for (const key of Object.keys(next)) {
+      if (key.startsWith(`${dayId}:`)) delete next[key];
+    }
+    return { dayActivities: next };
+  });
+}
 
 export function dayProgress(state: AppState, dayId: number, includesMeasurement = false) {
   const keys = includesMeasurement ? [...DAY_KEYS, "medicao" as DayActivityKey] : DAY_KEYS;

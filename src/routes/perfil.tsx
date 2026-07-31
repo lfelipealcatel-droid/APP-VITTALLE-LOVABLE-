@@ -4,6 +4,7 @@ import {
   ChevronRight,
   Download,
   FileText,
+  FlaskConical,
   Heart,
   HelpCircle,
   Info,
@@ -68,6 +69,10 @@ function Perfil() {
             </span>
             <span className="text-xs text-text-muted">1.0.0 (prototype)</span>
           </div>
+        </Group>
+
+        <Group title="Uso interno">
+          <Item to="/demo" icon={FlaskConical} label="Modo demonstração" />
         </Group>
 
         <div className="mt-6">

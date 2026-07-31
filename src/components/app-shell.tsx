@@ -3,6 +3,7 @@ import { ChevronLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { BottomNav } from "./bottom-nav";
+import { DemoBadge } from "./demo-badge";
 import { MiniAudioPlayer } from "./mini-audio-player";
 
 interface AppShellProps {
@@ -42,47 +43,50 @@ export function AppShell({
 
   return (
     <div className="min-h-screen bg-background">
-      {title || showBack || right ? (
-        <header
-          className={cn(
-            "sticky top-0 z-30 border-b",
-            variant === "transparent"
-              ? "border-transparent bg-transparent"
-              : "border-border bg-background/90 backdrop-blur",
-          )}
-        >
-          <div className="mx-auto flex max-w-[1200px] items-center gap-3 px-5 py-4 md:px-8">
-            {showBack ? (
-              <button
-                type="button"
-                aria-label="Voltar"
-                onClick={onBack}
-                className="-ml-2 inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-surface-2"
-              >
-                <ChevronLeft size={22} aria-hidden />
-              </button>
-            ) : null}
-            <div className="min-w-0 flex-1">
-              {title ? (
-                <h1
-                  className={cn(
-                    "truncate",
-                    variant === "editorial"
-                      ? "font-editorial text-2xl font-medium"
-                      : "text-lg font-semibold",
-                  )}
+      <div className="sticky top-0 z-30">
+        <DemoBadge />
+        {title || showBack || right ? (
+          <header
+            className={cn(
+              "border-b",
+              variant === "transparent"
+                ? "border-transparent bg-transparent"
+                : "border-border bg-background/90 backdrop-blur",
+            )}
+          >
+            <div className="mx-auto flex max-w-[1200px] items-center gap-3 px-5 py-4 md:px-8">
+              {showBack ? (
+                <button
+                  type="button"
+                  aria-label="Voltar"
+                  onClick={onBack}
+                  className="-ml-2 inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-surface-2"
                 >
-                  {title}
-                </h1>
+                  <ChevronLeft size={22} aria-hidden />
+                </button>
               ) : null}
-              {subtitle ? (
-                <p className="truncate text-sm text-text-secondary">{subtitle}</p>
-              ) : null}
+              <div className="min-w-0 flex-1">
+                {title ? (
+                  <h1
+                    className={cn(
+                      "truncate",
+                      variant === "editorial"
+                        ? "font-editorial text-2xl font-medium"
+                        : "text-lg font-semibold",
+                    )}
+                  >
+                    {title}
+                  </h1>
+                ) : null}
+                {subtitle ? (
+                  <p className="truncate text-sm text-text-secondary">{subtitle}</p>
+                ) : null}
+              </div>
+              {right}
             </div>
-            {right}
-          </div>
-        </header>
-      ) : null}
+          </header>
+        ) : null}
+      </div>
 
       <main
         className={cn(
