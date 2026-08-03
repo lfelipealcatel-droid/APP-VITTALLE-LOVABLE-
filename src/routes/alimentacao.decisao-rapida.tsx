@@ -13,36 +13,47 @@ export const Route = createFileRoute("/alimentacao/decisao-rapida")({
   component: DecisaoRapida,
 });
 
-const SITUATIONS = [
+type FiltroKey = "rapidas" | "completas" | "poucos-ingredientes" | "leves" | "vegetais";
+
+interface Situation {
+  title: string;
+  guidance: string;
+  suggestions: string[];
+  action: { label: string; filtro: FiltroKey } | null;
+  teaser?: string;
+}
+
+const SITUATIONS: Situation[] = [
   {
     title: "Tenho apenas 5 minutos",
     guidance: "Escolha uma combinação simples com uma fonte de proteína e algo que forneça energia.",
     suggestions: ["Iogurte com fruta e aveia", "Pão com ovo ou queijo", "Shake de banana com leite ou whey"],
-    action: { label: "Ver opções rápidas", filtro: "rapidas" as const },
+    action: { label: "Ver opções rápidas", filtro: "rapidas" },
   },
   {
     title: "Estou com muita fome",
     guidance: "Procure montar uma refeição mais completa para não continuar beliscando pouco tempo depois.",
     suggestions: ["Arroz, feijão, proteína e vegetais", "Omelete completa com acompanhamento", "Frango, legumes e uma fonte de carboidrato"],
-    action: { label: "Ver refeições mais completas", filtro: "completas" as const },
+    action: { label: "Ver refeições mais completas", filtro: "completas" },
   },
   {
     title: "Quero comer algo doce",
     guidance: "Você não precisa ignorar a vontade. Escolha uma opção simples e possível, sem transformar o momento em culpa.",
-    suggestions: ["Iogurte com fruta e canela", "Banana com aveia e cacau", "Shake de banana com leite ou whey"],
+    suggestions: ["Banana com canela", "Iogurte com cacau", "Uma fruta da sua preferência", "Shake doce de banana com leite ou whey", "Iogurte com morangos"],
     action: null,
+    teaser: "Quer mais opções? Conheça o Guia de Doces Inteligentes.",
   },
   {
     title: "Tenho poucos ingredientes em casa",
     guidance: "Não espere uma refeição perfeita. Combine dois ou três alimentos disponíveis e faça uma escolha possível.",
     suggestions: ["Pão com ovo", "Arroz, ovo e algum vegetal", "Fruta com iogurte ou leite"],
-    action: { label: "Ver opções com poucos ingredientes", filtro: "poucos-ingredientes" as const },
+    action: { label: "Ver opções com poucos ingredientes", filtro: "poucos-ingredientes" },
   },
   {
     title: "Quero algo mais leve",
     guidance: "Escolha algo simples, mas que ainda ofereça saciedade.",
-    suggestions: ["Omelete com vegetais", "Sopa completa", "Iogurte com fruta e aveia"],
-    action: { label: "Ver opções mais leves", filtro: "leves" as const },
+    suggestions: ["Sopa nutritiva", "Omelete simples", "Salada completa", "Frango com legumes", "Peixe com vegetais"],
+    action: { label: "Ver opções mais leves", filtro: "leves" },
   },
 ];
 
@@ -79,6 +90,7 @@ function DecisaoRapida() {
                   Voltar para Alimentação
                 </Link>
               )}
+              {s.teaser ? <p className="mt-3 text-xs text-text-muted">{s.teaser}</p> : null}
             </AccordionContent>
           </AccordionItem>
         ))}

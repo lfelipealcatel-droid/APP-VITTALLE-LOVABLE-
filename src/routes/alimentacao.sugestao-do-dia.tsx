@@ -18,6 +18,8 @@ const IDEAS = [
   "Use uma porção de legumes congelados",
   "Escolha uma pequena salada pronta",
   "Acrescente vegetais dentro de uma omelete",
+  "Aproveite os vegetais que já tem na geladeira",
+  "Reaproveite as sobras de legumes de ontem",
 ];
 
 function SugestaoPage() {
