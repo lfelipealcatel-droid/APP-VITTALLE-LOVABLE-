@@ -4,7 +4,7 @@ import {
   Outlet,
   useRouterState,
 } from "@tanstack/react-router";
-import { Apple, HelpCircle, Salad, ShoppingBasket, Sparkles } from "lucide-react";
+import { Apple, Droplets, HelpCircle, Salad, ShoppingBasket, Sparkles } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { GUIDES } from "@/lib/mock-data";
 
@@ -68,8 +68,14 @@ function Alimentacao() {
           <Row
             to="/alimentacao/refeicoes-modelo"
             icon={ShoppingBasket}
-            title="Refeições-modelo"
-            description="Opções práticas para café da manhã, almoço, lanches e jantar."
+            title="Refeições Inteligentes"
+            description="Sugestões simples para montar refeições equilibradas no café da manhã, almoço, lanche e jantar."
+          />
+          <Row
+            to="/alimentacao/bebidas-funcionais"
+            icon={Droplets}
+            title="Chás, Shakes e Shots Funcionais"
+            description="Receitas rápidas para apoiar hidratação, saciedade, energia e escolhas mais equilibradas."
           />
         </ul>
       </section>
@@ -108,7 +114,11 @@ function Row({
   title,
   description,
 }: {
-  to: "/alimentacao/sugestao-do-dia" | "/alimentacao/missao-alimentar" | "/alimentacao/refeicoes-modelo";
+  to:
+    | "/alimentacao/sugestao-do-dia"
+    | "/alimentacao/missao-alimentar"
+    | "/alimentacao/refeicoes-modelo"
+    | "/alimentacao/bebidas-funcionais";
   icon: typeof Salad;
   title: string;
   description: string;

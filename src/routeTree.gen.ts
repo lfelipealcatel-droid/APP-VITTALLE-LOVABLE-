@@ -9,164 +9,60 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TermosRouteImport } from './routes/termos'
-import { Route as SplashRouteImport } from './routes/splash'
-import { Route as SobreRouteImport } from './routes/sobre'
-import { Route as ProgressoRouteImport } from './routes/progresso'
-import { Route as ProgramaRouteImport } from './routes/programa'
-import { Route as PrivacidadeRouteImport } from './routes/privacidade'
-import { Route as PerfilRouteImport } from './routes/perfil'
-import { Route as OnboardingRouteImport } from './routes/onboarding'
-import { Route as NotificacoesRouteImport } from './routes/notificacoes'
-import { Route as MedidasRouteImport } from './routes/medidas'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as FavoritosRouteImport } from './routes/favoritos'
-import { Route as DownsellRouteImport } from './routes/downsell'
-import { Route as DownloadsRouteImport } from './routes/downloads'
-import { Route as DevPreviewRouteImport } from './routes/dev-preview'
-import { Route as DemoRouteImport } from './routes/demo'
-import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as ConclusaoRouteImport } from './routes/conclusao'
-import { Route as CerimoniaRouteImport } from './routes/cerimonia'
-import { Route as BuscarRouteImport } from './routes/buscar'
-import { Route as BibliotecaRouteImport } from './routes/biblioteca'
-import { Route as AlimentacaoRouteImport } from './routes/alimentacao'
-import { Route as AjudaRouteImport } from './routes/ajuda'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as JornadaIndexRouteImport } from './routes/jornada.index'
-import { Route as SequenciaIdRouteImport } from './routes/sequencia.$id'
-import { Route as PerfilSegurancaRouteImport } from './routes/perfil.seguranca'
-import { Route as PerfilPreferenciasRouteImport } from './routes/perfil.preferencias'
-import { Route as PerfilNotificacoesRouteImport } from './routes/perfil.notificacoes'
-import { Route as PerfilDadosRouteImport } from './routes/perfil.dados'
-import { Route as LeituraDiaRouteImport } from './routes/leitura.$dia'
-import { Route as JornadaDiaRouteImport } from './routes/jornada.$dia'
-import { Route as HabitoDiaRouteImport } from './routes/habito.$dia'
-import { Route as GuiaIdRouteImport } from './routes/guia.$id'
-import { Route as ConteudoIdRouteImport } from './routes/conteudo.$id'
-import { Route as ChegadaPassoRouteImport } from './routes/chegada.$passo'
-import { Route as CheckinDiaRouteImport } from './routes/checkin.$dia'
-import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
-import { Route as BonusIdRouteImport } from './routes/bonus.$id'
-import { Route as AlimentacaoSugestaoDoDiaRouteImport } from './routes/alimentacao.sugestao-do-dia'
-import { Route as AlimentacaoRefeicoesModeloRouteImport } from './routes/alimentacao.refeicoes-modelo'
-import { Route as AlimentacaoMissaoAlimentarRouteImport } from './routes/alimentacao.missao-alimentar'
+import { Route as AjudaRouteImport } from './routes/ajuda'
+import { Route as AlimentacaoRouteImport } from './routes/alimentacao'
+import { Route as BibliotecaRouteImport } from './routes/biblioteca'
+import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as CerimoniaRouteImport } from './routes/cerimonia'
+import { Route as ConclusaoRouteImport } from './routes/conclusao'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as DemoRouteImport } from './routes/demo'
+import { Route as DevPreviewRouteImport } from './routes/dev-preview'
+import { Route as DownloadsRouteImport } from './routes/downloads'
+import { Route as DownsellRouteImport } from './routes/downsell'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as MedidasRouteImport } from './routes/medidas'
+import { Route as NotificacoesRouteImport } from './routes/notificacoes'
+import { Route as OnboardingRouteImport } from './routes/onboarding'
+import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as ProgramaRouteImport } from './routes/programa'
+import { Route as ProgressoRouteImport } from './routes/progresso'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as SplashRouteImport } from './routes/splash'
+import { Route as TermosRouteImport } from './routes/termos'
+import { Route as AlimentacaoBebidasFuncionaisRouteImport } from './routes/alimentacao.bebidas-funcionais'
 import { Route as AlimentacaoDecisaoRapidaRouteImport } from './routes/alimentacao.decisao-rapida'
-import { Route as ProdutoIdIndexRouteImport } from './routes/produto.$id.index'
-import { Route as ProdutoIdCheckoutRouteImport } from './routes/produto.$id.checkout'
-import { Route as ProdutoIdAcessarRouteImport } from './routes/produto.$id.acessar'
-import { Route as GuiaIdMaterialRouteImport } from './routes/guia.$id.material'
-import { Route as GuiaIdConteudoRouteImport } from './routes/guia.$id.conteudo'
+import { Route as AlimentacaoMissaoAlimentarRouteImport } from './routes/alimentacao.missao-alimentar'
+import { Route as AlimentacaoRefeicoesModeloRouteImport } from './routes/alimentacao.refeicoes-modelo'
+import { Route as AlimentacaoSugestaoDoDiaRouteImport } from './routes/alimentacao.sugestao-do-dia'
+import { Route as BonusIdRouteImport } from './routes/bonus.$id'
+import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
+import { Route as CheckinDiaRouteImport } from './routes/checkin.$dia'
+import { Route as ChegadaPassoRouteImport } from './routes/chegada.$passo'
+import { Route as ConteudoIdRouteImport } from './routes/conteudo.$id'
+import { Route as GuiaIdRouteImport } from './routes/guia.$id'
+import { Route as HabitoDiaRouteImport } from './routes/habito.$dia'
+import { Route as JornadaIndexRouteImport } from './routes/jornada.index'
+import { Route as JornadaDiaRouteImport } from './routes/jornada.$dia'
+import { Route as LeituraDiaRouteImport } from './routes/leitura.$dia'
+import { Route as PerfilDadosRouteImport } from './routes/perfil.dados'
+import { Route as PerfilNotificacoesRouteImport } from './routes/perfil.notificacoes'
+import { Route as PerfilPreferenciasRouteImport } from './routes/perfil.preferencias'
+import { Route as PerfilSegurancaRouteImport } from './routes/perfil.seguranca'
+import { Route as SequenciaIdRouteImport } from './routes/sequencia.$id'
 import { Route as BonusIdConteudoRouteImport } from './routes/bonus.$id.conteudo'
+import { Route as GuiaIdConteudoRouteImport } from './routes/guia.$id.conteudo'
+import { Route as GuiaIdMaterialRouteImport } from './routes/guia.$id.material'
+import { Route as ProdutoIdIndexRouteImport } from './routes/produto.$id.index'
+import { Route as ProdutoIdAcessarRouteImport } from './routes/produto.$id.acessar'
+import { Route as ProdutoIdCheckoutRouteImport } from './routes/produto.$id.checkout'
 
-const TermosRoute = TermosRouteImport.update({
-  id: '/termos',
-  path: '/termos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SplashRoute = SplashRouteImport.update({
-  id: '/splash',
-  path: '/splash',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SobreRoute = SobreRouteImport.update({
-  id: '/sobre',
-  path: '/sobre',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProgressoRoute = ProgressoRouteImport.update({
-  id: '/progresso',
-  path: '/progresso',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProgramaRoute = ProgramaRouteImport.update({
-  id: '/programa',
-  path: '/programa',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacidadeRoute = PrivacidadeRouteImport.update({
-  id: '/privacidade',
-  path: '/privacidade',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PerfilRoute = PerfilRouteImport.update({
-  id: '/perfil',
-  path: '/perfil',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OnboardingRoute = OnboardingRouteImport.update({
-  id: '/onboarding',
-  path: '/onboarding',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const NotificacoesRoute = NotificacoesRouteImport.update({
-  id: '/notificacoes',
-  path: '/notificacoes',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MedidasRoute = MedidasRouteImport.update({
-  id: '/medidas',
-  path: '/medidas',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FavoritosRoute = FavoritosRouteImport.update({
-  id: '/favoritos',
-  path: '/favoritos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DownsellRoute = DownsellRouteImport.update({
-  id: '/downsell',
-  path: '/downsell',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DownloadsRoute = DownloadsRouteImport.update({
-  id: '/downloads',
-  path: '/downloads',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DevPreviewRoute = DevPreviewRouteImport.update({
-  id: '/dev-preview',
-  path: '/dev-preview',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoRoute = DemoRouteImport.update({
-  id: '/demo',
-  path: '/demo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContatoRoute = ContatoRouteImport.update({
-  id: '/contato',
-  path: '/contato',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConclusaoRoute = ConclusaoRouteImport.update({
-  id: '/conclusao',
-  path: '/conclusao',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CerimoniaRoute = CerimoniaRouteImport.update({
-  id: '/cerimonia',
-  path: '/cerimonia',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BuscarRoute = BuscarRouteImport.update({
-  id: '/buscar',
-  path: '/buscar',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BibliotecaRoute = BibliotecaRouteImport.update({
-  id: '/biblioteca',
-  path: '/biblioteca',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AlimentacaoRoute = AlimentacaoRouteImport.update({
-  id: '/alimentacao',
-  path: '/alimentacao',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AjudaRoute = AjudaRouteImport.update({
@@ -174,102 +70,120 @@ const AjudaRoute = AjudaRouteImport.update({
   path: '/ajuda',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AlimentacaoRoute = AlimentacaoRouteImport.update({
+  id: '/alimentacao',
+  path: '/alimentacao',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JornadaIndexRoute = JornadaIndexRouteImport.update({
-  id: '/jornada/',
-  path: '/jornada/',
+const BibliotecaRoute = BibliotecaRouteImport.update({
+  id: '/biblioteca',
+  path: '/biblioteca',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SequenciaIdRoute = SequenciaIdRouteImport.update({
-  id: '/sequencia/$id',
-  path: '/sequencia/$id',
+const BuscarRoute = BuscarRouteImport.update({
+  id: '/buscar',
+  path: '/buscar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PerfilSegurancaRoute = PerfilSegurancaRouteImport.update({
-  id: '/seguranca',
-  path: '/seguranca',
-  getParentRoute: () => PerfilRoute,
+const CerimoniaRoute = CerimoniaRouteImport.update({
+  id: '/cerimonia',
+  path: '/cerimonia',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const PerfilPreferenciasRoute = PerfilPreferenciasRouteImport.update({
-  id: '/preferencias',
-  path: '/preferencias',
-  getParentRoute: () => PerfilRoute,
+const ConclusaoRoute = ConclusaoRouteImport.update({
+  id: '/conclusao',
+  path: '/conclusao',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const PerfilNotificacoesRoute = PerfilNotificacoesRouteImport.update({
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoRoute = DemoRouteImport.update({
+  id: '/demo',
+  path: '/demo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevPreviewRoute = DevPreviewRouteImport.update({
+  id: '/dev-preview',
+  path: '/dev-preview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadsRoute = DownloadsRouteImport.update({
+  id: '/downloads',
+  path: '/downloads',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownsellRoute = DownsellRouteImport.update({
+  id: '/downsell',
+  path: '/downsell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MedidasRoute = MedidasRouteImport.update({
+  id: '/medidas',
+  path: '/medidas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificacoesRoute = NotificacoesRouteImport.update({
   id: '/notificacoes',
   path: '/notificacoes',
-  getParentRoute: () => PerfilRoute,
-} as any)
-const PerfilDadosRoute = PerfilDadosRouteImport.update({
-  id: '/dados',
-  path: '/dados',
-  getParentRoute: () => PerfilRoute,
-} as any)
-const LeituraDiaRoute = LeituraDiaRouteImport.update({
-  id: '/leitura/$dia',
-  path: '/leitura/$dia',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JornadaDiaRoute = JornadaDiaRouteImport.update({
-  id: '/jornada/$dia',
-  path: '/jornada/$dia',
+const OnboardingRoute = OnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HabitoDiaRoute = HabitoDiaRouteImport.update({
-  id: '/habito/$dia',
-  path: '/habito/$dia',
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GuiaIdRoute = GuiaIdRouteImport.update({
-  id: '/guia/$id',
-  path: '/guia/$id',
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConteudoIdRoute = ConteudoIdRouteImport.update({
-  id: '/conteudo/$id',
-  path: '/conteudo/$id',
+const ProgramaRoute = ProgramaRouteImport.update({
+  id: '/programa',
+  path: '/programa',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ChegadaPassoRoute = ChegadaPassoRouteImport.update({
-  id: '/chegada/$passo',
-  path: '/chegada/$passo',
+const ProgressoRoute = ProgressoRouteImport.update({
+  id: '/progresso',
+  path: '/progresso',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CheckinDiaRoute = CheckinDiaRouteImport.update({
-  id: '/checkin/$dia',
-  path: '/checkin/$dia',
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
-  id: '/categoria/$slug',
-  path: '/categoria/$slug',
+const SplashRoute = SplashRouteImport.update({
+  id: '/splash',
+  path: '/splash',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BonusIdRoute = BonusIdRouteImport.update({
-  id: '/bonus/$id',
-  path: '/bonus/$id',
+const TermosRoute = TermosRouteImport.update({
+  id: '/termos',
+  path: '/termos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AlimentacaoSugestaoDoDiaRoute =
-  AlimentacaoSugestaoDoDiaRouteImport.update({
-    id: '/sugestao-do-dia',
-    path: '/sugestao-do-dia',
-    getParentRoute: () => AlimentacaoRoute,
-  } as any)
-const AlimentacaoRefeicoesModeloRoute =
-  AlimentacaoRefeicoesModeloRouteImport.update({
-    id: '/refeicoes-modelo',
-    path: '/refeicoes-modelo',
-    getParentRoute: () => AlimentacaoRoute,
-  } as any)
-const AlimentacaoMissaoAlimentarRoute =
-  AlimentacaoMissaoAlimentarRouteImport.update({
-    id: '/missao-alimentar',
-    path: '/missao-alimentar',
+const AlimentacaoBebidasFuncionaisRoute =
+  AlimentacaoBebidasFuncionaisRouteImport.update({
+    id: '/bebidas-funcionais',
+    path: '/bebidas-funcionais',
     getParentRoute: () => AlimentacaoRoute,
   } as any)
 const AlimentacaoDecisaoRapidaRoute =
@@ -278,14 +192,117 @@ const AlimentacaoDecisaoRapidaRoute =
     path: '/decisao-rapida',
     getParentRoute: () => AlimentacaoRoute,
   } as any)
+const AlimentacaoMissaoAlimentarRoute =
+  AlimentacaoMissaoAlimentarRouteImport.update({
+    id: '/missao-alimentar',
+    path: '/missao-alimentar',
+    getParentRoute: () => AlimentacaoRoute,
+  } as any)
+const AlimentacaoRefeicoesModeloRoute =
+  AlimentacaoRefeicoesModeloRouteImport.update({
+    id: '/refeicoes-modelo',
+    path: '/refeicoes-modelo',
+    getParentRoute: () => AlimentacaoRoute,
+  } as any)
+const AlimentacaoSugestaoDoDiaRoute =
+  AlimentacaoSugestaoDoDiaRouteImport.update({
+    id: '/sugestao-do-dia',
+    path: '/sugestao-do-dia',
+    getParentRoute: () => AlimentacaoRoute,
+  } as any)
+const BonusIdRoute = BonusIdRouteImport.update({
+  id: '/bonus/$id',
+  path: '/bonus/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
+  id: '/categoria/$slug',
+  path: '/categoria/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckinDiaRoute = CheckinDiaRouteImport.update({
+  id: '/checkin/$dia',
+  path: '/checkin/$dia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChegadaPassoRoute = ChegadaPassoRouteImport.update({
+  id: '/chegada/$passo',
+  path: '/chegada/$passo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConteudoIdRoute = ConteudoIdRouteImport.update({
+  id: '/conteudo/$id',
+  path: '/conteudo/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuiaIdRoute = GuiaIdRouteImport.update({
+  id: '/guia/$id',
+  path: '/guia/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HabitoDiaRoute = HabitoDiaRouteImport.update({
+  id: '/habito/$dia',
+  path: '/habito/$dia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JornadaIndexRoute = JornadaIndexRouteImport.update({
+  id: '/jornada/',
+  path: '/jornada/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JornadaDiaRoute = JornadaDiaRouteImport.update({
+  id: '/jornada/$dia',
+  path: '/jornada/$dia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeituraDiaRoute = LeituraDiaRouteImport.update({
+  id: '/leitura/$dia',
+  path: '/leitura/$dia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilDadosRoute = PerfilDadosRouteImport.update({
+  id: '/dados',
+  path: '/dados',
+  getParentRoute: () => PerfilRoute,
+} as any)
+const PerfilNotificacoesRoute = PerfilNotificacoesRouteImport.update({
+  id: '/notificacoes',
+  path: '/notificacoes',
+  getParentRoute: () => PerfilRoute,
+} as any)
+const PerfilPreferenciasRoute = PerfilPreferenciasRouteImport.update({
+  id: '/preferencias',
+  path: '/preferencias',
+  getParentRoute: () => PerfilRoute,
+} as any)
+const PerfilSegurancaRoute = PerfilSegurancaRouteImport.update({
+  id: '/seguranca',
+  path: '/seguranca',
+  getParentRoute: () => PerfilRoute,
+} as any)
+const SequenciaIdRoute = SequenciaIdRouteImport.update({
+  id: '/sequencia/$id',
+  path: '/sequencia/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BonusIdConteudoRoute = BonusIdConteudoRouteImport.update({
+  id: '/conteudo',
+  path: '/conteudo',
+  getParentRoute: () => BonusIdRoute,
+} as any)
+const GuiaIdConteudoRoute = GuiaIdConteudoRouteImport.update({
+  id: '/conteudo',
+  path: '/conteudo',
+  getParentRoute: () => GuiaIdRoute,
+} as any)
+const GuiaIdMaterialRoute = GuiaIdMaterialRouteImport.update({
+  id: '/material',
+  path: '/material',
+  getParentRoute: () => GuiaIdRoute,
+} as any)
 const ProdutoIdIndexRoute = ProdutoIdIndexRouteImport.update({
   id: '/produto/$id/',
   path: '/produto/$id/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProdutoIdCheckoutRoute = ProdutoIdCheckoutRouteImport.update({
-  id: '/produto/$id/checkout',
-  path: '/produto/$id/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProdutoIdAcessarRoute = ProdutoIdAcessarRouteImport.update({
@@ -293,20 +310,10 @@ const ProdutoIdAcessarRoute = ProdutoIdAcessarRouteImport.update({
   path: '/produto/$id/acessar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const GuiaIdMaterialRoute = GuiaIdMaterialRouteImport.update({
-  id: '/material',
-  path: '/material',
-  getParentRoute: () => GuiaIdRoute,
-} as any)
-const GuiaIdConteudoRoute = GuiaIdConteudoRouteImport.update({
-  id: '/conteudo',
-  path: '/conteudo',
-  getParentRoute: () => GuiaIdRoute,
-} as any)
-const BonusIdConteudoRoute = BonusIdConteudoRouteImport.update({
-  id: '/conteudo',
-  path: '/conteudo',
-  getParentRoute: () => BonusIdRoute,
+const ProdutoIdCheckoutRoute = ProdutoIdCheckoutRouteImport.update({
+  id: '/produto/$id/checkout',
+  path: '/produto/$id/checkout',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -334,6 +341,7 @@ export interface FileRoutesByFullPath {
   '/sobre': typeof SobreRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
+  '/alimentacao/bebidas-funcionais': typeof AlimentacaoBebidasFuncionaisRoute
   '/alimentacao/decisao-rapida': typeof AlimentacaoDecisaoRapidaRoute
   '/alimentacao/missao-alimentar': typeof AlimentacaoMissaoAlimentarRoute
   '/alimentacao/refeicoes-modelo': typeof AlimentacaoRefeicoesModeloRoute
@@ -385,6 +393,7 @@ export interface FileRoutesByTo {
   '/sobre': typeof SobreRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
+  '/alimentacao/bebidas-funcionais': typeof AlimentacaoBebidasFuncionaisRoute
   '/alimentacao/decisao-rapida': typeof AlimentacaoDecisaoRapidaRoute
   '/alimentacao/missao-alimentar': typeof AlimentacaoMissaoAlimentarRoute
   '/alimentacao/refeicoes-modelo': typeof AlimentacaoRefeicoesModeloRoute
@@ -437,6 +446,7 @@ export interface FileRoutesById {
   '/sobre': typeof SobreRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
+  '/alimentacao/bebidas-funcionais': typeof AlimentacaoBebidasFuncionaisRoute
   '/alimentacao/decisao-rapida': typeof AlimentacaoDecisaoRapidaRoute
   '/alimentacao/missao-alimentar': typeof AlimentacaoMissaoAlimentarRoute
   '/alimentacao/refeicoes-modelo': typeof AlimentacaoRefeicoesModeloRoute
@@ -490,6 +500,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/splash'
     | '/termos'
+    | '/alimentacao/bebidas-funcionais'
     | '/alimentacao/decisao-rapida'
     | '/alimentacao/missao-alimentar'
     | '/alimentacao/refeicoes-modelo'
@@ -541,6 +552,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/splash'
     | '/termos'
+    | '/alimentacao/bebidas-funcionais'
     | '/alimentacao/decisao-rapida'
     | '/alimentacao/missao-alimentar'
     | '/alimentacao/refeicoes-modelo'
@@ -592,6 +604,7 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/splash'
     | '/termos'
+    | '/alimentacao/bebidas-funcionais'
     | '/alimentacao/decisao-rapida'
     | '/alimentacao/missao-alimentar'
     | '/alimentacao/refeicoes-modelo'
@@ -662,158 +675,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/termos': {
-      id: '/termos'
-      path: '/termos'
-      fullPath: '/termos'
-      preLoaderRoute: typeof TermosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/splash': {
-      id: '/splash'
-      path: '/splash'
-      fullPath: '/splash'
-      preLoaderRoute: typeof SplashRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sobre': {
-      id: '/sobre'
-      path: '/sobre'
-      fullPath: '/sobre'
-      preLoaderRoute: typeof SobreRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/progresso': {
-      id: '/progresso'
-      path: '/progresso'
-      fullPath: '/progresso'
-      preLoaderRoute: typeof ProgressoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/programa': {
-      id: '/programa'
-      path: '/programa'
-      fullPath: '/programa'
-      preLoaderRoute: typeof ProgramaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacidade': {
-      id: '/privacidade'
-      path: '/privacidade'
-      fullPath: '/privacidade'
-      preLoaderRoute: typeof PrivacidadeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/perfil': {
-      id: '/perfil'
-      path: '/perfil'
-      fullPath: '/perfil'
-      preLoaderRoute: typeof PerfilRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/onboarding': {
-      id: '/onboarding'
-      path: '/onboarding'
-      fullPath: '/onboarding'
-      preLoaderRoute: typeof OnboardingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/notificacoes': {
-      id: '/notificacoes'
-      path: '/notificacoes'
-      fullPath: '/notificacoes'
-      preLoaderRoute: typeof NotificacoesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/medidas': {
-      id: '/medidas'
-      path: '/medidas'
-      fullPath: '/medidas'
-      preLoaderRoute: typeof MedidasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/favoritos': {
-      id: '/favoritos'
-      path: '/favoritos'
-      fullPath: '/favoritos'
-      preLoaderRoute: typeof FavoritosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/downsell': {
-      id: '/downsell'
-      path: '/downsell'
-      fullPath: '/downsell'
-      preLoaderRoute: typeof DownsellRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/downloads': {
-      id: '/downloads'
-      path: '/downloads'
-      fullPath: '/downloads'
-      preLoaderRoute: typeof DownloadsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dev-preview': {
-      id: '/dev-preview'
-      path: '/dev-preview'
-      fullPath: '/dev-preview'
-      preLoaderRoute: typeof DevPreviewRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo': {
-      id: '/demo'
-      path: '/demo'
-      fullPath: '/demo'
-      preLoaderRoute: typeof DemoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contato': {
-      id: '/contato'
-      path: '/contato'
-      fullPath: '/contato'
-      preLoaderRoute: typeof ContatoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/conclusao': {
-      id: '/conclusao'
-      path: '/conclusao'
-      fullPath: '/conclusao'
-      preLoaderRoute: typeof ConclusaoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cerimonia': {
-      id: '/cerimonia'
-      path: '/cerimonia'
-      fullPath: '/cerimonia'
-      preLoaderRoute: typeof CerimoniaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/buscar': {
-      id: '/buscar'
-      path: '/buscar'
-      fullPath: '/buscar'
-      preLoaderRoute: typeof BuscarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/biblioteca': {
-      id: '/biblioteca'
-      path: '/biblioteca'
-      fullPath: '/biblioteca'
-      preLoaderRoute: typeof BibliotecaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/alimentacao': {
-      id: '/alimentacao'
-      path: '/alimentacao'
-      fullPath: '/alimentacao'
-      preLoaderRoute: typeof AlimentacaoRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ajuda': {
@@ -823,137 +689,165 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AjudaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/alimentacao': {
+      id: '/alimentacao'
+      path: '/alimentacao'
+      fullPath: '/alimentacao'
+      preLoaderRoute: typeof AlimentacaoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/jornada/': {
-      id: '/jornada/'
-      path: '/jornada'
-      fullPath: '/jornada/'
-      preLoaderRoute: typeof JornadaIndexRouteImport
+    '/biblioteca': {
+      id: '/biblioteca'
+      path: '/biblioteca'
+      fullPath: '/biblioteca'
+      preLoaderRoute: typeof BibliotecaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sequencia/$id': {
-      id: '/sequencia/$id'
-      path: '/sequencia/$id'
-      fullPath: '/sequencia/$id'
-      preLoaderRoute: typeof SequenciaIdRouteImport
+    '/buscar': {
+      id: '/buscar'
+      path: '/buscar'
+      fullPath: '/buscar'
+      preLoaderRoute: typeof BuscarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/perfil/seguranca': {
-      id: '/perfil/seguranca'
-      path: '/seguranca'
-      fullPath: '/perfil/seguranca'
-      preLoaderRoute: typeof PerfilSegurancaRouteImport
-      parentRoute: typeof PerfilRoute
+    '/cerimonia': {
+      id: '/cerimonia'
+      path: '/cerimonia'
+      fullPath: '/cerimonia'
+      preLoaderRoute: typeof CerimoniaRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/perfil/preferencias': {
-      id: '/perfil/preferencias'
-      path: '/preferencias'
-      fullPath: '/perfil/preferencias'
-      preLoaderRoute: typeof PerfilPreferenciasRouteImport
-      parentRoute: typeof PerfilRoute
+    '/conclusao': {
+      id: '/conclusao'
+      path: '/conclusao'
+      fullPath: '/conclusao'
+      preLoaderRoute: typeof ConclusaoRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/perfil/notificacoes': {
-      id: '/perfil/notificacoes'
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo': {
+      id: '/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof DemoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dev-preview': {
+      id: '/dev-preview'
+      path: '/dev-preview'
+      fullPath: '/dev-preview'
+      preLoaderRoute: typeof DevPreviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/downloads': {
+      id: '/downloads'
+      path: '/downloads'
+      fullPath: '/downloads'
+      preLoaderRoute: typeof DownloadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/downsell': {
+      id: '/downsell'
+      path: '/downsell'
+      fullPath: '/downsell'
+      preLoaderRoute: typeof DownsellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/medidas': {
+      id: '/medidas'
+      path: '/medidas'
+      fullPath: '/medidas'
+      preLoaderRoute: typeof MedidasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notificacoes': {
+      id: '/notificacoes'
       path: '/notificacoes'
-      fullPath: '/perfil/notificacoes'
-      preLoaderRoute: typeof PerfilNotificacoesRouteImport
-      parentRoute: typeof PerfilRoute
-    }
-    '/perfil/dados': {
-      id: '/perfil/dados'
-      path: '/dados'
-      fullPath: '/perfil/dados'
-      preLoaderRoute: typeof PerfilDadosRouteImport
-      parentRoute: typeof PerfilRoute
-    }
-    '/leitura/$dia': {
-      id: '/leitura/$dia'
-      path: '/leitura/$dia'
-      fullPath: '/leitura/$dia'
-      preLoaderRoute: typeof LeituraDiaRouteImport
+      fullPath: '/notificacoes'
+      preLoaderRoute: typeof NotificacoesRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/jornada/$dia': {
-      id: '/jornada/$dia'
-      path: '/jornada/$dia'
-      fullPath: '/jornada/$dia'
-      preLoaderRoute: typeof JornadaDiaRouteImport
+    '/onboarding': {
+      id: '/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof OnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/habito/$dia': {
-      id: '/habito/$dia'
-      path: '/habito/$dia'
-      fullPath: '/habito/$dia'
-      preLoaderRoute: typeof HabitoDiaRouteImport
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guia/$id': {
-      id: '/guia/$id'
-      path: '/guia/$id'
-      fullPath: '/guia/$id'
-      preLoaderRoute: typeof GuiaIdRouteImport
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/conteudo/$id': {
-      id: '/conteudo/$id'
-      path: '/conteudo/$id'
-      fullPath: '/conteudo/$id'
-      preLoaderRoute: typeof ConteudoIdRouteImport
+    '/programa': {
+      id: '/programa'
+      path: '/programa'
+      fullPath: '/programa'
+      preLoaderRoute: typeof ProgramaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/chegada/$passo': {
-      id: '/chegada/$passo'
-      path: '/chegada/$passo'
-      fullPath: '/chegada/$passo'
-      preLoaderRoute: typeof ChegadaPassoRouteImport
+    '/progresso': {
+      id: '/progresso'
+      path: '/progresso'
+      fullPath: '/progresso'
+      preLoaderRoute: typeof ProgressoRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkin/$dia': {
-      id: '/checkin/$dia'
-      path: '/checkin/$dia'
-      fullPath: '/checkin/$dia'
-      preLoaderRoute: typeof CheckinDiaRouteImport
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/categoria/$slug': {
-      id: '/categoria/$slug'
-      path: '/categoria/$slug'
-      fullPath: '/categoria/$slug'
-      preLoaderRoute: typeof CategoriaSlugRouteImport
+    '/splash': {
+      id: '/splash'
+      path: '/splash'
+      fullPath: '/splash'
+      preLoaderRoute: typeof SplashRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/bonus/$id': {
-      id: '/bonus/$id'
-      path: '/bonus/$id'
-      fullPath: '/bonus/$id'
-      preLoaderRoute: typeof BonusIdRouteImport
+    '/termos': {
+      id: '/termos'
+      path: '/termos'
+      fullPath: '/termos'
+      preLoaderRoute: typeof TermosRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/alimentacao/sugestao-do-dia': {
-      id: '/alimentacao/sugestao-do-dia'
-      path: '/sugestao-do-dia'
-      fullPath: '/alimentacao/sugestao-do-dia'
-      preLoaderRoute: typeof AlimentacaoSugestaoDoDiaRouteImport
-      parentRoute: typeof AlimentacaoRoute
-    }
-    '/alimentacao/refeicoes-modelo': {
-      id: '/alimentacao/refeicoes-modelo'
-      path: '/refeicoes-modelo'
-      fullPath: '/alimentacao/refeicoes-modelo'
-      preLoaderRoute: typeof AlimentacaoRefeicoesModeloRouteImport
-      parentRoute: typeof AlimentacaoRoute
-    }
-    '/alimentacao/missao-alimentar': {
-      id: '/alimentacao/missao-alimentar'
-      path: '/missao-alimentar'
-      fullPath: '/alimentacao/missao-alimentar'
-      preLoaderRoute: typeof AlimentacaoMissaoAlimentarRouteImport
+    '/alimentacao/bebidas-funcionais': {
+      id: '/alimentacao/bebidas-funcionais'
+      path: '/bebidas-funcionais'
+      fullPath: '/alimentacao/bebidas-funcionais'
+      preLoaderRoute: typeof AlimentacaoBebidasFuncionaisRouteImport
       parentRoute: typeof AlimentacaoRoute
     }
     '/alimentacao/decisao-rapida': {
@@ -963,18 +857,158 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AlimentacaoDecisaoRapidaRouteImport
       parentRoute: typeof AlimentacaoRoute
     }
+    '/alimentacao/missao-alimentar': {
+      id: '/alimentacao/missao-alimentar'
+      path: '/missao-alimentar'
+      fullPath: '/alimentacao/missao-alimentar'
+      preLoaderRoute: typeof AlimentacaoMissaoAlimentarRouteImport
+      parentRoute: typeof AlimentacaoRoute
+    }
+    '/alimentacao/refeicoes-modelo': {
+      id: '/alimentacao/refeicoes-modelo'
+      path: '/refeicoes-modelo'
+      fullPath: '/alimentacao/refeicoes-modelo'
+      preLoaderRoute: typeof AlimentacaoRefeicoesModeloRouteImport
+      parentRoute: typeof AlimentacaoRoute
+    }
+    '/alimentacao/sugestao-do-dia': {
+      id: '/alimentacao/sugestao-do-dia'
+      path: '/sugestao-do-dia'
+      fullPath: '/alimentacao/sugestao-do-dia'
+      preLoaderRoute: typeof AlimentacaoSugestaoDoDiaRouteImport
+      parentRoute: typeof AlimentacaoRoute
+    }
+    '/bonus/$id': {
+      id: '/bonus/$id'
+      path: '/bonus/$id'
+      fullPath: '/bonus/$id'
+      preLoaderRoute: typeof BonusIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categoria/$slug': {
+      id: '/categoria/$slug'
+      path: '/categoria/$slug'
+      fullPath: '/categoria/$slug'
+      preLoaderRoute: typeof CategoriaSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkin/$dia': {
+      id: '/checkin/$dia'
+      path: '/checkin/$dia'
+      fullPath: '/checkin/$dia'
+      preLoaderRoute: typeof CheckinDiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chegada/$passo': {
+      id: '/chegada/$passo'
+      path: '/chegada/$passo'
+      fullPath: '/chegada/$passo'
+      preLoaderRoute: typeof ChegadaPassoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conteudo/$id': {
+      id: '/conteudo/$id'
+      path: '/conteudo/$id'
+      fullPath: '/conteudo/$id'
+      preLoaderRoute: typeof ConteudoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guia/$id': {
+      id: '/guia/$id'
+      path: '/guia/$id'
+      fullPath: '/guia/$id'
+      preLoaderRoute: typeof GuiaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/habito/$dia': {
+      id: '/habito/$dia'
+      path: '/habito/$dia'
+      fullPath: '/habito/$dia'
+      preLoaderRoute: typeof HabitoDiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jornada/': {
+      id: '/jornada/'
+      path: '/jornada'
+      fullPath: '/jornada/'
+      preLoaderRoute: typeof JornadaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jornada/$dia': {
+      id: '/jornada/$dia'
+      path: '/jornada/$dia'
+      fullPath: '/jornada/$dia'
+      preLoaderRoute: typeof JornadaDiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leitura/$dia': {
+      id: '/leitura/$dia'
+      path: '/leitura/$dia'
+      fullPath: '/leitura/$dia'
+      preLoaderRoute: typeof LeituraDiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil/dados': {
+      id: '/perfil/dados'
+      path: '/dados'
+      fullPath: '/perfil/dados'
+      preLoaderRoute: typeof PerfilDadosRouteImport
+      parentRoute: typeof PerfilRoute
+    }
+    '/perfil/notificacoes': {
+      id: '/perfil/notificacoes'
+      path: '/notificacoes'
+      fullPath: '/perfil/notificacoes'
+      preLoaderRoute: typeof PerfilNotificacoesRouteImport
+      parentRoute: typeof PerfilRoute
+    }
+    '/perfil/preferencias': {
+      id: '/perfil/preferencias'
+      path: '/preferencias'
+      fullPath: '/perfil/preferencias'
+      preLoaderRoute: typeof PerfilPreferenciasRouteImport
+      parentRoute: typeof PerfilRoute
+    }
+    '/perfil/seguranca': {
+      id: '/perfil/seguranca'
+      path: '/seguranca'
+      fullPath: '/perfil/seguranca'
+      preLoaderRoute: typeof PerfilSegurancaRouteImport
+      parentRoute: typeof PerfilRoute
+    }
+    '/sequencia/$id': {
+      id: '/sequencia/$id'
+      path: '/sequencia/$id'
+      fullPath: '/sequencia/$id'
+      preLoaderRoute: typeof SequenciaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bonus/$id/conteudo': {
+      id: '/bonus/$id/conteudo'
+      path: '/conteudo'
+      fullPath: '/bonus/$id/conteudo'
+      preLoaderRoute: typeof BonusIdConteudoRouteImport
+      parentRoute: typeof BonusIdRoute
+    }
+    '/guia/$id/conteudo': {
+      id: '/guia/$id/conteudo'
+      path: '/conteudo'
+      fullPath: '/guia/$id/conteudo'
+      preLoaderRoute: typeof GuiaIdConteudoRouteImport
+      parentRoute: typeof GuiaIdRoute
+    }
+    '/guia/$id/material': {
+      id: '/guia/$id/material'
+      path: '/material'
+      fullPath: '/guia/$id/material'
+      preLoaderRoute: typeof GuiaIdMaterialRouteImport
+      parentRoute: typeof GuiaIdRoute
+    }
     '/produto/$id/': {
       id: '/produto/$id/'
       path: '/produto/$id'
       fullPath: '/produto/$id/'
       preLoaderRoute: typeof ProdutoIdIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/produto/$id/checkout': {
-      id: '/produto/$id/checkout'
-      path: '/produto/$id/checkout'
-      fullPath: '/produto/$id/checkout'
-      preLoaderRoute: typeof ProdutoIdCheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/produto/$id/acessar': {
@@ -984,31 +1018,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutoIdAcessarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/guia/$id/material': {
-      id: '/guia/$id/material'
-      path: '/material'
-      fullPath: '/guia/$id/material'
-      preLoaderRoute: typeof GuiaIdMaterialRouteImport
-      parentRoute: typeof GuiaIdRoute
-    }
-    '/guia/$id/conteudo': {
-      id: '/guia/$id/conteudo'
-      path: '/conteudo'
-      fullPath: '/guia/$id/conteudo'
-      preLoaderRoute: typeof GuiaIdConteudoRouteImport
-      parentRoute: typeof GuiaIdRoute
-    }
-    '/bonus/$id/conteudo': {
-      id: '/bonus/$id/conteudo'
-      path: '/conteudo'
-      fullPath: '/bonus/$id/conteudo'
-      preLoaderRoute: typeof BonusIdConteudoRouteImport
-      parentRoute: typeof BonusIdRoute
+    '/produto/$id/checkout': {
+      id: '/produto/$id/checkout'
+      path: '/produto/$id/checkout'
+      fullPath: '/produto/$id/checkout'
+      preLoaderRoute: typeof ProdutoIdCheckoutRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
 interface AlimentacaoRouteChildren {
+  AlimentacaoBebidasFuncionaisRoute: typeof AlimentacaoBebidasFuncionaisRoute
   AlimentacaoDecisaoRapidaRoute: typeof AlimentacaoDecisaoRapidaRoute
   AlimentacaoMissaoAlimentarRoute: typeof AlimentacaoMissaoAlimentarRoute
   AlimentacaoRefeicoesModeloRoute: typeof AlimentacaoRefeicoesModeloRoute
@@ -1016,6 +1037,7 @@ interface AlimentacaoRouteChildren {
 }
 
 const AlimentacaoRouteChildren: AlimentacaoRouteChildren = {
+  AlimentacaoBebidasFuncionaisRoute: AlimentacaoBebidasFuncionaisRoute,
   AlimentacaoDecisaoRapidaRoute: AlimentacaoDecisaoRapidaRoute,
   AlimentacaoMissaoAlimentarRoute: AlimentacaoMissaoAlimentarRoute,
   AlimentacaoRefeicoesModeloRoute: AlimentacaoRefeicoesModeloRoute,
@@ -1110,3 +1132,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
