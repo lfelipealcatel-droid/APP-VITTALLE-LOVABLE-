@@ -1,7 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
+import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
 
 export const Route = createFileRoute("/alimentacao/decisao-rapida")({
   head: () => ({
@@ -21,7 +30,26 @@ interface Situation {
   suggestions: string[];
   action: { label: string; filtro: FiltroKey } | null;
   teaser?: string;
+  recipesButtonLabel?: string;
 }
+
+const SWEET_RECIPES = [
+  {
+    title: "Banana com canela",
+    ingredients: ["Banana", "Canela", "Cacau opcional"],
+    preparo: "Aqueça ou amasse a banana, finalize com canela e, se desejar, um pouco de cacau.",
+  },
+  {
+    title: "Iogurte com cacau",
+    ingredients: ["Iogurte natural", "Cacau em pó", "Fruta opcional"],
+    preparo: "Misture o cacau ao iogurte e acrescente uma fruta, se desejar.",
+  },
+  {
+    title: "Shake doce de banana",
+    ingredients: ["Banana", "Leite, iogurte ou bebida habitual", "Canela ou cacau"],
+    preparo: "Bata os ingredientes até ficar cremoso.",
+  },
+];
 
 const SITUATIONS: Situation[] = [
   {
@@ -39,9 +67,10 @@ const SITUATIONS: Situation[] = [
   {
     title: "Quero comer algo doce",
     guidance: "Você não precisa ignorar a vontade. Escolha uma opção simples e possível, sem transformar o momento em culpa.",
-    suggestions: ["Banana com canela", "Iogurte com cacau", "Uma fruta da sua preferência", "Shake doce de banana com leite ou whey", "Iogurte com morangos"],
+    suggestions: ["Banana com canela", "Iogurte com cacau", "Shake doce de banana"],
     action: null,
     teaser: "Quer mais opções? Conheça o Guia de Doces Inteligentes.",
+    recipesButtonLabel: "Ver como preparar",
   },
   {
     title: "Tenho poucos ingredientes em casa",
@@ -52,12 +81,14 @@ const SITUATIONS: Situation[] = [
   {
     title: "Quero algo mais leve",
     guidance: "Escolha algo simples, mas que ainda ofereça saciedade.",
-    suggestions: ["Sopa nutritiva", "Omelete simples", "Salada completa", "Frango com legumes", "Peixe com vegetais"],
+    suggestions: ["Sopa completa", "Omelete com vegetais", "Prato leve com proteína e legumes"],
     action: { label: "Ver opções mais leves", filtro: "leves" },
   },
 ];
 
 function DecisaoRapida() {
+  const [recipesOpen, setRecipesOpen] = useState(false);
+
   return (
     <AppShell title="Me ajude a escolher" subtitle="Uma decisão simples para o momento em que você está." back="/alimentacao">
       <p className="text-sm text-text-secondary">
@@ -85,6 +116,14 @@ function DecisaoRapida() {
                 >
                   {s.action.label} <ArrowRight size={14} aria-hidden />
                 </Link>
+              ) : s.recipesButtonLabel ? (
+                <button
+                  type="button"
+                  onClick={() => setRecipesOpen(true)}
+                  className="mt-3 inline-flex min-h-10 items-center gap-2 rounded-xl bg-primary px-4 text-xs font-semibold text-primary-foreground"
+                >
+                  {s.recipesButtonLabel} <ArrowRight size={14} aria-hidden />
+                </button>
               ) : (
                 <Link to="/alimentacao" className="mt-3 inline-flex text-xs font-semibold text-primary hover:underline">
                   Voltar para Alimentação
@@ -102,6 +141,38 @@ function DecisaoRapida() {
       >
         Voltar para Alimentação
       </Link>
+
+      <Drawer open={recipesOpen} onOpenChange={setRecipesOpen}>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Como preparar</DrawerTitle>
+            <DrawerDescription>Três opções simples para quando bater vontade de doce.</DrawerDescription>
+          </DrawerHeader>
+          <div className="grid gap-4 px-4 pb-6 text-sm">
+            {SWEET_RECIPES.map((r) => (
+              <div key={r.title} className="rounded-xl border border-border bg-surface-2 p-3">
+                <p className="text-sm font-semibold text-foreground">{r.title}</p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-text-muted">Ingredientes</p>
+                <ul className="mt-1 grid list-disc gap-0.5 pl-4 text-text-secondary">
+                  {r.ingredients.map((ing) => (
+                    <li key={ing}>{ing}</li>
+                  ))}
+                </ul>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-text-muted">Preparo</p>
+                <p className="mt-1 text-text-secondary">{r.preparo}</p>
+              </div>
+            ))}
+            <DrawerClose asChild>
+              <button
+                type="button"
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-semibold hover:bg-surface-2"
+              >
+                <X size={16} aria-hidden /> Fechar
+              </button>
+            </DrawerClose>
+          </div>
+        </DrawerContent>
+      </Drawer>
     </AppShell>
   );
 }
