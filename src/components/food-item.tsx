@@ -19,6 +19,8 @@ export interface FoodItem {
   category: string;
   name: string;
   cover: "warm" | "green";
+  // Imagem Hero oficial (public/imagens/biblioteca). Quando presente, substitui o MediaPlaceholder.
+  image?: string;
   ingredients: string;
   method: string;
   swaps: string;
@@ -54,7 +56,21 @@ export function FoodItemDrawer({ item, onOpenChange }: { item: FoodItem | null; 
       <DrawerContent>
         {item ? (
           <>
-            <MediaPlaceholder type="food" cover={item.cover} aspect="wide" label={item.name} className="rounded-none" />
+            {item.image ? (
+              // aspect-[3/2] no próprio wrapper (não num filho) casa com a proporção real das imagens
+              // oficiais (1536x1024). shrink-0 evita que o algoritmo de flex-column do DrawerContent
+              // colapse a altura para 0 antes de resolver o aspect-ratio (bug conhecido de flex+aspect-ratio).
+              <div className="aspect-[3/2] w-full shrink-0 overflow-hidden bg-surface-2">
+                <img
+                  src={encodeURI(item.image)}
+                  alt={item.name}
+                  className="h-full w-full object-contain"
+                  loading="lazy"
+                />
+              </div>
+            ) : (
+              <MediaPlaceholder type="food" cover={item.cover} aspect="wide" label={item.name} className="rounded-none" />
+            )}
             <DrawerHeader>
               <DrawerTitle>{item.name}</DrawerTitle>
               <DrawerDescription>{item.category}</DrawerDescription>
@@ -62,15 +78,15 @@ export function FoodItemDrawer({ item, onOpenChange }: { item: FoodItem | null; 
             <div className="grid gap-4 px-4 pb-6 text-sm">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Ingredientes</p>
-                <p className="mt-1 text-text-secondary">{item.ingredients}</p>
+                <p className="mt-1 whitespace-pre-line leading-relaxed text-text-secondary">{item.ingredients}</p>
               </div>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Como preparar</p>
-                <p className="mt-1 text-text-secondary">{item.method}</p>
+                <p className="mt-1 leading-relaxed text-text-secondary">{item.method}</p>
               </div>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">Trocas Inteligentes</p>
-                <p className="mt-1 text-text-secondary">{item.swaps}</p>
+                <p className="mt-1 whitespace-pre-line leading-relaxed text-text-secondary">{item.swaps}</p>
               </div>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">
@@ -90,7 +106,7 @@ export function FoodItemDrawer({ item, onOpenChange }: { item: FoodItem | null; 
                     {item.whyPoints.map((wp, i) => (
                       <div key={i} className="rounded-xl bg-soft-green/50 p-3">
                         <p className="text-sm font-semibold text-secondary-dark">{wp.title}</p>
-                        <p className="mt-1 text-text-secondary">{wp.body}</p>
+                        <p className="mt-1 leading-relaxed text-text-secondary">{wp.body}</p>
                       </div>
                     ))}
                   </div>
@@ -102,7 +118,7 @@ export function FoodItemDrawer({ item, onOpenChange }: { item: FoodItem | null; 
                   <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-primary-dark">
                     <Heart size={14} className="fill-primary text-primary" aria-hidden /> Na prática
                   </p>
-                  <p className="mt-1 text-text-secondary">{item.practicalNote}</p>
+                  <p className="mt-1 leading-relaxed text-text-secondary">{item.practicalNote}</p>
                 </div>
               ) : null}
 
