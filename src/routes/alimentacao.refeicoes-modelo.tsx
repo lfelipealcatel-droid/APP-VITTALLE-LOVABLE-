@@ -37,6 +37,7 @@ interface Meal extends FoodItem {
 }
 
 const BREAKFAST_IMG = "/imagens/biblioteca/";
+const LUNCH_IMG = "/imagens/biblioteca/almoço/";
 
 const MEALS: Meal[] = [
   {
@@ -305,43 +306,283 @@ const MEALS: Meal[] = [
     practicalNote: "Transforma uma crepioca comum numa refeição que controla melhor a fome e apoia a perda de gordura sem abrir mão da praticidade.",
   },
   {
-    id: "almoco-arroz-feijao-proteina-vegetais",
+    id: "almoco-01-frango-grelhado-legumes-salada",
     category: "Almoço",
-    name: "Prato com arroz, feijão, proteína e vegetais",
-    tags: ["completas", "vegetais"],
-    cover: "green",
-    ingredients: "Arroz, feijão, uma proteína (carne, frango, ovo ou tofu), vegetais à sua escolha.",
-    method: "Monte o prato dividindo o espaço entre arroz e feijão, a proteína e os vegetais.",
-    swaps: "Troque o arroz por batata, mandioca ou quinoa.",
-    time: "20 a 30 minutos",
-    whyPoints: [],
-    practicalNote: "",
-  },
-  {
-    id: "almoco-frango-legumes-carboidrato",
-    category: "Almoço",
-    name: "Frango, legumes e uma fonte de carboidrato",
-    tags: ["completas", "vegetais"],
+    name: "Frango Grelhado com Legumes e Salada",
+    tags: ["completas", "leves", "vegetais"],
     cover: "warm",
-    ingredients: "Frango grelhado ou assado, legumes variados, arroz ou batata.",
-    method: "Prepare o frango e os legumes separadamente e sirva com o carboidrato escolhido.",
-    swaps: "Troque o frango por peixe ou carne magra.",
-    time: "20 a 30 minutos",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${LUNCH_IMG}1- frango grelhado com legumes e saladas.png`,
+    ingredients:
+      "• 1 filé médio de frango\n• Brócolis cozido\n• Cenoura em rodelas ou ralada\n• Tomate\n• Alface ou folhas de sua preferência\n• 1 fio de azeite de oliva\n• Sal, alho e ervas a gosto",
+    method:
+      "Tempere o frango com alho, ervas e uma pitada de sal. Grelhe até dourar dos dois lados. Cozinhe os legumes até ficarem macios, sem desmanchar. Monte o prato com o frango, os legumes e a salada fresca. Finalize com um fio de azeite.",
+    swaps:
+      "• Frango por peixe, ovos, patinho moído ou tofu\n• Brócolis por couve-flor, abobrinha, vagem ou chuchu\n• Cenoura por abóbora ou beterraba\n• Alface por rúcula, agrião ou repolho",
+    time: "20 minutos",
+    whyPoints: [
+      {
+        title: "Ajuda a controlar a fome por mais tempo",
+        body: "A proteína do frango aumenta a saciedade e ajuda a reduzir a vontade de beliscar entre as refeições, facilitando o controle das porções ao longo do dia.",
+      },
+      {
+        title: "Favorece uma barriga mais leve",
+        body: "Os legumes e as folhas fornecem fibras e água, ajudando o intestino a funcionar melhor e contribuindo para reduzir a sensação de inchaço abdominal.",
+      },
+      {
+        title: "Apoia o metabolismo durante o emagrecimento",
+        body: "Consumir proteína regularmente ajuda a preservar a massa muscular, importante para manter um metabolismo mais ativo, especialmente depois dos 40 anos.",
+      },
+    ],
+    practicalNote:
+      "Um almoço simples, rápido e nutritivo que ajuda a controlar a fome, reduzir o inchaço e manter o foco no emagrecimento sem complicar a rotina.",
   },
   {
-    id: "almoco-omelete-completa",
+    id: "almoco-02-peixe-assado-legumes",
     category: "Almoço",
-    name: "Omelete completa com acompanhamento",
-    tags: ["completas"],
+    name: "Peixe Assado com Legumes",
+    tags: ["completas", "leves", "vegetais"],
     cover: "green",
-    ingredients: "Ovos, um recheio à sua escolha (queijo, legumes ou frango desfiado), acompanhamento simples.",
-    method: "Bata os ovos, adicione o recheio e cozinhe em fogo baixo até firmar.",
-    swaps: "Troque o recheio conforme o que houver em casa.",
+    image: `${LUNCH_IMG}2- peixe assado com legumes.png`,
+    ingredients:
+      "• 1 filé de peixe (tilápia, pescada ou outro de sua preferência)\n• Abobrinha em rodelas\n• Cenoura em tiras\n• Brócolis cozido\n• Limão\n• 1 fio de azeite de oliva\n• Sal, alho e ervas a gosto",
+    method:
+      "Tempere o peixe com limão, alho, ervas e uma pitada de sal. Leve ao forno ou à air fryer até ficar macio e levemente dourado. Cozinhe ou asse os legumes até ficarem al dente. Monte o prato com o peixe e os legumes. Finalize com um fio de azeite.",
+    swaps:
+      "• Peixe por frango grelhado, ovos ou tofu\n• Abobrinha por chuchu, vagem ou berinjela\n• Brócolis por couve-flor ou repolho\n• Limão por ervas frescas ou temperos naturais",
+    time: "25 minutos",
+    whyPoints: [
+      {
+        title: "Proteína que ajuda a preservar os músculos",
+        body: "O peixe fornece proteína de alta qualidade, importante para manter a massa muscular e favorecer um metabolismo mais ativo durante o emagrecimento.",
+      },
+      {
+        title: "Mais leve para o organismo",
+        body: "Os legumes aumentam o consumo de fibras e água, favorecendo uma digestão mais leve e ajudando a reduzir a sensação de inchaço abdominal.",
+      },
+      {
+        title: "Gorduras boas para a saúde",
+        body: "O peixe fornece nutrientes importantes para o coração, o cérebro e o equilíbrio do organismo, especialmente após os 40 anos.",
+      },
+    ],
+    practicalNote:
+      "Uma refeição leve, nutritiva e fácil de preparar que ajuda a controlar a fome, diminuir o inchaço e manter o foco na perda de barriga.",
+  },
+  {
+    id: "almoco-03-carne-magra-abobora-brocolis",
+    category: "Almoço",
+    name: "Carne Magra com Abóbora e Brócolis",
+    tags: ["completas", "leves", "vegetais"],
+    cover: "warm",
+    image: `${LUNCH_IMG}3- carne magra com abóbora e brócolis.png`,
+    ingredients:
+      "• 1 bife médio de patinho grelhado\n• Abóbora cozida em cubos\n• Brócolis cozido\n• Tomate\n• Folhas verdes de sua preferência\n• 1 fio de azeite de oliva\n• Sal, alho e ervas a gosto",
+    method:
+      "Tempere a carne com alho, ervas e uma pitada de sal. Grelhe até atingir o ponto desejado. Cozinhe a abóbora e o brócolis até ficarem macios. Monte o prato com a carne, os legumes e a salada. Finalize com um fio de azeite.",
+    swaps:
+      "• Patinho por frango, peixe, ovos ou tofu\n• Abóbora por batata-doce, mandioca ou cenoura\n• Brócolis por couve-flor, vagem ou abobrinha\n• Folhas verdes por rúcula, agrião ou repolho",
+    time: "25 minutos",
+    whyPoints: [
+      {
+        title: "Proteína que ajuda a preservar os músculos",
+        body: "A carne magra fornece proteína e ferro, nutrientes importantes para preservar a massa muscular e dar mais suporte ao metabolismo durante o emagrecimento.",
+      },
+      {
+        title: "Energia sem pesar",
+        body: "A abóbora é uma fonte de carboidratos de boa qualidade e fibras, ajudando a manter a energia ao longo da tarde sem aumentar excessivamente as calorias da refeição.",
+      },
+      {
+        title: "Alimentação mais anti-inflamatória",
+        body: "Brócolis, folhas e vegetais oferecem fibras, vitaminas e antioxidantes que ajudam a reduzir o estresse oxidativo e favorecem uma alimentação mais equilibrada.",
+      },
+    ],
+    practicalNote:
+      "Um almoço simples e nutritivo que ajuda a manter a saciedade, oferece energia para o restante do dia e facilita a perda de barriga sem abrir mão de uma refeição saborosa.",
+  },
+  {
+    id: "almoco-04-frango-desfiado-pure-batata-doce",
+    category: "Almoço",
+    name: "Frango Desfiado com Purê de Batata-Doce",
+    tags: ["completas", "vegetais"],
+    cover: "green",
+    image: `${LUNCH_IMG}4- frango desfiado com pure de batata doce.png`,
+    ingredients:
+      "• 1 porção de frango desfiado\n• 1 batata-doce média\n• Mix de folhas verdes\n• Tomate em cubos\n• 1 fio de azeite de oliva\n• Sal, alho e ervas a gosto",
+    method:
+      "Cozinhe a batata-doce e amasse até formar um purê. Refogue o frango desfiado com alho, cebola e ervas. Monte o prato com o purê, o frango e a salada. Tempere a salada com um fio de azeite. Sirva ainda quente.",
+    swaps:
+      "• Frango por patinho moído, peixe ou ovos\n• Batata-doce por mandioca, inhame ou abóbora\n• Folhas verdes por rúcula, agrião ou alface\n• Tomate por cenoura ralada ou pepino",
+    time: "25 minutos",
+    whyPoints: [
+      {
+        title: "Saciedade que dura por mais tempo",
+        body: "O frango fornece proteína de alta qualidade, ajudando a controlar a fome e diminuindo a vontade de beliscar entre as refeições.",
+      },
+      {
+        title: "Energia mais estável ao longo da tarde",
+        body: "A batata-doce fornece carboidratos de digestão mais gradual, ajudando a evitar oscilações rápidas de energia e mantendo maior disposição.",
+      },
+      {
+        title: "Ajuda a preservar a massa muscular",
+        body: "Consumir proteína em quantidade adequada durante o almoço favorece a manutenção da massa muscular, importante para um metabolismo mais ativo depois dos 40 anos.",
+      },
+    ],
+    practicalNote:
+      "Uma refeição prática que sustenta por mais tempo, reduz a fome nas horas seguintes e ajuda a manter o foco no emagrecimento sem abrir mão do sabor.",
+  },
+  {
+    id: "almoco-05-carne-moida-arroz-legumes",
+    category: "Almoço",
+    name: "Carne Moída com Arroz e Legumes",
+    tags: ["completas", "rapidas", "vegetais"],
+    cover: "warm",
+    image: `${LUNCH_IMG}5- carne moida com arroz e legumes.png`,
+    ingredients:
+      "• 1 porção de patinho moído refogado\n• 3 colheres (sopa) de arroz\n• Abobrinha em cubos\n• Cenoura ralada\n• Mix de folhas verdes\n• 1 fio de azeite de oliva\n• Sal, alho e ervas a gosto",
+    method:
+      "Refogue a carne moída com alho, cebola e ervas. Cozinhe o arroz normalmente. Refogue rapidamente a abobrinha e a cenoura. Monte o prato com o arroz, a carne, os legumes e a salada. Finalize com um fio de azeite.",
+    swaps:
+      "• Patinho por frango desfiado, peixe ou ovos\n• Arroz por arroz integral, quinoa ou batata-doce\n• Abobrinha por chuchu, berinjela ou vagem\n• Cenoura por abóbora ou beterraba",
+    time: "20 minutos",
+    whyPoints: [
+      {
+        title: "Proteína que ajuda a controlar a fome",
+        body: "A carne magra fornece proteína de qualidade, aumentando a saciedade e ajudando a reduzir a vontade de beliscar ao longo da tarde.",
+      },
+      {
+        title: "Energia equilibrada durante o dia",
+        body: "A combinação de arroz, vegetais e proteína fornece energia de forma mais constante, favorecendo uma rotina com menos oscilações de fome.",
+      },
+      {
+        title: "Mais fibras para uma barriga mais leve",
+        body: "Os legumes aumentam o consumo de fibras, favorecem o funcionamento do intestino e ajudam a reduzir a sensação de inchaço abdominal.",
+      },
+    ],
+    practicalNote:
+      "Um almoço fácil de preparar, nutritivo e muito versátil, que ajuda a controlar a fome, manter a energia e facilitar o emagrecimento sem complicar a rotina.",
+  },
+  {
+    id: "almoco-06-omelete-completa-salada",
+    category: "Almoço",
+    name: "Omelete Completa com Salada",
+    tags: ["rapidas", "leves", "poucos-ingredientes", "vegetais"],
+    cover: "green",
+    image: `${LUNCH_IMG}6- omelete completa com salada.png`,
+    ingredients:
+      "• 2 ovos\n• Queijo branco em cubos\n• Tomate picado\n• Cebola picada\n• Orégano ou ervas a gosto\n• Mix de folhas verdes\n• 1 fio de azeite de oliva",
+    method:
+      "Bata os ovos e misture o tomate, a cebola, o queijo e os temperos. Cozinhe em uma frigideira antiaderente até dourar dos dois lados. Prepare a salada com as folhas e um fio de azeite. Sirva a omelete acompanhada da salada. Se desejar, acrescente legumes cozidos como acompanhamento.",
+    swaps:
+      "• Queijo branco por cottage, ricota ou muçarela light\n• Tomate por espinafre, brócolis ou abobrinha\n• Folhas verdes por rúcula, agrião ou alface\n• Ovos por tofu mexido",
     time: "15 minutos",
-    whyPoints: [],
-    practicalNote: "",
+    whyPoints: [
+      {
+        title: "Proteína que aumenta a saciedade",
+        body: "Os ovos fornecem proteína de alta qualidade, ajudando a controlar a fome e facilitando o consumo de porções mais equilibradas ao longo do dia.",
+      },
+      {
+        title: "Poucos carboidratos e muitos vegetais",
+        body: "A combinação de ovos com salada aumenta o volume da refeição sem pesar, favorecendo uma alimentação rica em fibras e ajudando a reduzir o inchaço abdominal.",
+      },
+      {
+        title: "Alimentação mais anti-inflamatória",
+        body: "Os vegetais fornecem vitaminas, minerais e antioxidantes que ajudam a proteger o organismo e favorecem uma alimentação mais equilibrada depois dos 40 anos.",
+      },
+    ],
+    practicalNote:
+      "Uma refeição rápida, prática e muito satisfatória para os dias corridos, ajudando a controlar a fome e manter o foco na perda de barriga.",
+  },
+  {
+    id: "almoco-07-macarrao-integral-frango-legumes",
+    category: "Almoço",
+    name: "Macarrão Integral com Frango e Legumes",
+    tags: ["completas", "rapidas", "vegetais"],
+    cover: "warm",
+    image: `${LUNCH_IMG}7- macarrão integral com frango e legumes.png`,
+    ingredients:
+      "• 1 xícara de macarrão integral cozido\n• 1 filé de frango em cubos\n• Abobrinha em cubos\n• Cenoura ralada\n• Tomate-cereja ou tomate picado\n• 1 fio de azeite de oliva\n• Alho, ervas e sal a gosto",
+    method:
+      "Cozinhe o macarrão conforme as instruções da embalagem. Grelhe o frango temperado até dourar. Refogue rapidamente a abobrinha e a cenoura. Misture o macarrão com o frango e os legumes. Finalize com tomate e um fio de azeite.",
+    swaps:
+      "• Frango por patinho moído, atum ou tofu\n• Macarrão integral por macarrão tradicional ou de grão-de-bico\n• Abobrinha por brócolis, vagem ou berinjela\n• Tomate por pimentão ou ervilhas",
+    time: "20 minutos",
+    whyPoints: [
+      {
+        title: "Mais equilíbrio para controlar a fome",
+        body: "Quando o macarrão é combinado com proteína e vegetais, a refeição fica mais completa e ajuda a prolongar a saciedade, evitando exageros nas próximas refeições.",
+      },
+      {
+        title: "Proteína que apoia o emagrecimento",
+        body: "O frango ajuda a preservar a massa muscular durante a perda de peso, contribuindo para manter um metabolismo mais ativo.",
+      },
+      {
+        title: "Mais fibras para uma digestão leve",
+        body: "Os legumes aumentam o consumo de fibras, favorecem o funcionamento do intestino e ajudam a reduzir a sensação de barriga estufada.",
+      },
+    ],
+    practicalNote:
+      "Você continua comendo alimentos que gosta, mas em uma combinação mais equilibrada, que ajuda a controlar a fome e facilita manter o plano por mais tempo.",
+  },
+  {
+    id: "almoco-08-file-grelhado-arroz-feijao-salada",
+    category: "Almoço",
+    name: "Filé Grelhado com Arroz, Feijão e Salada",
+    tags: ["completas", "rapidas", "vegetais"],
+    cover: "green",
+    image: `${LUNCH_IMG}8- file grelhado com arroz e feijão.png`,
+    ingredients:
+      "• 1 filé médio de carne magra grelhada\n• 3 colheres (sopa) de arroz\n• 1 concha pequena de feijão\n• Alface ou folhas verdes\n• Tomate\n• Pepino em rodelas\n• 1 fio de azeite de oliva",
+    method:
+      "Tempere a carne com alho, ervas e uma pitada de sal. Grelhe até dourar dos dois lados. Prepare o arroz e o feijão normalmente. Monte o prato com a carne, o arroz, o feijão e a salada. Finalize a salada com um fio de azeite.",
+    swaps:
+      "• Carne por frango, peixe ou ovos\n• Arroz por arroz integral, quinoa ou batata-doce\n• Feijão por lentilha, grão-de-bico ou ervilha\n• Pepino por cenoura, beterraba ou repolho",
+    time: "20 minutos",
+    whyPoints: [
+      {
+        title: "Mais saciedade para evitar exageros",
+        body: "A combinação de carne magra, arroz e feijão forma uma refeição equilibrada que ajuda a controlar a fome e reduz a vontade de beliscar durante a tarde.",
+      },
+      {
+        title: "Energia para o restante do dia",
+        body: "O arroz e o feijão fornecem energia de forma equilibrada quando consumidos em porções adequadas e acompanhados de proteína e vegetais.",
+      },
+      {
+        title: "Mais fibras para reduzir o inchaço",
+        body: "A salada aumenta o consumo de fibras e água, favorecendo o funcionamento do intestino e ajudando a manter a barriga mais leve.",
+      },
+    ],
+    practicalNote:
+      "Você continua comendo o tradicional arroz com feijão, mas em uma versão equilibrada, que ajuda a emagrecer sem abrir mão dos alimentos que fazem parte da rotina.",
+  },
+  {
+    id: "almoco-09-escondidinho-frango-batata-doce",
+    category: "Almoço",
+    name: "Escondidinho de Frango com Batata-Doce",
+    tags: ["completas"],
+    cover: "warm",
+    image: `${LUNCH_IMG}9- escondidinho de frango com batata doce.png`,
+    ingredients:
+      "• 1 peito de frango desfiado\n• 1 batata-doce média\n• Queijo ralado opcional, em pequena quantidade\n• Tomate picado\n• Cebola picada\n• Alho, ervas e sal a gosto\n• 1 fio de azeite de oliva",
+    method:
+      "Cozinhe a batata-doce e amasse até formar um purê. Refogue o frango desfiado com alho, cebola, tomate e ervas. Em um refratário, faça uma camada de purê, outra de frango e finalize com o restante do purê. Se desejar, acrescente um pouco de queijo ralado por cima. Leve ao forno apenas para aquecer e dourar levemente.",
+    swaps:
+      "• Frango por patinho moído, carne desfiada ou tofu\n• Batata-doce por mandioca, abóbora ou inhame\n• Queijo ralado por cottage ou ricota\n• Tomate por cenoura ralada ou milho",
+    time: "30 minutos",
+    whyPoints: [
+      {
+        title: "Mais saciedade sem exagerar nas calorias",
+        body: "O frango fornece proteína de qualidade, ajudando a controlar a fome e facilitando o emagrecimento sem abrir mão de uma refeição saborosa.",
+      },
+      {
+        title: "Energia para o dia sem excessos",
+        body: "A batata-doce fornece carboidratos de digestão mais gradual, ajudando a manter a energia por mais tempo e reduzindo a vontade de beliscar.",
+      },
+      {
+        title: "Ajuda a preservar a massa muscular",
+        body: "Consumir proteína em quantidade adequada durante o almoço favorece a manutenção da massa muscular, importante para um metabolismo mais ativo depois dos 40 anos.",
+      },
+    ],
+    practicalNote:
+      "Uma versão mais equilibrada de um prato que muitas pessoas já gostam, mostrando que é possível emagrecer sem abrir mão de receitas tradicionais.",
   },
   {
     id: "lanche-iogurte-fruta",
@@ -474,6 +715,50 @@ function breakfastsForDay(dayId: number): Meal[] {
     .filter((m): m is Meal => !!m);
 }
 
+// Rotação oficial dos almoços ao longo dos 21 dias — cada número referencia um dos 9 almoços oficiais.
+const LUNCH_ID_BY_NUMBER: Record<number, string> = {
+  1: "almoco-01-frango-grelhado-legumes-salada",
+  2: "almoco-02-peixe-assado-legumes",
+  3: "almoco-03-carne-magra-abobora-brocolis",
+  4: "almoco-04-frango-desfiado-pure-batata-doce",
+  5: "almoco-05-carne-moida-arroz-legumes",
+  6: "almoco-06-omelete-completa-salada",
+  7: "almoco-07-macarrao-integral-frango-legumes",
+  8: "almoco-08-file-grelhado-arroz-feijao-salada",
+  9: "almoco-09-escondidinho-frango-batata-doce",
+};
+
+const LUNCH_ROTATION: Record<number, number[]> = {
+  1: [1, 2, 3],
+  2: [1, 2, 4],
+  3: [2, 3, 5],
+  4: [1, 3, 6],
+  5: [2, 4, 5],
+  6: [3, 5, 6],
+  7: [1, 4, 6],
+  8: [4, 5, 6],
+  9: [2, 4, 5],
+  10: [3, 5, 6],
+  11: [1, 4, 6],
+  12: [4, 5, 7],
+  13: [5, 6, 8],
+  14: [4, 6, 9],
+  15: [7, 8, 9],
+  16: [5, 7, 8],
+  17: [6, 8, 9],
+  18: [4, 7, 9],
+  19: [1, 7, 8],
+  20: [2, 8, 9],
+  21: [3, 7, 9],
+};
+
+function lunchesForDay(dayId: number): Meal[] {
+  const numbers = LUNCH_ROTATION[dayId] ?? LUNCH_ROTATION[1];
+  return numbers
+    .map((n) => MEALS.find((m) => m.id === LUNCH_ID_BY_NUMBER[n]))
+    .filter((m): m is Meal => !!m);
+}
+
 function RefeicoesPage() {
   const [state] = useAppState();
   const dayId = activeDay(state);
@@ -481,8 +766,10 @@ function RefeicoesPage() {
   const filtro = filtroRaw as FilterKey | undefined;
   const [openItem, setOpenItem] = useState<FoodItem | null>(null);
   const [showAllBreakfasts, setShowAllBreakfasts] = useState(false);
+  const [showAllLunches, setShowAllLunches] = useState(false);
 
   const todaysBreakfasts = breakfastsForDay(dayId);
+  const todaysLunches = lunchesForDay(dayId);
 
   return (
     <AppShell title="Refeições Inteligentes" subtitle="Referências práticas" back="/alimentacao">
@@ -513,11 +800,16 @@ function RefeicoesPage() {
           <div className="mt-4 grid gap-4">
             {CATEGORIES.map((cat) => {
               const isBreakfast = cat.title === "Café da manhã";
+              const isLunch = cat.title === "Almoço";
               const items = isBreakfast
                 ? showAllBreakfasts
                   ? MEALS.filter((m) => m.category === cat.title)
                   : todaysBreakfasts
-                : MEALS.filter((m) => m.category === cat.title);
+                : isLunch
+                  ? showAllLunches
+                    ? MEALS.filter((m) => m.category === cat.title)
+                    : todaysLunches
+                  : MEALS.filter((m) => m.category === cat.title);
               return (
                 <section key={cat.title} className="rounded-2xl border border-border bg-surface p-5">
                   <div className="flex items-center justify-between gap-2">
@@ -533,9 +825,17 @@ function RefeicoesPage() {
                       >
                         {showAllBreakfasts ? "Ver só as de hoje" : "Ver todos os cafés"}
                       </button>
+                    ) : isLunch ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowAllLunches((v) => !v)}
+                        className="shrink-0 text-xs font-semibold text-primary hover:underline"
+                      >
+                        {showAllLunches ? "Ver só os de hoje" : "Ver todos os almoços"}
+                      </button>
                     ) : null}
                   </div>
-                  {isBreakfast && !showAllBreakfasts ? (
+                  {(isBreakfast && !showAllBreakfasts) || (isLunch && !showAllLunches) ? (
                     <p className="mt-1 text-xs text-text-muted">Selecionados para o Dia {dayId} da sua jornada.</p>
                   ) : null}
                   <ul className="mt-3 grid gap-2">
