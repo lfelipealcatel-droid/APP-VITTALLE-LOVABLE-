@@ -38,6 +38,7 @@ interface Meal extends FoodItem {
 
 const BREAKFAST_IMG = "/imagens/biblioteca/";
 const LUNCH_IMG = "/imagens/biblioteca/almoço/";
+const SNACK_IMG = "/imagens/biblioteca/lanche/";
 
 const MEALS: Meal[] = [
   {
@@ -585,43 +586,275 @@ const MEALS: Meal[] = [
       "Uma versão mais equilibrada de um prato que muitas pessoas já gostam, mostrando que é possível emagrecer sem abrir mão de receitas tradicionais.",
   },
   {
-    id: "lanche-iogurte-fruta",
+    id: "lanche-01-iogurte-fruta-aveia-canela",
     category: "Lanches",
-    name: "Iogurte com fruta",
-    tags: ["rapidas", "poucos-ingredientes"],
+    name: "Iogurte com Fruta, Aveia e Canela",
+    tags: ["rapidas", "leves", "poucos-ingredientes"],
     cover: "warm",
-    ingredients: "Iogurte natural, uma fruta.",
-    method: "Corte a fruta e misture com o iogurte.",
-    swaps: "Troque a fruta conforme a estação.",
-    time: "5 minutos",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${SNACK_IMG}1- iogurte com fruta.png`,
+    ingredients: "• 1 pote de iogurte natural sem açúcar\n• 1 fruta picada\n• 1 colher (sopa) de aveia\n• Canela a gosto\n• Chia opcional",
+    method:
+      "Coloque o iogurte em uma tigela.\nAcrescente a fruta picada e a aveia.\nFinalize com canela.\nMisture e consuma imediatamente ou deixe alguns minutos na geladeira.",
+    swaps:
+      "• Iogurte natural por kefir ou versão sem lactose\n• Fruta por banana, mamão, maçã, pera ou morangos\n• Aveia por chia ou linhaça moída\n• Canela por cacau em pó sem açúcar",
+    time: "3 minutos",
+    whyPoints: [
+      {
+        title: "Ajuda a controlar a fome e a vontade de doce",
+        body: "As fibras da fruta e da aveia tornam o lanche mais satisfatório e ajudam a evitar que a fome retorne rapidamente.",
+      },
+      {
+        title: "Favorece o intestino e uma barriga mais leve",
+        body: "O iogurte fermentado e as fibras contribuem para a regularidade intestinal, importante para reduzir a sensação de barriga presa e estufada.",
+      },
+      {
+        title: "Oferece proteína e cálcio depois dos 40",
+        body: "O iogurte acrescenta nutrientes importantes para a manutenção dos músculos e da saúde óssea.",
+      },
+    ],
+    practicalNote:
+      "Um lanche rápido que segura melhor a fome, reduz a procura por doces e ainda ajuda a cuidar do intestino, dos músculos e dos ossos.",
   },
   {
-    id: "lanche-pao-queijo",
+    id: "lanche-02-pao-integral-frango-desfiado",
     category: "Lanches",
-    name: "Pão com queijo",
-    tags: ["rapidas", "poucos-ingredientes"],
+    name: "Pão Integral com Frango Desfiado",
+    tags: ["rapidas", "completas", "vegetais"],
     cover: "green",
-    ingredients: "Pão, queijo.",
-    method: "Monte o sanduíche simples, quente ou frio.",
-    swaps: "Troque o queijo por outra proteína disponível.",
-    time: "5 minutos",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${SNACK_IMG}2- pão integral com frango desfiado.png`,
+    ingredients:
+      "• 2 fatias de pão integral\n• 1/2 xícara de frango desfiado\n• Tomate em rodelas\n• Alface\n• 1 colher (sopa) de ricota ou cottage, opcional\n• Orégano a gosto",
+    method:
+      "Monte o pão com o frango desfiado, o tomate, a alface e, se desejar, a ricota ou o cottage.\nFeche o sanduíche e sirva imediatamente.\nSe preferir, aqueça rapidamente na frigideira para ficar levemente crocante.",
+    swaps:
+      "• Pão integral por pão de forma tradicional, pão francês ou tapioca\n• Frango desfiado por atum, ovos mexidos ou carne desfiada\n• Ricota por queijo branco ou cottage\n• Alface por rúcula ou agrião",
+    time: "10 minutos",
+    whyPoints: [
+      {
+        title: "Ajuda a controlar a fome por mais tempo",
+        body: "O frango fornece proteína de alta qualidade, aumentando a saciedade e ajudando a reduzir a vontade de beliscar até a próxima refeição.",
+      },
+      {
+        title: "Energia sem pesar",
+        body: "O pão integral fornece energia de forma gradual quando combinado com proteína, favorecendo maior disposição durante a tarde.",
+      },
+      {
+        title: "Mais fibras para uma digestão leve",
+        body: "O pão integral e os vegetais aumentam o consumo de fibras, contribuindo para o funcionamento do intestino e ajudando a diminuir a sensação de barriga estufada.",
+      },
+    ],
+    practicalNote:
+      "Uma opção prática para levar ao trabalho ou preparar em poucos minutos, ajudando a controlar a fome e manter a alimentação equilibrada mesmo nos dias mais corridos.",
   },
   {
-    id: "lanche-fruta-aveia-castanhas",
+    id: "lanche-03-ovos-cozidos-tomate-fruta",
     category: "Lanches",
-    name: "Fruta com aveia ou castanhas",
-    tags: ["poucos-ingredientes"],
+    name: "Ovos Cozidos com Tomate e Fruta",
+    tags: ["rapidas", "completas", "poucos-ingredientes"],
     cover: "warm",
-    ingredients: "Uma fruta, aveia ou castanhas.",
-    method: "Corte a fruta e finalize com a aveia ou as castanhas por cima.",
-    swaps: "Troque as castanhas por sementes, se preferir.",
+    image: `${SNACK_IMG}3- ovos cozidos com tomate.png`,
+    ingredients: "• 2 ovos cozidos\n• 1 tomate em rodelas\n• 1 fruta de sua preferência\n• Orégano ou ervas a gosto\n• 1 pitada de sal",
+    method:
+      "Cozinhe os ovos até ficarem firmes.\nCorte o tomate em rodelas.\nTempere com orégano e uma pitada de sal.\nSirva acompanhado da fruta.",
+    swaps:
+      "• Ovos por queijo branco, cottage ou atum\n• Tomate por pepino ou cenoura em palitos\n• Fruta por maçã, pera, banana, mamão ou uvas\n• Orégano por cheiro-verde ou manjericão",
+    time: "10 minutos",
+    whyPoints: [
+      {
+        title: "Proteína que ajuda a controlar a fome",
+        body: "Os ovos aumentam a saciedade e ajudam a reduzir a vontade de beliscar entre as refeições, favorecendo um melhor controle alimentar.",
+      },
+      {
+        title: "Mais equilíbrio para a vontade de doce",
+        body: "A fruta oferece fibras e doçura natural, ajudando a diminuir a vontade de consumir doces e alimentos ultraprocessados.",
+      },
+      {
+        title: "Ajuda a preservar a massa muscular",
+        body: "Consumir proteína ao longo do dia contribui para manter a massa muscular, importante para um metabolismo mais ativo depois dos 40 anos.",
+      },
+    ],
+    practicalNote:
+      "Um lanche simples, nutritivo e muito fácil de preparar, ideal para manter a saciedade e evitar escolhas impulsivas quando a fome aparece.",
+  },
+  {
+    id: "lanche-04-mix-castanhas-maca",
+    category: "Lanches",
+    name: "Mix de Castanhas com Maçã",
+    tags: ["rapidas", "leves", "poucos-ingredientes"],
+    cover: "green",
+    image: `${SNACK_IMG}4- mix castanhas com maça.png`,
+    ingredients: "• 1 maçã média\n• 1 pequeno punhado de castanhas, como castanha-do-pará, castanha de caju ou nozes\n• Canela a gosto, opcional",
+    method:
+      "Lave e corte a maçã em fatias.\nSepare uma pequena porção de castanhas.\nSe desejar, polvilhe canela sobre a maçã.\nConsuma junto.",
+    swaps: "• Maçã por pera, ameixa ou pêssego\n• Castanhas por amêndoas ou amendoim sem sal\n• Canela por cacau em pó sem açúcar",
+    time: "2 minutos",
+    whyPoints: [
+      {
+        title: "Gorduras boas para maior saciedade",
+        body: "As castanhas fornecem gorduras saudáveis que ajudam a prolongar a saciedade e tornam o lanche mais satisfatório.",
+      },
+      {
+        title: "Mais fibras para controlar a fome",
+        body: "A maçã é rica em fibras, ajudando a reduzir a vontade de beliscar e favorecendo uma digestão mais equilibrada.",
+      },
+      {
+        title: "Antioxidantes para a saúde",
+        body: "A maçã e as oleaginosas fornecem compostos antioxidantes que ajudam a proteger as células e contribuem para uma alimentação mais saudável.",
+      },
+    ],
+    practicalNote:
+      "Perfeito para carregar na bolsa ou deixar no trabalho. Não precisa de preparo e ajuda a evitar salgadinhos, biscoitos e doces quando a fome aparece.",
+  },
+  {
+    id: "lanche-05-queijo-branco-tomate-oregano",
+    category: "Lanches",
+    name: "Queijo Branco com Tomate e Orégano",
+    tags: ["rapidas", "leves", "poucos-ingredientes", "vegetais"],
+    cover: "warm",
+    image: `${SNACK_IMG}5- queijo branco com tomate e oregano.png`,
+    ingredients: "• 2 fatias de queijo branco\n• 1 tomate em rodelas\n• Orégano a gosto\n• 1 fio de azeite de oliva, opcional",
+    method: "Corte o queijo e o tomate em fatias.\nDisponha em um prato alternando as fatias.\nTempere com orégano.\nSe desejar, finalize com um fio de azeite.",
+    swaps:
+      "• Queijo branco por ricota ou cottage\n• Tomate por pepino ou cenoura em rodelas\n• Orégano por manjericão ou cheiro-verde\n• Azeite por algumas gotas de limão",
     time: "5 minutos",
-    whyPoints: [],
-    practicalNote: "",
+    whyPoints: [
+      {
+        title: "Proteína para controlar a fome",
+        body: "O queijo branco ajuda a prolongar a saciedade, diminuindo a vontade de beliscar até a próxima refeição.",
+      },
+      {
+        title: "Cálcio importante depois dos 40",
+        body: "Além da proteína, fornece cálcio, nutriente essencial para a saúde dos ossos, especialmente durante o envelhecimento.",
+      },
+      {
+        title: "Refeição leve e refrescante",
+        body: "O tomate acrescenta água, vitaminas e antioxidantes, tornando o lanche leve e agradável para os dias mais quentes.",
+      },
+    ],
+    practicalNote:
+      "Quando a fome aparece e você quer algo rápido, essa combinação fica pronta em poucos minutos e ajuda a evitar escolhas mais calóricas.",
+  },
+  {
+    id: "lanche-06-salada-frutas-granola-chia",
+    category: "Lanches",
+    name: "Salada de Frutas com Granola e Chia",
+    tags: ["rapidas", "leves", "poucos-ingredientes"],
+    cover: "green",
+    image: `${SNACK_IMG}6- salada de fruta com granola e chia.png`,
+    ingredients:
+      "• 1/2 banana em rodelas\n• 1/2 maçã em cubos\n• 1 fatia de mamão em cubos\n• 2 colheres (sopa) de granola sem açúcar\n• 1 colher (chá) de chia",
+    method: "Corte as frutas em pedaços pequenos.\nColoque tudo em uma tigela.\nAcrescente a granola.\nFinalize com a chia.\nMisture levemente e sirva.",
+    swaps:
+      "• Banana por pera ou morangos\n• Maçã por manga ou kiwi\n• Mamão por melão ou uvas\n• Granola por aveia em flocos\n• Chia por linhaça moída",
+    time: "5 minutos",
+    whyPoints: [
+      {
+        title: "Rica em vitaminas e antioxidantes",
+        body: "A combinação de frutas fornece vitaminas, minerais e antioxidantes que ajudam a proteger o organismo e favorecem uma alimentação mais nutritiva.",
+      },
+      {
+        title: "Mais fibras para uma digestão equilibrada",
+        body: "As frutas, a granola e a chia aumentam o consumo de fibras, ajudando o intestino a funcionar melhor e contribuindo para uma sensação de barriga mais leve.",
+      },
+      {
+        title: "Ajuda a controlar a vontade de doces",
+        body: "O sabor naturalmente doce das frutas ajuda a reduzir a vontade de consumir sobremesas e alimentos ultraprocessados ao longo do dia.",
+      },
+    ],
+    practicalNote:
+      "Quando bater aquela vontade de comer um doce, essa é uma alternativa saborosa, refrescante e fácil de preparar, que ajuda a manter a alimentação equilibrada sem abrir mão do prazer de comer.",
+  },
+  {
+    id: "lanche-07-torrada-pastinha-berinjela",
+    category: "Lanches",
+    name: "Torrada Integral com Pastinha de Berinjela",
+    tags: ["leves", "vegetais"],
+    cover: "warm",
+    image: `${SNACK_IMG}7- torrada integral com pastinha de berinjela.png`,
+    ingredients:
+      "Para a pastinha:\n• 1 berinjela média\n• 1 colher (sopa) de azeite de oliva\n• 1 dente de alho picado\n• Suco de 1/2 limão\n• Orégano ou ervas finas a gosto\n• 1 pitada de sal\n\nPara servir:\n• 2 torradas integrais",
+    method:
+      "Cozinhe ou asse a berinjela até ficar bem macia.\nRetire a polpa e coloque em um recipiente.\nAmasse com um garfo.\nMisture o alho, o limão, o azeite, as ervas e uma pitada de sal.\nPasse a pastinha sobre as torradas integrais e sirva.",
+    swaps:
+      "• Torradas integrais por pão integral ou pão sírio integral\n• Berinjela por abobrinha assada\n• Limão por vinagre de maçã\n• Orégano por cheiro-verde ou manjericão",
+    time: "15 minutos",
+    whyPoints: [
+      {
+        title: "Rica em fibras para maior saciedade",
+        body: "A berinjela ajuda a aumentar o consumo de fibras, contribuindo para controlar a fome entre as refeições.",
+      },
+      {
+        title: "Mais leve para o dia a dia",
+        body: "É uma opção com poucos ingredientes e rica em vegetais, ajudando a tornar a alimentação mais equilibrada sem complicar a rotina.",
+      },
+      {
+        title: "Fonte de antioxidantes",
+        body: "A berinjela fornece compostos antioxidantes que ajudam a proteger as células e contribuem para uma alimentação mais saudável.",
+      },
+    ],
+    practicalNote:
+      "Uma maneira diferente e saborosa de consumir mais vegetais no dia a dia. A pastinha pode ser preparada com antecedência e deixada na geladeira, facilitando lanches rápidos durante a semana.",
+  },
+  {
+    id: "lanche-08-bolo-banana-caseiro-sem-acucar",
+    category: "Lanches",
+    name: "Bolo de Banana Caseiro sem Açúcar",
+    tags: ["completas"],
+    cover: "green",
+    image: `${SNACK_IMG}8- bolo de banana.png`,
+    ingredients: "• 2 bananas maduras\n• 2 ovos\n• 1 xícara de aveia em flocos\n• 1 colher (chá) de fermento em pó\n• Canela a gosto",
+    method:
+      "Amasse bem as bananas.\nMisture os ovos e a aveia.\nAcrescente a canela e o fermento.\nColoque em uma forma pequena untada ou de silicone.\nAsse em forno preaquecido por aproximadamente 30 minutos.",
+    swaps:
+      "• Banana por maçã ralada\n• Aveia por farinha de aveia\n• Canela por cacau em pó sem açúcar\n• Forma tradicional por forminhas individuais de silicone",
+    time: "40 minutos — rende várias porções para a semana",
+    whyPoints: [
+      {
+        title: "Mata a vontade de comer bolo e doces",
+        body: "A doçura natural da banana ajuda a reduzir a vontade de consumir sobremesas e produtos ricos em açúcar.",
+      },
+      {
+        title: "Rico em fibras",
+        body: "A aveia aumenta o consumo de fibras, favorecendo uma digestão equilibrada e ajudando na saciedade.",
+      },
+      {
+        title: "Energia para o dia",
+        body: "A combinação de banana e aveia fornece energia de forma gradual, ajudando a manter a disposição entre as refeições.",
+      },
+    ],
+    practicalNote:
+      "Prepare no início da semana e deixe porções prontas. Assim, quando bater a vontade de um doce, você já terá uma opção prática, saborosa e mais equilibrada esperando por você.",
+  },
+  {
+    id: "lanche-09-sanduiche-integral-atum",
+    category: "Lanches",
+    name: "Sanduíche Integral de Atum",
+    tags: ["rapidas", "completas", "vegetais"],
+    cover: "warm",
+    image: `${SNACK_IMG}9- sanduiche de atum.png`,
+    ingredients:
+      "• 2 fatias de pão integral\n• 1 lata de atum em água, escorrido\n• 1 colher (sopa) de iogurte natural ou cottage\n• Alface\n• Tomate em rodelas\n• Cenoura ralada\n• Orégano ou cheiro-verde a gosto",
+    method:
+      "Escorra bem o atum.\nMisture com o iogurte natural ou cottage e os temperos.\nColoque a pasta sobre uma fatia do pão integral.\nAcrescente a alface, o tomate e a cenoura ralada.\nFeche o sanduíche e sirva.",
+    swaps:
+      "• Atum por frango desfiado ou sardinha\n• Iogurte natural por cottage ou ricota amassada\n• Pão integral por pão de forma tradicional ou pão sírio\n• Cenoura por pepino ou folhas de rúcula",
+    time: "10 minutos",
+    whyPoints: [
+      {
+        title: "Rico em proteína para controlar a fome",
+        body: "O atum ajuda a aumentar a saciedade, reduzindo a vontade de beliscar entre as refeições e facilitando o controle das porções ao longo do dia.",
+      },
+      {
+        title: "Energia equilibrada para a rotina",
+        body: "O pão integral fornece energia de forma mais gradual quando combinado com proteína e vegetais, ajudando a manter a disposição por mais tempo.",
+      },
+      {
+        title: "Uma refeição prática e completa",
+        body: "A combinação de proteína, vegetais e fibras torna o lanche mais equilibrado, nutritivo e fácil de incluir na rotina.",
+      },
+    ],
+    practicalNote:
+      "Uma excelente opção para quem precisa de um lanche rápido, saboroso e fácil de levar para o trabalho. Fica pronto em poucos minutos e ajuda a evitar escolhas menos saudáveis quando a fome aparece.",
   },
   {
     id: "jantar-sopa-completa",
@@ -759,6 +992,50 @@ function lunchesForDay(dayId: number): Meal[] {
     .filter((m): m is Meal => !!m);
 }
 
+// Rotação oficial dos lanches ao longo dos 21 dias — cada número referencia um dos 9 lanches oficiais.
+const SNACK_ID_BY_NUMBER: Record<number, string> = {
+  1: "lanche-01-iogurte-fruta-aveia-canela",
+  2: "lanche-02-pao-integral-frango-desfiado",
+  3: "lanche-03-ovos-cozidos-tomate-fruta",
+  4: "lanche-04-mix-castanhas-maca",
+  5: "lanche-05-queijo-branco-tomate-oregano",
+  6: "lanche-06-salada-frutas-granola-chia",
+  7: "lanche-07-torrada-pastinha-berinjela",
+  8: "lanche-08-bolo-banana-caseiro-sem-acucar",
+  9: "lanche-09-sanduiche-integral-atum",
+};
+
+const SNACK_ROTATION: Record<number, number[]> = {
+  1: [1, 2, 3],
+  2: [1, 2, 4],
+  3: [2, 3, 5],
+  4: [1, 3, 6],
+  5: [2, 4, 5],
+  6: [3, 5, 6],
+  7: [1, 4, 6],
+  8: [4, 5, 6],
+  9: [2, 4, 5],
+  10: [3, 5, 6],
+  11: [1, 4, 6],
+  12: [4, 5, 7],
+  13: [5, 6, 8],
+  14: [4, 6, 9],
+  15: [7, 8, 9],
+  16: [5, 7, 8],
+  17: [6, 8, 9],
+  18: [4, 7, 9],
+  19: [1, 7, 8],
+  20: [2, 8, 9],
+  21: [3, 7, 9],
+};
+
+function snacksForDay(dayId: number): Meal[] {
+  const numbers = SNACK_ROTATION[dayId] ?? SNACK_ROTATION[1];
+  return numbers
+    .map((n) => MEALS.find((m) => m.id === SNACK_ID_BY_NUMBER[n]))
+    .filter((m): m is Meal => !!m);
+}
+
 function RefeicoesPage() {
   const [state] = useAppState();
   const dayId = activeDay(state);
@@ -767,9 +1044,11 @@ function RefeicoesPage() {
   const [openItem, setOpenItem] = useState<FoodItem | null>(null);
   const [showAllBreakfasts, setShowAllBreakfasts] = useState(false);
   const [showAllLunches, setShowAllLunches] = useState(false);
+  const [showAllSnacks, setShowAllSnacks] = useState(false);
 
   const todaysBreakfasts = breakfastsForDay(dayId);
   const todaysLunches = lunchesForDay(dayId);
+  const todaysSnacks = snacksForDay(dayId);
 
   return (
     <AppShell title="Refeições Inteligentes" subtitle="Referências práticas" back="/alimentacao">
@@ -801,6 +1080,7 @@ function RefeicoesPage() {
             {CATEGORIES.map((cat) => {
               const isBreakfast = cat.title === "Café da manhã";
               const isLunch = cat.title === "Almoço";
+              const isSnack = cat.title === "Lanches";
               const items = isBreakfast
                 ? showAllBreakfasts
                   ? MEALS.filter((m) => m.category === cat.title)
@@ -809,7 +1089,11 @@ function RefeicoesPage() {
                   ? showAllLunches
                     ? MEALS.filter((m) => m.category === cat.title)
                     : todaysLunches
-                  : MEALS.filter((m) => m.category === cat.title);
+                  : isSnack
+                    ? showAllSnacks
+                      ? MEALS.filter((m) => m.category === cat.title)
+                      : todaysSnacks
+                    : MEALS.filter((m) => m.category === cat.title);
               return (
                 <section key={cat.title} className="rounded-2xl border border-border bg-surface p-5">
                   <div className="flex items-center justify-between gap-2">
@@ -833,9 +1117,17 @@ function RefeicoesPage() {
                       >
                         {showAllLunches ? "Ver só os de hoje" : "Ver todos os almoços"}
                       </button>
+                    ) : isSnack ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowAllSnacks((v) => !v)}
+                        className="shrink-0 text-xs font-semibold text-primary hover:underline"
+                      >
+                        {showAllSnacks ? "Ver só os de hoje" : "Ver todos os lanches"}
+                      </button>
                     ) : null}
                   </div>
-                  {(isBreakfast && !showAllBreakfasts) || (isLunch && !showAllLunches) ? (
+                  {(isBreakfast && !showAllBreakfasts) || (isLunch && !showAllLunches) || (isSnack && !showAllSnacks) ? (
                     <p className="mt-1 text-xs text-text-muted">Selecionados para o Dia {dayId} da sua jornada.</p>
                   ) : null}
                   <ul className="mt-3 grid gap-2">
