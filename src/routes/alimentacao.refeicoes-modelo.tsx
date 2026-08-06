@@ -39,6 +39,7 @@ interface Meal extends FoodItem {
 const BREAKFAST_IMG = "/imagens/biblioteca/";
 const LUNCH_IMG = "/imagens/biblioteca/almoço/";
 const SNACK_IMG = "/imagens/biblioteca/lanche/";
+const DINNER_IMG = "/imagens/biblioteca/jantar/";
 
 const MEALS: Meal[] = [
   {
@@ -857,43 +858,280 @@ const MEALS: Meal[] = [
       "Uma excelente opção para quem precisa de um lanche rápido, saboroso e fácil de levar para o trabalho. Fica pronto em poucos minutos e ajuda a evitar escolhas menos saudáveis quando a fome aparece.",
   },
   {
-    id: "jantar-sopa-completa",
+    id: "jantar-01-frango-desfiado-legumes-refogados",
     category: "Jantar",
-    name: "Sopa completa",
-    tags: ["leves"],
-    cover: "green",
-    ingredients: "Legumes variados, uma proteína leve, caldo ou água.",
-    method: "Cozinhe os legumes e a proteína juntos até ficarem macios.",
-    swaps: "Troque os legumes conforme o que houver disponível.",
-    time: "25 a 35 minutos",
-    whyPoints: [],
-    practicalNote: "",
-  },
-  {
-    id: "jantar-omelete-vegetais",
-    category: "Jantar",
-    name: "Omelete com vegetais",
-    tags: ["leves", "vegetais"],
+    name: "Frango Desfiado com Legumes Refogados",
+    tags: ["completas", "leves", "vegetais"],
     cover: "warm",
-    ingredients: "Ovos, vegetais picados à sua escolha.",
-    method: "Bata os ovos, misture os vegetais picados e cozinhe em fogo baixo.",
-    swaps: "Troque os vegetais conforme a estação.",
-    time: "15 minutos",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${DINNER_IMG}1- frango desfiado com legumes refogado.png`,
+    ingredients:
+      "• 1 xícara de frango desfiado\n• 1/2 abobrinha em cubos\n• 1/2 cenoura em tiras finas\n• Brócolis picado\n• 1 colher (chá) de azeite de oliva\n• Alho picado\n• Orégano ou ervas finas a gosto\n• 1 pitada de sal",
+    method:
+      "Aqueça uma frigideira com o azeite.\nRefogue o alho rapidamente.\nAcrescente a cenoura, a abobrinha e o brócolis.\nRefogue por alguns minutos até os legumes ficarem macios.\nAdicione o frango desfiado e misture bem.\nTempere com ervas e uma pequena pitada de sal.\nSirva ainda quente.",
+    swaps:
+      "• Frango por peixe, carne magra ou ovos mexidos\n• Abobrinha por chuchu ou couve-flor\n• Cenoura por abóbora ou vagem\n• Brócolis por espinafre ou couve\n• Azeite por óleo de abacate",
+    time: "20 minutos",
+    whyPoints: [
+      {
+        title: "Proteína que ajuda seu corpo durante a noite",
+        body: "O frango fornece proteína de alta qualidade, importante para preservar a massa muscular e contribuir para um metabolismo mais ativo, especialmente depois dos 40 anos.",
+      },
+      {
+        title: "Menos inchaço e digestão mais leve",
+        body: "Os vegetais acrescentam fibras e água à refeição, favorecendo o funcionamento do intestino e ajudando a reduzir a sensação de barriga estufada ao longo da noite.",
+      },
+      {
+        title: "Ajuda a controlar a fome noturna",
+        body: "A combinação de proteína e vegetais aumenta a saciedade, reduzindo a vontade de beliscar antes de dormir e facilitando uma rotina alimentar mais equilibrada.",
+      },
+    ],
+    practicalNote:
+      "Um jantar simples, leve e muito fácil de preparar. Ajuda a terminar o dia bem alimentada, sem exageros, contribuindo para controlar a fome, reduzir o inchaço e continuar trabalhando a favor do seu objetivo de perder barriga.",
   },
   {
-    id: "jantar-proteina-legumes",
+    id: "jantar-02-omelete-espinafre-queijo-branco",
     category: "Jantar",
-    name: "Prato leve com proteína e legumes",
-    tags: ["completas", "vegetais", "leves"],
+    name: "Omelete de Espinafre e Queijo Branco",
+    tags: ["rapidas", "leves", "poucos-ingredientes", "vegetais"],
     cover: "green",
-    ingredients: "Uma proteína, legumes variados.",
-    method: "Prepare a proteína e os legumes separadamente e sirva juntos.",
-    swaps: "Troque a proteína conforme o que houver disponível.",
+    image: `${DINNER_IMG}2- omelete de espinafre e queijo branco.png`,
+    ingredients:
+      "• 2 ovos\n• 1 punhado de espinafre picado\n• 2 colheres (sopa) de queijo branco em cubos\n• 1 colher (chá) de azeite de oliva\n• Orégano ou ervas finas\n• 1 pitada de sal",
+    method:
+      "Bata os ovos com um garfo.\nMisture o espinafre picado e o queijo branco.\nTempere com orégano e uma pequena pitada de sal.\nAqueça uma frigideira antiaderente com o azeite.\nDespeje a mistura e cozinhe em fogo baixo até dourar dos dois lados.\nSirva ainda quente.",
+    swaps:
+      "• Queijo branco por cottage ou ricota\n• Espinafre por couve ou rúcula\n• Ovos por tofu mexido, para quem não consome ovos\n• Azeite por óleo de abacate",
+    time: "15 minutos",
+    whyPoints: [
+      {
+        title: "Proteína que ajuda a preservar o metabolismo",
+        body: "Os ovos fornecem proteína de alta qualidade, importante para preservar a massa muscular. Isso ajuda o corpo a manter um metabolismo mais ativo, especialmente depois dos 40 anos.",
+      },
+      {
+        title: "Nutrientes que favorecem o equilíbrio do organismo",
+        body: "O espinafre é rico em vitaminas, minerais e compostos antioxidantes que contribuem para uma alimentação equilibrada e ajudam a reduzir o estresse oxidativo.",
+      },
+      {
+        title: "Ajuda a controlar a fome da noite",
+        body: "A combinação de proteína e gordura naturalmente presente nos ovos aumenta a saciedade, reduzindo a vontade de beliscar antes de dormir e favorecendo uma rotina alimentar mais consistente.",
+      },
+    ],
+    practicalNote:
+      "Uma opção rápida, econômica e muito nutritiva para o jantar. Em poucos minutos você prepara uma refeição que ajuda a controlar a fome, preservar a massa muscular e manter o foco no seu objetivo de perder barriga.",
+  },
+  {
+    id: "jantar-03-peixe-grelhado-legumes-vapor",
+    category: "Jantar",
+    name: "Peixe Grelhado com Legumes no Vapor",
+    tags: ["completas", "leves", "vegetais"],
+    cover: "warm",
+    image: `${DINNER_IMG}3- peixe grelhado com legumes.png`,
+    ingredients:
+      "• 1 filé de peixe, como tilápia, merluza ou pescada\n• Brócolis\n• Couve-flor\n• Cenoura em rodelas\n• 1 colher (chá) de azeite de oliva\n• Limão\n• Alho picado\n• Ervas finas\n• 1 pitada de sal",
+    method:
+      "Tempere o peixe com alho, limão, ervas e uma pequena pitada de sal.\nGrelhe em frigideira antiaderente até dourar dos dois lados.\nCozinhe os legumes no vapor até ficarem macios, sem desmanchar.\nFinalize com um fio de azeite e sirva imediatamente.",
+    swaps:
+      "• Peixe por frango grelhado ou ovos\n• Brócolis por abobrinha\n• Couve-flor por chuchu\n• Cenoura por abóbora\n• Limão por ervas frescas",
     time: "20 minutos",
-    whyPoints: [],
-    practicalNote: "",
+    whyPoints: [
+      {
+        title: "Proteína leve para ajudar seu metabolismo",
+        body: "O peixe fornece proteína de alta qualidade com uma digestão geralmente leve, ajudando a preservar a massa muscular e contribuindo para um metabolismo mais ativo.",
+      },
+      {
+        title: "Refeição que ajuda a reduzir o inchaço",
+        body: "Os legumes fornecem fibras e água, favorecendo o funcionamento do intestino e ajudando a diminuir a sensação de barriga estufada.",
+      },
+      {
+        title: "Leve para terminar o dia",
+        body: "Uma refeição equilibrada e de fácil digestão ajuda a controlar a fome da noite, favorecendo uma rotina alimentar mais consistente sem sensação de peso.",
+      },
+    ],
+    practicalNote:
+      "Uma ótima opção para quem deseja um jantar leve, nutritivo e fácil de preparar. Ajuda a controlar a fome, diminuir o inchaço e continuar cuidando do corpo sem abrir mão de uma refeição saborosa.",
+  },
+  {
+    id: "jantar-04-sopa-cremosa-abobora-frango",
+    category: "Jantar",
+    name: "Sopa Cremosa de Abóbora com Frango Desfiado",
+    tags: ["completas", "leves"],
+    cover: "green",
+    image: `${DINNER_IMG}4- sopa cremesa de abobora.png`,
+    ingredients:
+      "• 2 xícaras de abóbora em cubos\n• 1/2 xícara de frango cozido e desfiado\n• 1/2 cebola picada\n• 1 dente de alho\n• Água suficiente para o cozimento\n• 1 colher (chá) de azeite de oliva\n• Sal e ervas a gosto",
+    method:
+      "Refogue a cebola e o alho com o azeite.\nAcrescente a abóbora e cubra com água.\nCozinhe até a abóbora ficar bem macia.\nBata ou amasse até formar um creme.\nVolte à panela, misture o frango desfiado, tempere e aqueça por mais alguns minutos.",
+    swaps:
+      "• Frango por carne desfiada, peixe ou grão-de-bico\n• Abóbora por mandioquinha, cenoura ou inhame\n• Cebola por alho-poró\n• Ervas por cheiro-verde, cúrcuma ou páprica doce",
+    time: "25 minutos",
+    whyPoints: [
+      {
+        title: "Aquece e satisfaz sem pesar",
+        body: "O volume do creme, combinado com a proteína do frango, ajuda a prolongar a saciedade e reduz a vontade de procurar outros alimentos depois do jantar.",
+      },
+      {
+        title: "Ajuda o intestino e favorece uma barriga mais leve",
+        body: "A abóbora fornece água e fibras, contribuindo para o funcionamento intestinal e ajudando a diminuir a sensação de barriga presa e estufada.",
+      },
+      {
+        title: "Proteína para proteger o metabolismo",
+        body: "O frango ajuda a preservar a massa muscular, importante para manter o corpo metabolicamente ativo e favorecer o emagrecimento depois dos 40.",
+      },
+    ],
+    practicalNote:
+      "Um jantar quente, acolhedor e fácil de digerir, que ajuda a controlar a fome da noite, reduzir o inchaço e manter o corpo bem nutrido sem exageros antes de dormir.",
+  },
+  {
+    id: "jantar-05-carne-moida-abobrinha-cenoura",
+    category: "Jantar",
+    name: "Carne Moída com Abobrinha e Cenoura",
+    tags: ["completas", "rapidas", "vegetais"],
+    cover: "warm",
+    image: `${DINNER_IMG}5- carne moida com abobrinha.png`,
+    ingredients:
+      "• 120 g de carne moída magra, como patinho\n• 1/2 abobrinha em cubos\n• 1/2 cenoura ralada\n• 1/2 cebola picada\n• 1 dente de alho\n• 1 colher (chá) de azeite de oliva\n• Cheiro-verde a gosto\n• 1 pitada de sal",
+    method:
+      "Refogue a cebola e o alho no azeite.\nAcrescente a carne moída e cozinhe até dourar.\nAdicione a cenoura e a abobrinha.\nCozinhe por mais alguns minutos até os legumes ficarem macios.\nFinalize com cheiro-verde e sirva imediatamente.",
+    swaps:
+      "• Carne moída por frango desfiado ou peixe\n• Abobrinha por chuchu ou berinjela\n• Cenoura por abóbora ou vagem\n• Cheiro-verde por salsinha ou cebolinha",
+    time: "20 minutos",
+    whyPoints: [
+      {
+        title: "Proteína que ajuda a preservar a massa muscular",
+        body: "A carne magra fornece proteína de alta qualidade, importante para manter a massa muscular durante o emagrecimento. Isso ajuda o corpo a continuar gastando energia de forma eficiente, especialmente depois dos 40 anos.",
+      },
+      {
+        title: "Fibras para uma barriga mais leve",
+        body: "A cenoura e a abobrinha aumentam o volume da refeição com poucas calorias e fornecem fibras que favorecem o intestino e ajudam a reduzir a sensação de inchaço.",
+      },
+      {
+        title: "Saciedade para evitar beliscos antes de dormir",
+        body: "A combinação de proteína e vegetais ajuda a manter a saciedade por mais tempo, reduzindo a vontade de comer novamente no período da noite e favorecendo uma rotina alimentar mais consistente.",
+      },
+    ],
+    practicalNote:
+      "Uma refeição prática, saborosa e pronta em poucos minutos. Ideal para terminar o dia bem alimentada, controlar a fome da noite e continuar cuidando do corpo sem complicar a rotina.",
+  },
+  {
+    id: "jantar-06-file-frango-molho-mostarda-legumes",
+    category: "Jantar",
+    name: "Filé de Frango ao Molho de Mostarda com Legumes",
+    tags: ["completas", "rapidas", "vegetais"],
+    cover: "green",
+    image: `${DINNER_IMG}6- file de frango ao molho de mostarda.png`,
+    ingredients:
+      "• 1 filé médio de frango\n• 1/2 cenoura em rodelas\n• Brócolis cozido\n• Abobrinha em cubos\n• 1 colher (sopa) de iogurte natural\n• 1 colher (chá) de mostarda\n• 1 colher (chá) de azeite de oliva\n• Alho e ervas finas\n• 1 pitada de sal",
+    method:
+      "Tempere o frango com alho, ervas e uma pequena pitada de sal.\nGrelhe até dourar dos dois lados.\nMisture o iogurte natural com a mostarda até formar um molho leve.\nCozinhe os legumes até ficarem macios.\nSirva o frango com os legumes e finalize com o molho.",
+    swaps:
+      "• Frango por peixe ou patinho grelhado\n• Brócolis por couve-flor\n• Abobrinha por chuchu\n• Iogurte por cottage batido\n• Mostarda por ervas frescas",
+    time: "20 minutos",
+    whyPoints: [
+      {
+        title: "Proteína para proteger a massa muscular",
+        body: "O frango fornece proteína de alta qualidade, importante para preservar a massa muscular e favorecer um metabolismo mais ativo durante o emagrecimento.",
+      },
+      {
+        title: "Vegetais que ajudam a reduzir o inchaço",
+        body: "Os legumes aumentam o consumo de fibras e água, favorecendo o funcionamento do intestino e ajudando a diminuir a sensação de barriga estufada.",
+      },
+      {
+        title: "Mais saciedade para evitar beliscos",
+        body: "A combinação de proteína e vegetais ajuda a controlar a fome durante a noite, favorecendo uma rotina alimentar mais consistente.",
+      },
+    ],
+    practicalNote:
+      "Uma refeição com sabor de restaurante, mas muito fácil de preparar. Ideal para quem quer terminar o dia bem alimentada, sem exageros e mantendo o foco em perder barriga.",
+  },
+  {
+    id: "jantar-07-abobrinha-recheada-carne-magra",
+    category: "Jantar",
+    name: "Abobrinha Recheada com Carne Magra",
+    tags: ["completas", "leves", "vegetais"],
+    cover: "warm",
+    image: `${DINNER_IMG}7- abobrinha recheada.png`,
+    ingredients:
+      "• 1 abobrinha média\n• 120 g de carne moída magra, como patinho\n• 1/2 cebola picada\n• 1 dente de alho\n• 2 colheres (sopa) de molho de tomate caseiro\n• 2 colheres (sopa) de queijo branco ralado\n• Orégano\n• 1 pitada de sal",
+    method:
+      "Corte a abobrinha ao meio e retire parte da polpa.\nRefogue a cebola, o alho e a carne.\nAcrescente o molho de tomate e misture.\nRecheie a abobrinha.\nFinalize com queijo branco.\nLeve ao forno por aproximadamente 20 minutos.",
+    swaps: "• Carne por frango desfiado\n• Queijo branco por cottage\n• Abobrinha por berinjela",
+    time: "30 minutos",
+    whyPoints: [
+      {
+        title: "Proteína para ajudar seu metabolismo",
+        body: "A carne magra fornece proteína importante para preservar a massa muscular durante o emagrecimento, favorecendo um metabolismo mais ativo.",
+      },
+      {
+        title: "Poucos carboidratos e muita saciedade",
+        body: "A abobrinha aumenta o volume da refeição com poucas calorias, ajudando a controlar a fome sem pesar.",
+      },
+      {
+        title: "Jantar leve e equilibrado",
+        body: "É uma refeição nutritiva que ajuda a terminar o dia sem exageros, favorecendo uma rotina alimentar mais consistente.",
+      },
+    ],
+    practicalNote:
+      "Uma receita simples, bonita e muito saborosa. Excelente para variar o cardápio sem sair do foco de perder barriga.",
+  },
+  {
+    id: "jantar-08-tomate-recheado-frango-queijo-branco",
+    category: "Jantar",
+    name: "Tomate Recheado com Frango e Queijo Branco",
+    tags: ["rapidas", "leves", "vegetais"],
+    cover: "green",
+    image: `${DINNER_IMG}8- tomate recheado com frango.png`,
+    ingredients: "• 2 tomates grandes\n• 1/2 xícara de frango desfiado\n• 2 colheres (sopa) de queijo branco\n• Orégano\n• Cheiro-verde\n• 1 fio de azeite",
+    method:
+      "Corte a tampa dos tomates e retire a polpa.\nMisture o frango, o queijo branco e os temperos.\nRecheie os tomates.\nRegue com um fio de azeite.\nLeve ao forno por aproximadamente 15 minutos.",
+    swaps: "• Frango por atum ou carne magra\n• Queijo branco por cottage\n• Tomate por pimentão",
+    time: "20 minutos",
+    whyPoints: [
+      {
+        title: "Proteína para controlar a fome",
+        body: "O frango ajuda a aumentar a saciedade, reduzindo a vontade de beliscar antes de dormir.",
+      },
+      {
+        title: "Antioxidantes para uma alimentação equilibrada",
+        body: "O tomate fornece vitaminas e compostos antioxidantes que contribuem para uma alimentação rica em vegetais.",
+      },
+      {
+        title: "Leve para a noite",
+        body: "Uma refeição saborosa, com digestão confortável e ideal para quem deseja perder barriga sem abrir mão de comer bem.",
+      },
+    ],
+    practicalNote:
+      "Perfeito para os dias em que você quer um jantar bonito, rápido e diferente, sem complicar a cozinha.",
+  },
+  {
+    id: "jantar-09-peixe-assado-tomate-ervas",
+    category: "Jantar",
+    name: "Peixe Assado ao Forno com Tomate e Ervas",
+    tags: ["completas", "leves", "vegetais"],
+    cover: "warm",
+    image: `${DINNER_IMG}9- peixe assado ao forno.png`,
+    ingredients:
+      "• 1 filé de tilápia, merluza ou pescada\n• 1 tomate em rodelas\n• 1/2 cebola em rodelas\n• Limão\n• 1 colher (chá) de azeite de oliva\n• Alho picado\n• Ervas finas\n• 1 pitada de sal",
+    method:
+      "Tempere o peixe com limão, alho, ervas e uma pequena pitada de sal.\nColoque em uma assadeira.\nCubra com tomate e cebola.\nRegue com um fio de azeite.\nAsse por aproximadamente 20 a 25 minutos.\nSirva ainda quente.",
+    swaps:
+      "• Tilápia por merluza ou pescada\n• Tomate por abobrinha em rodelas\n• Cebola por alho-poró\n• Ervas por manjericão ou salsinha",
+    time: "25 minutos",
+    whyPoints: [
+      {
+        title: "Proteína leve para preservar a massa muscular",
+        body: "O peixe fornece proteína de alta qualidade com digestão leve, ajudando a preservar a massa muscular e contribuindo para um metabolismo mais ativo durante o emagrecimento.",
+      },
+      {
+        title: "Ajuda a reduzir o inchaço",
+        body: "O tomate e a cebola acrescentam fibras, água e compostos antioxidantes, favorecendo uma refeição equilibrada e ajudando a diminuir a sensação de barriga estufada.",
+      },
+      {
+        title: "Uma forma leve de terminar o dia",
+        body: "É uma refeição nutritiva, saborosa e de digestão confortável, ajudando a controlar a fome da noite e favorecendo uma rotina alimentar consistente.",
+      },
+    ],
+    practicalNote:
+      "Quando você quer um jantar leve e saboroso, esse peixe praticamente fica pronto sozinho no forno. Uma ótima forma de terminar o dia cuidando do seu corpo e mantendo o foco em perder barriga.",
   },
 ];
 
@@ -1036,6 +1274,50 @@ function snacksForDay(dayId: number): Meal[] {
     .filter((m): m is Meal => !!m);
 }
 
+// Rotação oficial dos jantares ao longo dos 21 dias — cada número referencia um dos 9 jantares oficiais.
+const DINNER_ID_BY_NUMBER: Record<number, string> = {
+  1: "jantar-01-frango-desfiado-legumes-refogados",
+  2: "jantar-02-omelete-espinafre-queijo-branco",
+  3: "jantar-03-peixe-grelhado-legumes-vapor",
+  4: "jantar-04-sopa-cremosa-abobora-frango",
+  5: "jantar-05-carne-moida-abobrinha-cenoura",
+  6: "jantar-06-file-frango-molho-mostarda-legumes",
+  7: "jantar-07-abobrinha-recheada-carne-magra",
+  8: "jantar-08-tomate-recheado-frango-queijo-branco",
+  9: "jantar-09-peixe-assado-tomate-ervas",
+};
+
+const DINNER_ROTATION: Record<number, number[]> = {
+  1: [1, 2, 3],
+  2: [1, 2, 4],
+  3: [2, 3, 5],
+  4: [1, 3, 6],
+  5: [2, 4, 5],
+  6: [3, 5, 6],
+  7: [1, 4, 6],
+  8: [4, 5, 6],
+  9: [2, 4, 5],
+  10: [3, 5, 6],
+  11: [1, 4, 6],
+  12: [4, 5, 7],
+  13: [5, 6, 8],
+  14: [4, 6, 9],
+  15: [7, 8, 9],
+  16: [5, 7, 8],
+  17: [6, 8, 9],
+  18: [4, 7, 9],
+  19: [1, 7, 8],
+  20: [2, 8, 9],
+  21: [3, 7, 9],
+};
+
+function dinnersForDay(dayId: number): Meal[] {
+  const numbers = DINNER_ROTATION[dayId] ?? DINNER_ROTATION[1];
+  return numbers
+    .map((n) => MEALS.find((m) => m.id === DINNER_ID_BY_NUMBER[n]))
+    .filter((m): m is Meal => !!m);
+}
+
 function RefeicoesPage() {
   const [state] = useAppState();
   const dayId = activeDay(state);
@@ -1045,10 +1327,12 @@ function RefeicoesPage() {
   const [showAllBreakfasts, setShowAllBreakfasts] = useState(false);
   const [showAllLunches, setShowAllLunches] = useState(false);
   const [showAllSnacks, setShowAllSnacks] = useState(false);
+  const [showAllDinners, setShowAllDinners] = useState(false);
 
   const todaysBreakfasts = breakfastsForDay(dayId);
   const todaysLunches = lunchesForDay(dayId);
   const todaysSnacks = snacksForDay(dayId);
+  const todaysDinners = dinnersForDay(dayId);
 
   return (
     <AppShell title="Refeições Inteligentes" subtitle="Referências práticas" back="/alimentacao">
@@ -1081,6 +1365,7 @@ function RefeicoesPage() {
               const isBreakfast = cat.title === "Café da manhã";
               const isLunch = cat.title === "Almoço";
               const isSnack = cat.title === "Lanches";
+              const isDinner = cat.title === "Jantar";
               const items = isBreakfast
                 ? showAllBreakfasts
                   ? MEALS.filter((m) => m.category === cat.title)
@@ -1093,7 +1378,11 @@ function RefeicoesPage() {
                     ? showAllSnacks
                       ? MEALS.filter((m) => m.category === cat.title)
                       : todaysSnacks
-                    : MEALS.filter((m) => m.category === cat.title);
+                    : isDinner
+                      ? showAllDinners
+                        ? MEALS.filter((m) => m.category === cat.title)
+                        : todaysDinners
+                      : MEALS.filter((m) => m.category === cat.title);
               return (
                 <section key={cat.title} className="rounded-2xl border border-border bg-surface p-5">
                   <div className="flex items-center justify-between gap-2">
@@ -1125,9 +1414,20 @@ function RefeicoesPage() {
                       >
                         {showAllSnacks ? "Ver só os de hoje" : "Ver todos os lanches"}
                       </button>
+                    ) : isDinner ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowAllDinners((v) => !v)}
+                        className="shrink-0 text-xs font-semibold text-primary hover:underline"
+                      >
+                        {showAllDinners ? "Ver só os de hoje" : "Ver todos os jantares"}
+                      </button>
                     ) : null}
                   </div>
-                  {(isBreakfast && !showAllBreakfasts) || (isLunch && !showAllLunches) || (isSnack && !showAllSnacks) ? (
+                  {(isBreakfast && !showAllBreakfasts) ||
+                  (isLunch && !showAllLunches) ||
+                  (isSnack && !showAllSnacks) ||
+                  (isDinner && !showAllDinners) ? (
                     <p className="mt-1 text-xs text-text-muted">Selecionados para o Dia {dayId} da sua jornada.</p>
                   ) : null}
                   <ul className="mt-3 grid gap-2">
