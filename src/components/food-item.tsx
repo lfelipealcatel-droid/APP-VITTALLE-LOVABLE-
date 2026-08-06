@@ -1,4 +1,4 @@
-import { ChevronRight, Heart, Star, X } from "lucide-react";
+import { ChevronRight, Heart, Info, Star, X } from "lucide-react";
 import { MediaPlaceholder } from "@/components/media-placeholder";
 import {
   Drawer,
@@ -30,6 +30,8 @@ export interface FoodItem {
   // Sem conteúdo ainda: os blocos correspondentes ficam ocultos até existir copy real.
   whyPoints: WhyPoint[];
   practicalNote: string;
+  // Nota discreta opcional (ex.: aviso médico dos chás). Quando ausente, nada é renderizado.
+  observation?: string;
 }
 
 export function FoodItemRow({ item, onOpen }: { item: FoodItem; onOpen: (i: FoodItem) => void }) {
@@ -119,6 +121,15 @@ export function FoodItemDrawer({ item, onOpenChange }: { item: FoodItem | null; 
                     <Heart size={14} className="fill-primary text-primary" aria-hidden /> Na prática
                   </p>
                   <p className="mt-1 leading-relaxed text-text-secondary">{item.practicalNote}</p>
+                </div>
+              ) : null}
+
+              {item.observation ? (
+                <div className="rounded-xl bg-surface-2 p-3">
+                  <p className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-text-muted">
+                    <Info size={14} className="text-text-muted" aria-hidden /> Observação
+                  </p>
+                  <p className="mt-1 text-xs leading-relaxed text-text-muted">{item.observation}</p>
                 </div>
               ) : null}
 
