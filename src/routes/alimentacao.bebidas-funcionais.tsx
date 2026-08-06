@@ -19,7 +19,7 @@ const CHA_IMG = "/imagens/biblioteca/chás/";
 // Observação médica padrão, exigida ao final de cada um dos 6 chás.
 // Renderizada pelo Drawer no campo dedicado FoodItem.observation, separado de practicalNote.
 const TEA_DISCLAIMER =
-  "Este chá é uma opção complementar e não substitui orientação ou tratamento médico. Gestantes, lactantes, pessoas com condições de saúde ou que usam medicamentos devem consultar médico ou nutricionista antes do consumo frequente. Suspenda o uso se sentir qualquer desconforto.";
+  "Este chá é uma opção complementar e não substitui orientação ou tratamento médico. Se você está grávida, amamentando, possui alguma doença crônica ou utiliza medicamentos de uso contínuo, converse com seu médico ou nutricionista antes do consumo frequente. Suspenda o uso se sentir qualquer desconforto.";
 
 const DRINKS: FoodItem[] = [
   {
@@ -324,107 +324,107 @@ function BebidasPage() {
 
   const activeGoal = GOALS.find((g) => g.key === selectedGoal) ?? null;
 
+  const pageTitle = activeGoal ? activeGoal.pageTitle : "Ferramentas Funcionais";
+  const pageSubtitle = activeGoal ? activeGoal.intro : "Escolha conforme o que seu corpo precisa hoje.";
+
   return (
-    <AppShell title="Ferramentas Funcionais" subtitle="Escolha conforme o que seu corpo precisa hoje." back="/alimentacao">
-      <p className="text-sm text-text-secondary">
-        Encontre opções para apoiar sono, saciedade, energia, digestão e uma rotina mais favorável ao seu objetivo de perder
-        barriga.
-      </p>
-
-      <section className="mt-4 rounded-2xl border border-border bg-surface p-5">
-        <h2 className="text-sm font-semibold">Chás Funcionais</h2>
-        <p className="mt-1 text-xs text-text-secondary">Escolha um objetivo e encontre a opção mais adequada para o seu momento.</p>
-
-        {activeGoal ? (
-          <div className="mt-4">
-            <button
-              type="button"
-              onClick={() => setSelectedGoal(null)}
-              className="inline-flex min-h-8 items-center gap-1 text-xs font-semibold text-primary hover:underline"
-            >
-              <ArrowLeft size={14} aria-hidden /> Voltar aos objetivos
-            </button>
-            <div className="mt-3 flex items-center gap-2">
-              <span className="text-xl" aria-hidden>
-                {activeGoal.emoji}
-              </span>
-              <h3 className="text-sm font-semibold">{activeGoal.pageTitle}</h3>
-            </div>
-            <p className="mt-1 text-sm text-text-secondary">{activeGoal.intro}</p>
-            <ul className="mt-3 grid gap-2">
-              {activeGoal.teas.map((tea) => {
-                const item = DRINKS.find((d) => d.id === tea.id);
-                if (!item) return null;
-                return (
-                  <li key={tea.id}>
-                    <button
-                      type="button"
-                      onClick={() => setOpenItem(item)}
-                      className="flex w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-3 text-left hover:bg-surface"
-                    >
-                      {item.image ? (
-                        <img
-                          src={encodeURI(item.image)}
-                          alt=""
-                          className="h-14 w-14 shrink-0 rounded-lg object-cover"
-                          loading="lazy"
-                        />
-                      ) : null}
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-semibold text-foreground">{item.name}</span>
-                        <span className="block text-xs text-text-muted">{item.category}</span>
-                        <span className="mt-0.5 block text-xs text-text-secondary">{tea.shortPhrase}</span>
-                      </span>
-                      <ChevronRight size={18} className="shrink-0 text-text-muted" aria-hidden />
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        ) : (
-          <ul className="mt-4 grid gap-2">
-            {GOALS.map((g) => (
-              <li key={g.key}>
-                <button
-                  type="button"
-                  onClick={() => setSelectedGoal(g.key)}
-                  className="flex min-h-16 w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-4 text-left hover:bg-surface"
-                >
-                  <span className="text-xl" aria-hidden>
-                    {g.emoji}
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-semibold text-foreground">{g.title}</span>
-                    <span className="block text-xs text-text-secondary">{g.subtitle}</span>
-                  </span>
-                  <ChevronRight size={18} className="shrink-0 text-text-muted" aria-hidden />
-                </button>
-              </li>
-            ))}
+    <AppShell title={pageTitle} subtitle={pageSubtitle} back="/alimentacao">
+      {activeGoal ? (
+        <>
+          <ul className="grid gap-2">
+            {activeGoal.teas.map((tea) => {
+              const item = DRINKS.find((d) => d.id === tea.id);
+              if (!item) return null;
+              return (
+                <li key={tea.id}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenItem(item)}
+                    className="flex w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-3 text-left hover:bg-surface"
+                  >
+                    {item.image ? (
+                      <img
+                        src={encodeURI(item.image)}
+                        alt=""
+                        className="h-14 w-14 shrink-0 rounded-lg object-cover"
+                        loading="lazy"
+                      />
+                    ) : null}
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold text-foreground">{item.name}</span>
+                      <span className="block text-xs text-text-muted">{item.category}</span>
+                      <span className="mt-0.5 block text-xs text-text-secondary">{tea.shortPhrase}</span>
+                    </span>
+                    <ChevronRight size={18} className="shrink-0 text-text-muted" aria-hidden />
+                  </button>
+                </li>
+              );
+            })}
           </ul>
-        )}
-      </section>
 
-      <div className="mt-4 grid gap-4">
-        {CATEGORIES.filter((cat) => cat.title !== "Chás").map((cat) => (
-          <section key={cat.title} className="rounded-2xl border border-border bg-surface p-5">
-            <div className="flex items-center gap-2">
-              <cat.icon size={18} className="text-primary" aria-hidden />
-              <h2 className="text-sm font-semibold">{cat.title}</h2>
-            </div>
-            <ul className="mt-3 grid gap-2">
-              {DRINKS.filter((d) => d.category === cat.title).map((d) => (
-                <FoodItemRow key={d.id} item={d} onOpen={setOpenItem} />
+          <button
+            type="button"
+            onClick={() => setSelectedGoal(null)}
+            className="mt-4 inline-flex min-h-8 items-center gap-1 text-xs font-semibold text-primary hover:underline"
+          >
+            <ArrowLeft size={14} aria-hidden /> Voltar aos objetivos
+          </button>
+        </>
+      ) : (
+        <>
+          <p className="text-sm text-text-secondary">
+            Encontre opções para apoiar sono, saciedade, energia, digestão e uma rotina mais favorável ao seu objetivo de
+            perder barriga.
+          </p>
+
+          <section className="mt-4 rounded-2xl border border-border bg-surface p-5">
+            <h2 className="text-sm font-semibold">Chás Funcionais</h2>
+            <p className="mt-1 text-xs text-text-secondary">
+              Escolha um objetivo e encontre a opção mais adequada para o seu momento.
+            </p>
+            <ul className="mt-4 grid gap-2">
+              {GOALS.map((g) => (
+                <li key={g.key}>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedGoal(g.key)}
+                    className="flex min-h-16 w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-4 text-left hover:bg-surface"
+                  >
+                    <span className="text-xl" aria-hidden>
+                      {g.emoji}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold text-foreground">{g.title}</span>
+                      <span className="block text-xs text-text-secondary">{g.subtitle}</span>
+                    </span>
+                    <ChevronRight size={18} className="shrink-0 text-text-muted" aria-hidden />
+                  </button>
+                </li>
               ))}
             </ul>
           </section>
-        ))}
-      </div>
 
-      <Link to="/alimentacao" className="mt-4 inline-flex text-xs font-semibold text-primary hover:underline">
-        Voltar para Alimentação
-      </Link>
+          <div className="mt-4 grid gap-4">
+            {CATEGORIES.filter((cat) => cat.title !== "Chás").map((cat) => (
+              <section key={cat.title} className="rounded-2xl border border-border bg-surface p-5">
+                <div className="flex items-center gap-2">
+                  <cat.icon size={18} className="text-primary" aria-hidden />
+                  <h2 className="text-sm font-semibold">{cat.title}</h2>
+                </div>
+                <ul className="mt-3 grid gap-2">
+                  {DRINKS.filter((d) => d.category === cat.title).map((d) => (
+                    <FoodItemRow key={d.id} item={d} onOpen={setOpenItem} />
+                  ))}
+                </ul>
+              </section>
+            ))}
+          </div>
+
+          <Link to="/alimentacao" className="mt-4 inline-flex text-xs font-semibold text-primary hover:underline">
+            Voltar para Alimentação
+          </Link>
+        </>
+      )}
 
       <FoodItemDrawer item={openItem} onOpenChange={(open) => { if (!open) setOpenItem(null); }} />
     </AppShell>
