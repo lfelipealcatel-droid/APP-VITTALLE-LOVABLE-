@@ -15,11 +15,16 @@ export const Route = createFileRoute("/alimentacao/bebidas-funcionais")({
 });
 
 const CHA_IMG = "/imagens/biblioteca/chás/";
+const SHAKE_IMG = "/imagens/biblioteca/shakes/";
 
 // Observação médica padrão, exigida ao final de cada um dos 6 chás.
 // Renderizada pelo Drawer no campo dedicado FoodItem.observation, separado de practicalNote.
 const TEA_DISCLAIMER =
   "Este chá é uma opção complementar e não substitui orientação ou tratamento médico. Se você está grávida, amamentando, possui alguma doença crônica ou utiliza medicamentos de uso contínuo, converse com seu médico ou nutricionista antes do consumo frequente. Suspenda o uso se sentir qualquer desconforto.";
+
+// Observação padrão dos 6 shakes, também renderizada via FoodItem.observation no Drawer.
+const SHAKE_DISCLAIMER =
+  "Este shake é uma sugestão de preparo com alimentos comuns e faz parte de uma rotina alimentar equilibrada. Se você possui alergias alimentares, intolerâncias, restrições específicas ou faz acompanhamento nutricional ou médico, adapte os ingredientes conforme a orientação do profissional que acompanha você.";
 
 const DRINKS: FoodItem[] = [
   {
@@ -186,40 +191,166 @@ const DRINKS: FoodItem[] = [
     observation: TEA_DISCLAIMER,
   },
   {
-    id: "shake-banana-aveia",
-    category: "Shakes",
-    name: "Shake de banana com aveia",
+    id: "shake-01-saciedade",
+    category: "Iogurte Natural + Morango + Chia",
+    name: "Shake Saciedade",
     cover: "green",
-    ingredients: "Banana, aveia, leite ou bebida vegetal.",
-    method: "Bata todos os ingredientes no liquidificador até ficar homogêneo.",
-    swaps: "Troque a banana por manga ou mamão.",
-    bestMoment: "No café da manhã ou como lanche.",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${SHAKE_IMG}1- shake saciedade.png`,
+    ingredients: "• 170 g de iogurte natural sem açúcar\n• 6 morangos\n• 1 colher (sopa) de chia\n• 150 ml de água gelada\n• Gelo a gosto",
+    method: "Coloque todos os ingredientes no liquidificador.\nBata por aproximadamente 1 minuto.\nSirva imediatamente.",
+    swaps: "• Morango por frutas vermelhas\n• Chia por linhaça\n• Iogurte por kefir natural",
+    bestMoment: "Lanche da manhã ou da tarde.",
+    whyPoints: [
+      {
+        title: "Saciedade",
+        body: "A proteína do iogurte e as fibras da chia ajudam a prolongar a sensação de saciedade.",
+      },
+      {
+        title: "Menos vontade de doces",
+        body: "Uma opção rica em proteínas e fibras pode facilitar o controle da fome entre as refeições.",
+      },
+      {
+        title: "Fibras",
+        body: "As fibras ajudam o intestino e contribuem para uma alimentação equilibrada.",
+      },
+    ],
+    practicalNote: "Excelente para evitar beliscar alimentos ultraprocessados entre as principais refeições.",
+    observation: SHAKE_DISCLAIMER,
   },
   {
-    id: "shake-verde-abacaxi",
-    category: "Shakes",
-    name: "Shake verde com abacaxi",
+    id: "shake-02-fome-controlada",
+    category: "Iogurte Natural + Maçã + Canela",
+    name: "Shake Fome Controlada",
     cover: "warm",
-    ingredients: "Abacaxi, folhas verdes (couve ou espinafre), água ou água de coco.",
-    method: "Bata todos os ingredientes no liquidificador e sirva na sequência.",
-    swaps: "Troque o abacaxi por maçã, se preferir um sabor mais suave.",
-    bestMoment: "Pela manhã ou antes do almoço.",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${SHAKE_IMG}2- shake fome controlada.png`,
+    ingredients: "• 170 g de iogurte natural\n• 1 maçã pequena\n• Canela a gosto\n• 150 ml de água\n• Gelo a gosto",
+    method: "Coloque todos os ingredientes no liquidificador.\nBata até obter uma mistura cremosa.\nSirva imediatamente.",
+    swaps: "• Maçã por pera\n• Canela por cacau 100%\n• Iogurte por kefir",
+    bestMoment: "Meio da tarde.",
+    whyPoints: [
+      {
+        title: "Controle da fome",
+        body: "A combinação favorece uma maior sensação de saciedade.",
+      },
+      {
+        title: "Saciedade",
+        body: "Proteína e fibras ajudam a prolongar a satisfação após o lanche.",
+      },
+      {
+        title: "Leveza",
+        body: "Uma alternativa prática para substituir lanches ricos em açúcar.",
+      },
+    ],
+    practicalNote: "Ideal para o período em que costuma surgir vontade de comer doces.",
+    observation: SHAKE_DISCLAIMER,
   },
   {
-    id: "shake-morango-iogurte",
-    category: "Shakes",
-    name: "Shake de morango com iogurte",
+    id: "shake-03-proteico",
+    category: "Leite + Whey + Cacau + Canela",
+    name: "Shake Proteico",
     cover: "green",
-    ingredients: "Morangos, iogurte natural, gelo (opcional).",
-    method: "Bata os morangos com o iogurte até ficar cremoso.",
-    swaps: "Troque os morangos por outras frutas vermelhas.",
-    bestMoment: "Como lanche da tarde.",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${SHAKE_IMG}3- shake proteico.png`,
+    ingredients: "• 200 ml de leite\n• 1 medida de whey protein\n• 1 colher (chá) de cacau 100%\n• Canela a gosto",
+    method: "Coloque todos os ingredientes no liquidificador.\nBata até ficar homogêneo.\nSirva imediatamente.",
+    swaps: "• Whey por iogurte grego natural\n• Leite por bebida vegetal sem açúcar",
+    bestMoment: "Após atividade física ou no café da manhã.",
+    whyPoints: [
+      {
+        title: "Proteína",
+        body: "Ajuda a aumentar a ingestão proteica do dia.",
+      },
+      {
+        title: "Metabolismo",
+        body: "A preservação da massa muscular contribui para um metabolismo saudável.",
+      },
+      {
+        title: "Saciedade",
+        body: "Proteínas ajudam a prolongar a sensação de saciedade.",
+      },
+    ],
+    practicalNote: "Ótimo para quem tem dificuldade em consumir proteínas nas refeições.",
+    observation: SHAKE_DISCLAIMER,
+  },
+  {
+    id: "shake-04-recuperacao",
+    category: "Iogurte Grego + Banana + Aveia",
+    name: "Shake Recuperação",
+    cover: "warm",
+    image: `${SHAKE_IMG}4- shake de recuperação.png`,
+    ingredients: "• 170 g de iogurte grego natural\n• 1/2 banana\n• 2 colheres (sopa) de aveia",
+    method: "Coloque todos os ingredientes no liquidificador.\nBata até ficar homogêneo.\nSirva imediatamente.",
+    swaps: "• Banana por morango\n• Aveia por chia",
+    bestMoment: "Após exercícios ou no café da manhã.",
+    whyPoints: [
+      {
+        title: "Fortalece o corpo",
+        body: "Proteínas e carboidratos ajudam na recuperação após atividades físicas.",
+      },
+      {
+        title: "Energia",
+        body: "Fornece energia para iniciar ou recuperar o dia.",
+      },
+      {
+        title: "Fibras",
+        body: "A aveia auxilia na saciedade e na saúde intestinal.",
+      },
+    ],
+    practicalNote: "Uma ótima opção para quem faz exercícios ou deseja começar o dia mais nutrida.",
+    observation: SHAKE_DISCLAIMER,
+  },
+  {
+    id: "shake-05-energia",
+    category: "Café + Leite + Cacau + Canela",
+    name: "Shake Energia",
+    cover: "green",
+    image: `${SHAKE_IMG}5- shake energia.png`,
+    ingredients: "• 150 ml de café frio sem açúcar\n• 150 ml de leite\n• 1 colher (chá) de cacau 100%\n• Canela a gosto",
+    method: "Coloque todos os ingredientes no liquidificador.\nBata até ficar cremoso.\nSirva imediatamente.",
+    swaps: "• Café por café descafeinado\n• Leite por bebida vegetal",
+    bestMoment: "Pela manhã.",
+    whyPoints: [
+      {
+        title: "Energia",
+        body: "A cafeína pode aumentar a disposição em pessoas sensíveis ao seu efeito.",
+      },
+      {
+        title: "Metabolismo",
+        body: "Substitui bebidas açucaradas por uma alternativa mais equilibrada.",
+      },
+      {
+        title: "Comece bem o dia",
+        body: "Ajuda a iniciar a rotina com mais praticidade.",
+      },
+    ],
+    practicalNote: "Excelente para quem costuma sair de casa sem tomar café da manhã.",
+    observation: SHAKE_DISCLAIMER,
+  },
+  {
+    id: "shake-06-manha-ativa",
+    category: "Kefir + Mamão + Gengibre",
+    name: "Shake Manhã Ativa",
+    cover: "warm",
+    image: `${SHAKE_IMG}6- shake manhã.png`,
+    ingredients: "• 200 ml de kefir natural\n• 1 fatia de mamão\n• 1 pequeno pedaço de gengibre",
+    method: "Coloque todos os ingredientes no liquidificador.\nBata até ficar homogêneo.\nConsuma imediatamente.",
+    swaps: "• Kefir por iogurte natural\n• Mamão por manga\n• Gengibre por canela",
+    bestMoment: "Café da manhã.",
+    whyPoints: [
+      {
+        title: "Metabolismo",
+        body: "Uma refeição nutritiva ajuda a manter uma rotina alimentar consistente.",
+      },
+      {
+        title: "Intestino",
+        body: "O kefir e o mamão podem contribuir para o bom funcionamento intestinal em muitas pessoas.",
+      },
+      {
+        title: "Energia",
+        body: "Uma alternativa prática para começar o dia.",
+      },
+    ],
+    practicalNote: "Ideal para quem quer substituir um café da manhã pobre em nutrientes por uma opção mais completa.",
+    observation: SHAKE_DISCLAIMER,
   },
   {
     id: "shot-limao-hortela",
@@ -318,14 +449,86 @@ const GOALS: Goal[] = [
   },
 ];
 
+type ShakeGoalKey = "saciedade" | "fortalecer" | "energia";
+
+interface ShakeGoal {
+  key: ShakeGoalKey;
+  emoji: string;
+  title: string;
+  subtitle: string;
+  pageTitle: string;
+  intro: string;
+  // shortPhrase é conteúdo só do card de prévia (nesta página), não faz parte do FoodItem/Drawer compartilhado.
+  shakes: { id: string; shortPhrase: string }[];
+}
+
+const SHAKE_GOALS: ShakeGoal[] = [
+  {
+    key: "saciedade",
+    emoji: "🍽️",
+    title: "Saciedade",
+    subtitle: "Para controlar a fome entre as refeições e reduzir a vontade de doces.",
+    pageTitle: "Saciedade",
+    intro:
+      "Ajudar a controlar a fome entre as refeições, reduzir a vontade de doces e facilitar uma rotina alimentar mais equilibrada.",
+    shakes: [
+      { id: "shake-01-saciedade", shortPhrase: "Para prolongar a saciedade e evitar beliscos entre as refeições." },
+      { id: "shake-02-fome-controlada", shortPhrase: "Para o período em que costuma aparecer vontade de comer doces." },
+    ],
+  },
+  {
+    key: "fortalecer",
+    emoji: "💪",
+    title: "Fortalecer o Corpo",
+    subtitle: "Para apoiar a ingestão de proteínas, a massa muscular e o metabolismo.",
+    pageTitle: "Fortalecer o Corpo",
+    intro: "Ajudar na ingestão de proteínas e nutrientes importantes para preservar a massa muscular e apoiar o metabolismo.",
+    shakes: [
+      { id: "shake-03-proteico", shortPhrase: "Para aumentar de forma prática a ingestão de proteínas do dia." },
+      { id: "shake-04-recuperacao", shortPhrase: "Para apoiar recuperação, energia e nutrição depois dos exercícios." },
+    ],
+  },
+  {
+    key: "energia",
+    emoji: "⚡",
+    title: "Energia e Metabolismo",
+    subtitle: "Para começar o dia com mais disposição e apoiar uma rotina ativa.",
+    pageTitle: "Energia e Metabolismo",
+    intro: "Começar o dia com mais disposição e apoiar hábitos que favoreçam o metabolismo.",
+    shakes: [
+      { id: "shake-05-energia", shortPhrase: "Para começar a manhã com mais praticidade e disposição." },
+      { id: "shake-06-manha-ativa", shortPhrase: "Para apoiar o intestino e começar o dia com uma opção nutritiva." },
+    ],
+  },
+];
+
 function BebidasPage() {
   const [openItem, setOpenItem] = useState<FoodItem | null>(null);
   const [selectedGoal, setSelectedGoal] = useState<GoalKey | null>(null);
+  const [selectedShakeGoal, setSelectedShakeGoal] = useState<ShakeGoalKey | null>(null);
 
   const activeGoal = GOALS.find((g) => g.key === selectedGoal) ?? null;
+  const activeShakeGoal = SHAKE_GOALS.find((g) => g.key === selectedShakeGoal) ?? null;
 
-  const pageTitle = activeGoal ? activeGoal.pageTitle : "Ferramentas Funcionais";
-  const pageSubtitle = activeGoal ? activeGoal.intro : "Escolha conforme o que seu corpo precisa hoje.";
+  const openTeaGoal = (key: GoalKey) => {
+    setSelectedShakeGoal(null);
+    setSelectedGoal(key);
+  };
+  const openShakeGoal = (key: ShakeGoalKey) => {
+    setSelectedGoal(null);
+    setSelectedShakeGoal(key);
+  };
+
+  const pageTitle = activeGoal
+    ? activeGoal.pageTitle
+    : activeShakeGoal
+      ? activeShakeGoal.pageTitle
+      : "Ferramentas Funcionais";
+  const pageSubtitle = activeGoal
+    ? activeGoal.intro
+    : activeShakeGoal
+      ? activeShakeGoal.intro
+      : "Escolha conforme o que seu corpo precisa hoje.";
 
   return (
     <AppShell title={pageTitle} subtitle={pageSubtitle} back="/alimentacao">
@@ -370,6 +573,47 @@ function BebidasPage() {
             <ArrowLeft size={14} aria-hidden /> Voltar aos objetivos
           </button>
         </>
+      ) : activeShakeGoal ? (
+        <>
+          <ul className="grid gap-2">
+            {activeShakeGoal.shakes.map((shake) => {
+              const item = DRINKS.find((d) => d.id === shake.id);
+              if (!item) return null;
+              return (
+                <li key={shake.id}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenItem(item)}
+                    className="flex w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-3 text-left hover:bg-surface"
+                  >
+                    {item.image ? (
+                      <img
+                        src={encodeURI(item.image)}
+                        alt=""
+                        className="h-14 w-14 shrink-0 rounded-lg object-cover"
+                        loading="lazy"
+                      />
+                    ) : null}
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold text-foreground">{item.name}</span>
+                      <span className="block text-xs text-text-muted">{item.category}</span>
+                      <span className="mt-0.5 block text-xs text-text-secondary">{shake.shortPhrase}</span>
+                    </span>
+                    <ChevronRight size={18} className="shrink-0 text-text-muted" aria-hidden />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          <button
+            type="button"
+            onClick={() => setSelectedShakeGoal(null)}
+            className="mt-4 inline-flex min-h-8 items-center gap-1 text-xs font-semibold text-primary hover:underline"
+          >
+            <ArrowLeft size={14} aria-hidden /> Voltar aos objetivos
+          </button>
+        </>
       ) : (
         <>
           <p className="text-sm text-text-secondary">
@@ -387,7 +631,34 @@ function BebidasPage() {
                 <li key={g.key}>
                   <button
                     type="button"
-                    onClick={() => setSelectedGoal(g.key)}
+                    onClick={() => openTeaGoal(g.key)}
+                    className="flex min-h-16 w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-4 text-left hover:bg-surface"
+                  >
+                    <span className="text-xl" aria-hidden>
+                      {g.emoji}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold text-foreground">{g.title}</span>
+                      <span className="block text-xs text-text-secondary">{g.subtitle}</span>
+                    </span>
+                    <ChevronRight size={18} className="shrink-0 text-text-muted" aria-hidden />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-4 rounded-2xl border border-border bg-surface p-5">
+            <h2 className="text-sm font-semibold">Shakes Funcionais</h2>
+            <p className="mt-1 text-xs text-text-secondary">
+              Escolha um objetivo e encontre uma opção prática para o seu momento.
+            </p>
+            <ul className="mt-4 grid gap-2">
+              {SHAKE_GOALS.map((g) => (
+                <li key={g.key}>
+                  <button
+                    type="button"
+                    onClick={() => openShakeGoal(g.key)}
                     className="flex min-h-16 w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-4 text-left hover:bg-surface"
                   >
                     <span className="text-xl" aria-hidden>
@@ -405,7 +676,7 @@ function BebidasPage() {
           </section>
 
           <div className="mt-4 grid gap-4">
-            {CATEGORIES.filter((cat) => cat.title !== "Chás").map((cat) => (
+            {CATEGORIES.filter((cat) => cat.title !== "Chás" && cat.title !== "Shakes").map((cat) => (
               <section key={cat.title} className="rounded-2xl border border-border bg-surface p-5">
                 <div className="flex items-center gap-2">
                   <cat.icon size={18} className="text-primary" aria-hidden />
