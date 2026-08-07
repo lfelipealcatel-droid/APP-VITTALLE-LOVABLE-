@@ -56,6 +56,7 @@ import { Route as SequenciaIdRouteImport } from './routes/sequencia.$id'
 import { Route as BonusIdConteudoRouteImport } from './routes/bonus.$id.conteudo'
 import { Route as GuiaIdConteudoRouteImport } from './routes/guia.$id.conteudo'
 import { Route as GuiaIdMaterialRouteImport } from './routes/guia.$id.material'
+import { Route as GuiaIdPdfRouteImport } from './routes/guia.$id.pdf'
 import { Route as ProdutoIdIndexRouteImport } from './routes/produto.$id.index'
 import { Route as ProdutoIdAcessarRouteImport } from './routes/produto.$id.acessar'
 import { Route as ProdutoIdCheckoutRouteImport } from './routes/produto.$id.checkout'
@@ -300,6 +301,11 @@ const GuiaIdMaterialRoute = GuiaIdMaterialRouteImport.update({
   path: '/material',
   getParentRoute: () => GuiaIdRoute,
 } as any)
+const GuiaIdPdfRoute = GuiaIdPdfRouteImport.update({
+  id: '/pdf',
+  path: '/pdf',
+  getParentRoute: () => GuiaIdRoute,
+} as any)
 const ProdutoIdIndexRoute = ProdutoIdIndexRouteImport.update({
   id: '/produto/$id/',
   path: '/produto/$id/',
@@ -364,6 +370,7 @@ export interface FileRoutesByFullPath {
   '/bonus/$id/conteudo': typeof BonusIdConteudoRoute
   '/guia/$id/conteudo': typeof GuiaIdConteudoRoute
   '/guia/$id/material': typeof GuiaIdMaterialRoute
+  '/guia/$id/pdf': typeof GuiaIdPdfRoute
   '/produto/$id/acessar': typeof ProdutoIdAcessarRoute
   '/produto/$id/checkout': typeof ProdutoIdCheckoutRoute
   '/produto/$id/': typeof ProdutoIdIndexRoute
@@ -416,6 +423,7 @@ export interface FileRoutesByTo {
   '/bonus/$id/conteudo': typeof BonusIdConteudoRoute
   '/guia/$id/conteudo': typeof GuiaIdConteudoRoute
   '/guia/$id/material': typeof GuiaIdMaterialRoute
+  '/guia/$id/pdf': typeof GuiaIdPdfRoute
   '/produto/$id/acessar': typeof ProdutoIdAcessarRoute
   '/produto/$id/checkout': typeof ProdutoIdCheckoutRoute
   '/produto/$id': typeof ProdutoIdIndexRoute
@@ -469,6 +477,7 @@ export interface FileRoutesById {
   '/bonus/$id/conteudo': typeof BonusIdConteudoRoute
   '/guia/$id/conteudo': typeof GuiaIdConteudoRoute
   '/guia/$id/material': typeof GuiaIdMaterialRoute
+  '/guia/$id/pdf': typeof GuiaIdPdfRoute
   '/produto/$id/acessar': typeof ProdutoIdAcessarRoute
   '/produto/$id/checkout': typeof ProdutoIdCheckoutRoute
   '/produto/$id/': typeof ProdutoIdIndexRoute
@@ -523,6 +532,7 @@ export interface FileRouteTypes {
     | '/bonus/$id/conteudo'
     | '/guia/$id/conteudo'
     | '/guia/$id/material'
+    | '/guia/$id/pdf'
     | '/produto/$id/acessar'
     | '/produto/$id/checkout'
     | '/produto/$id/'
@@ -575,6 +585,7 @@ export interface FileRouteTypes {
     | '/bonus/$id/conteudo'
     | '/guia/$id/conteudo'
     | '/guia/$id/material'
+    | '/guia/$id/pdf'
     | '/produto/$id/acessar'
     | '/produto/$id/checkout'
     | '/produto/$id'
@@ -627,6 +638,7 @@ export interface FileRouteTypes {
     | '/bonus/$id/conteudo'
     | '/guia/$id/conteudo'
     | '/guia/$id/material'
+    | '/guia/$id/pdf'
     | '/produto/$id/acessar'
     | '/produto/$id/checkout'
     | '/produto/$id/'
@@ -1004,6 +1016,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiaIdMaterialRouteImport
       parentRoute: typeof GuiaIdRoute
     }
+    '/guia/$id/pdf': {
+      id: '/guia/$id/pdf'
+      path: '/pdf'
+      fullPath: '/guia/$id/pdf'
+      preLoaderRoute: typeof GuiaIdPdfRouteImport
+      parentRoute: typeof GuiaIdRoute
+    }
     '/produto/$id/': {
       id: '/produto/$id/'
       path: '/produto/$id'
@@ -1079,11 +1098,13 @@ const BonusIdRouteWithChildren =
 interface GuiaIdRouteChildren {
   GuiaIdConteudoRoute: typeof GuiaIdConteudoRoute
   GuiaIdMaterialRoute: typeof GuiaIdMaterialRoute
+  GuiaIdPdfRoute: typeof GuiaIdPdfRoute
 }
 
 const GuiaIdRouteChildren: GuiaIdRouteChildren = {
   GuiaIdConteudoRoute: GuiaIdConteudoRoute,
   GuiaIdMaterialRoute: GuiaIdMaterialRoute,
+  GuiaIdPdfRoute: GuiaIdPdfRoute,
 }
 
 const GuiaIdRouteWithChildren =

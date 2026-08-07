@@ -393,6 +393,9 @@ export interface GuideItem {
   cover: "warm" | "green";
   image?: string;
   description: string;
+  // PDF real do material (public/imagens/biblioteca/GAMMA PROJETOS). Quando presente, o card abre
+  // o material diretamente em /guia/$id/pdf, sem passar pela tela intermediária.
+  pdf?: string;
 }
 
 export const GUIDES: GuideItem[] = [
@@ -404,6 +407,7 @@ export const GUIDES: GuideItem[] = [
     cover: "warm",
     image: "/imagens/biblioteca/monta-prato.webp.png",
     description: "A base prática do Plano: como montar um prato equilibrado sem complicação.",
+    pdf: "/imagens/biblioteca/GAMMA PROJETOS/Metodo-Monta-Prato.pdf",
   },
   {
     id: "superalimentos-e-substituicoes",
@@ -413,6 +417,7 @@ export const GUIDES: GuideItem[] = [
     cover: "green",
     image: "/imagens/biblioteca/superalimentos.webp.png",
     description: "Trocas inteligentes que somam sem restringir.",
+    pdf: "/imagens/biblioteca/GAMMA PROJETOS/Guia-de-Superalimentos-e-Substituicoes.pdf",
   },
   {
     id: "refeicoes-rapidas-e-emergenciais",
@@ -422,6 +427,7 @@ export const GUIDES: GuideItem[] = [
     cover: "warm",
     image: "/imagens/biblioteca/refeicoes-rapidas.webp.png",
     description: "Opções práticas para quando o tempo é curto.",
+    pdf: "/imagens/biblioteca/GAMMA PROJETOS/Refeicoes-Rapidas-e-Emergenciais.pdf",
   },
   {
     id: "lista-de-compras-inteligente",
@@ -432,6 +438,7 @@ export const GUIDES: GuideItem[] = [
     image: "/imagens/biblioteca/lista-compras.webp.png",
     description:
       "O que comprar e como manter uma alimentação saudável mesmo na correria do dia a dia.",
+    pdf: "/imagens/biblioteca/GAMMA PROJETOS/Lista-de-Compras-Inteligente.pdf",
   },
 ];
 

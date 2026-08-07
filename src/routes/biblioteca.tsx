@@ -79,7 +79,7 @@ function Biblioteca() {
             {GUIDES.map((g) => (
               <Link
                 key={g.id}
-                to="/guia/$id"
+                to={g.pdf ? "/guia/$id/pdf" : "/guia/$id"}
                 params={{ id: g.id }}
                 className="group overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-0.5 hover:shadow-elevated"
               >
