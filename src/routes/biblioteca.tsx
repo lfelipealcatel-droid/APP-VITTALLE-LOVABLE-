@@ -100,7 +100,7 @@ function Biblioteca() {
             {BONUSES.map((b) => (
               <Link
                 key={b.id}
-                to="/bonus/$id"
+                to={b.pdf ? "/bonus/$id/pdf" : "/bonus/$id"}
                 params={{ id: b.id }}
                 className="overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-0.5 hover:shadow-elevated"
               >
@@ -108,6 +108,9 @@ function Biblioteca() {
                 <div className="p-3">
                   <p className="text-sm font-medium">{b.title}</p>
                   <p className="text-xs text-text-secondary">{b.subtitle}</p>
+                  {b.pdf ? (
+                    <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-primary">Abrir bônus</p>
+                  ) : null}
                 </div>
               </Link>
             ))}

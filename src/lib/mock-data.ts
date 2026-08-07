@@ -346,6 +346,9 @@ export interface BonusItem {
   image?: string;
   description: string;
   note?: string;
+  // PDF real do bônus (public/imagens/biblioteca/bônus). Quando presente, o card abre o material
+  // diretamente em /bonus/$id/pdf, sem passar pela tela intermediária.
+  pdf?: string;
 }
 
 export const BONUSES: BonusItem[] = [
@@ -357,6 +360,7 @@ export const BONUSES: BonusItem[] = [
     cover: "green",
     image: "/imagens/biblioteca/guia-superalimentos.webp.png",
     description: "Um guia prático com superalimentos organizados por função.",
+    pdf: "/imagens/biblioteca/bônus/Guia-de-Superalimentos-Hormonais.pdf",
   },
   {
     id: "lista-8-pratos",
@@ -367,6 +371,7 @@ export const BONUSES: BonusItem[] = [
     image: "/imagens/biblioteca/lista-8-pratos.webp.png",
     description: "A lista dos oito pratos incluídos no Front.",
     note: "Esta é apenas a lista dos oito pratos incluídos no Front. Não é o cardápio completo de 21 dias.",
+    pdf: "/imagens/biblioteca/bônus/Lista-de-Compras-dos-8-Pratos.pdf",
   },
   {
     id: "diario-hormonal-21-dias",
@@ -377,6 +382,7 @@ export const BONUSES: BonusItem[] = [
     image: "/imagens/biblioteca/diario-21-dias.webp.png",
     description: "A versão offline e imprimível do registro dos 21 dias.",
     note: "Versão imprimível. O registro dentro do app continua funcionando normalmente.",
+    pdf: "/imagens/biblioteca/bônus/Diario-Hormonal-de-21-Dias.pdf",
   },
 ];
 

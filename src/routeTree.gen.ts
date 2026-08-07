@@ -54,6 +54,7 @@ import { Route as PerfilPreferenciasRouteImport } from './routes/perfil.preferen
 import { Route as PerfilSegurancaRouteImport } from './routes/perfil.seguranca'
 import { Route as SequenciaIdRouteImport } from './routes/sequencia.$id'
 import { Route as BonusIdConteudoRouteImport } from './routes/bonus.$id.conteudo'
+import { Route as BonusIdPdfRouteImport } from './routes/bonus.$id_.pdf'
 import { Route as GuiaIdConteudoRouteImport } from './routes/guia.$id.conteudo'
 import { Route as GuiaIdMaterialRouteImport } from './routes/guia.$id.material'
 import { Route as GuiaIdPdfRouteImport } from './routes/guia.$id_.pdf'
@@ -291,6 +292,11 @@ const BonusIdConteudoRoute = BonusIdConteudoRouteImport.update({
   path: '/conteudo',
   getParentRoute: () => BonusIdRoute,
 } as any)
+const BonusIdPdfRoute = BonusIdPdfRouteImport.update({
+  id: '/bonus/$id_/pdf',
+  path: '/bonus/$id/pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuiaIdConteudoRoute = GuiaIdConteudoRouteImport.update({
   id: '/conteudo',
   path: '/conteudo',
@@ -368,6 +374,7 @@ export interface FileRoutesByFullPath {
   '/sequencia/$id': typeof SequenciaIdRoute
   '/jornada/': typeof JornadaIndexRoute
   '/bonus/$id/conteudo': typeof BonusIdConteudoRoute
+  '/bonus/$id/pdf': typeof BonusIdPdfRoute
   '/guia/$id/conteudo': typeof GuiaIdConteudoRoute
   '/guia/$id/material': typeof GuiaIdMaterialRoute
   '/guia/$id/pdf': typeof GuiaIdPdfRoute
@@ -421,6 +428,7 @@ export interface FileRoutesByTo {
   '/sequencia/$id': typeof SequenciaIdRoute
   '/jornada': typeof JornadaIndexRoute
   '/bonus/$id/conteudo': typeof BonusIdConteudoRoute
+  '/bonus/$id/pdf': typeof BonusIdPdfRoute
   '/guia/$id/conteudo': typeof GuiaIdConteudoRoute
   '/guia/$id/material': typeof GuiaIdMaterialRoute
   '/guia/$id/pdf': typeof GuiaIdPdfRoute
@@ -475,6 +483,7 @@ export interface FileRoutesById {
   '/sequencia/$id': typeof SequenciaIdRoute
   '/jornada/': typeof JornadaIndexRoute
   '/bonus/$id/conteudo': typeof BonusIdConteudoRoute
+  '/bonus/$id_/pdf': typeof BonusIdPdfRoute
   '/guia/$id/conteudo': typeof GuiaIdConteudoRoute
   '/guia/$id/material': typeof GuiaIdMaterialRoute
   '/guia/$id_/pdf': typeof GuiaIdPdfRoute
@@ -530,6 +539,7 @@ export interface FileRouteTypes {
     | '/sequencia/$id'
     | '/jornada/'
     | '/bonus/$id/conteudo'
+    | '/bonus/$id/pdf'
     | '/guia/$id/conteudo'
     | '/guia/$id/material'
     | '/guia/$id/pdf'
@@ -583,6 +593,7 @@ export interface FileRouteTypes {
     | '/sequencia/$id'
     | '/jornada'
     | '/bonus/$id/conteudo'
+    | '/bonus/$id/pdf'
     | '/guia/$id/conteudo'
     | '/guia/$id/material'
     | '/guia/$id/pdf'
@@ -636,6 +647,7 @@ export interface FileRouteTypes {
     | '/sequencia/$id'
     | '/jornada/'
     | '/bonus/$id/conteudo'
+    | '/bonus/$id_/pdf'
     | '/guia/$id/conteudo'
     | '/guia/$id/material'
     | '/guia/$id_/pdf'
@@ -680,6 +692,7 @@ export interface RootRouteChildren {
   LeituraDiaRoute: typeof LeituraDiaRoute
   SequenciaIdRoute: typeof SequenciaIdRoute
   JornadaIndexRoute: typeof JornadaIndexRoute
+  BonusIdPdfRoute: typeof BonusIdPdfRoute
   GuiaIdPdfRoute: typeof GuiaIdPdfRoute
   ProdutoIdAcessarRoute: typeof ProdutoIdAcessarRoute
   ProdutoIdCheckoutRoute: typeof ProdutoIdCheckoutRoute
@@ -1003,6 +1016,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BonusIdConteudoRouteImport
       parentRoute: typeof BonusIdRoute
     }
+    '/bonus/$id_/pdf': {
+      id: '/bonus/$id_/pdf'
+      path: '/bonus/$id/pdf'
+      fullPath: '/bonus/$id/pdf'
+      preLoaderRoute: typeof BonusIdPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guia/$id/conteudo': {
       id: '/guia/$id/conteudo'
       path: '/conteudo'
@@ -1145,6 +1165,7 @@ const rootRouteChildren: RootRouteChildren = {
   LeituraDiaRoute: LeituraDiaRoute,
   SequenciaIdRoute: SequenciaIdRoute,
   JornadaIndexRoute: JornadaIndexRoute,
+  BonusIdPdfRoute: BonusIdPdfRoute,
   GuiaIdPdfRoute: GuiaIdPdfRoute,
   ProdutoIdAcessarRoute: ProdutoIdAcessarRoute,
   ProdutoIdCheckoutRoute: ProdutoIdCheckoutRoute,
