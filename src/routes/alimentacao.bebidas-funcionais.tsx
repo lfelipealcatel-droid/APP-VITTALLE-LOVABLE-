@@ -1,8 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, ChevronRight, Leaf, Milk, Zap } from "lucide-react";
+import { ArrowLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
-import { FoodItemDrawer, FoodItemRow, type FoodItem } from "@/components/food-item";
+import { FoodItemDrawer, type FoodItem } from "@/components/food-item";
 
 export const Route = createFileRoute("/alimentacao/bebidas-funcionais")({
   head: () => ({
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/alimentacao/bebidas-funcionais")({
 
 const CHA_IMG = "/imagens/biblioteca/chás/";
 const SHAKE_IMG = "/imagens/biblioteca/shakes/";
+const SHOT_IMG = "/imagens/biblioteca/shot/";
 
 // Observação médica padrão, exigida ao final de cada um dos 6 chás.
 // Renderizada pelo Drawer no campo dedicado FoodItem.observation, separado de practicalNote.
@@ -25,6 +26,10 @@ const TEA_DISCLAIMER =
 // Observação padrão dos 6 shakes, também renderizada via FoodItem.observation no Drawer.
 const SHAKE_DISCLAIMER =
   "Este shake é uma sugestão de preparo com alimentos comuns e faz parte de uma rotina alimentar equilibrada. Se você possui alergias alimentares, intolerâncias, restrições específicas ou faz acompanhamento nutricional ou médico, adapte os ingredientes conforme a orientação do profissional que acompanha você.";
+
+// Observação padrão dos 6 shots, também renderizada via FoodItem.observation no Drawer.
+const SHOT_DISCLAIMER =
+  "Este shot é uma opção complementar dentro de uma rotina alimentar equilibrada. Se você está grávida, amamentando, possui alguma doença crônica, sensibilidade digestiva ou utiliza medicamentos de uso contínuo, converse com seu médico ou nutricionista antes do consumo frequente. Suspenda o uso se sentir qualquer desconforto.";
 
 const DRINKS: FoodItem[] = [
   {
@@ -353,47 +358,171 @@ const DRINKS: FoodItem[] = [
     observation: SHAKE_DISCLAIMER,
   },
   {
-    id: "shot-limao-hortela",
-    category: "Shots Funcionais",
-    name: "Shot de limão com hortelã",
+    id: "shot-01-bom-dia",
+    category: "Limão + Gengibre + Água",
+    name: "Shot Bom Dia",
     cover: "warm",
-    ingredients: "Suco de limão, folhas de hortelã, um pouco de água.",
-    method: "Bata ou misture bem os ingredientes e sirva em um copo pequeno, bem gelado.",
-    swaps: "Troque a hortelã por gengibre ralado.",
-    bestMoment: "Ao acordar ou antes das refeições.",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${SHOT_IMG}1- shot bom dia.png`,
+    ingredients: "• 100 ml de água\n• Suco de ½ limão\n• 1 fatia fina de gengibre ralado",
+    method: "Misture todos os ingredientes.\nConsumir imediatamente após o preparo.",
+    swaps: "• Limão → limão-siciliano\n• Gengibre → hortelã fresca",
+    bestMoment: "Ao acordar, cerca de 15 a 20 minutos antes do café da manhã.",
+    whyPoints: [
+      {
+        title: "Mais disposição",
+        body: "Começar o dia com ingredientes naturais ajuda você a iniciar a manhã com mais energia e bem-estar.",
+      },
+      {
+        title: "Barriga mais leve",
+        body: "Uma boa hidratação logo cedo favorece o funcionamento do organismo e pode ajudar a reduzir a sensação de inchaço.",
+      },
+      {
+        title: "Digestão",
+        body: "O gengibre é tradicionalmente utilizado para favorecer o conforto digestivo ao longo do dia.",
+      },
+    ],
+    practicalNote:
+      "Ideal para quem costuma acordar com sensação de barriga pesada e quer começar o dia cuidando da saúde desde os primeiros minutos.",
+    observation: SHOT_DISCLAIMER,
   },
   {
-    id: "shot-pepino-limao",
-    category: "Shots Funcionais",
-    name: "Shot de pepino com limão",
+    id: "shot-02-vitalidade",
+    category: "Laranja + Cúrcuma + Pimenta-do-Reino",
+    name: "Shot Vitalidade",
     cover: "green",
-    ingredients: "Pepino batido e coado, suco de limão.",
-    method: "Bata o pepino com um pouco de água, coe, misture o limão e sirva em um copo pequeno.",
-    swaps: "Troque o pepino por aipo, se preferir.",
-    bestMoment: "Nos dias mais quentes, ao longo do dia.",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${SHOT_IMG}2- shot vitalidade.png`,
+    ingredients: "• Suco de ½ laranja\n• ½ colher (chá) de cúrcuma\n• 1 pitada de pimenta-do-reino",
+    method: "Misture bem todos os ingredientes.\nConsumir logo após o preparo.",
+    swaps: "• Laranja → tangerina\n• Cúrcuma → gengibre",
+    bestMoment: "Pela manhã.",
+    whyPoints: [
+      {
+        title: "Antioxidantes",
+        body: "A cúrcuma e a laranja fornecem compostos antioxidantes naturalmente presentes nesses alimentos.",
+      },
+      {
+        title: "Energia",
+        body: "Uma rotina matinal consistente ajuda você a começar o dia com mais disposição.",
+      },
+      {
+        title: "Desinflamar",
+        body: "A cúrcuma é tradicionalmente utilizada em uma alimentação voltada para reduzir processos inflamatórios.",
+      },
+    ],
+    practicalNote: "Excelente para variar o shot da manhã utilizando ingredientes naturais que combinam muito bem entre si.",
+    observation: SHOT_DISCLAIMER,
   },
   {
-    id: "shot-frutas-vermelhas",
-    category: "Shots Funcionais",
-    name: "Shot de frutas vermelhas",
+    id: "shot-03-metabolismo",
+    category: "Vinagre de Maçã Orgânico + Canela + Água",
+    name: "Shot Metabolismo",
     cover: "warm",
-    ingredients: "Frutas vermelhas amassadas, um pouco de água ou água de coco.",
-    method: "Amasse ou bata as frutas, coe se preferir, e sirva em um copo pequeno bem gelado.",
-    swaps: "Troque as frutas vermelhas por frutas da estação.",
-    bestMoment: "Ao longo do dia.",
-    whyPoints: [],
-    practicalNote: "",
+    image: `${SHOT_IMG}3- shot metabolismo.png`,
+    ingredients: "• 100 ml de água\n• 1 colher (chá) de vinagre de maçã orgânico\n• Canela a gosto",
+    method: "Misture todos os ingredientes.\nConsumir imediatamente.",
+    swaps: "• Canela → gengibre\n• Vinagre de maçã → limão",
+    bestMoment: "Antes do café da manhã.",
+    whyPoints: [
+      {
+        title: "Metabolismo",
+        body: "Ajuda a reforçar uma rotina alimentar voltada para mulheres que desejam perder barriga e emagrecer.",
+      },
+      {
+        title: "Menos fome",
+        body: "Começar o dia com escolhas inteligentes pode facilitar o controle da fome nas próximas refeições.",
+      },
+      {
+        title: "Barriga mais leve",
+        body: "Uma alimentação equilibrada favorece uma maior sensação de leveza ao longo do dia.",
+      },
+    ],
+    practicalNote:
+      "Perfeito para quem sente mais fome ao longo do dia e quer começar a manhã reforçando hábitos que favorecem melhores escolhas alimentares.",
+    observation: SHOT_DISCLAIMER,
   },
-];
-
-const CATEGORIES = [
-  { title: "Chás", icon: Leaf },
-  { title: "Shakes", icon: Milk },
-  { title: "Shots Funcionais", icon: Zap },
+  {
+    id: "shot-04-ativacao",
+    category: "Limão + Gengibre + Canela",
+    name: "Shot Ativação",
+    cover: "green",
+    image: `${SHOT_IMG}4- shot ativação.png`,
+    ingredients: "• Suco de ½ limão\n• 1 fatia fina de gengibre\n• Canela a gosto\n• 50 ml de água",
+    method: "Misture todos os ingredientes até incorporar bem.\nConsumir imediatamente após o preparo.",
+    swaps: "• Limão → limão-siciliano\n• Canela → cúrcuma\n• Gengibre → hortelã fresca",
+    bestMoment: "15 a 20 minutos antes do café da manhã.",
+    whyPoints: [
+      {
+        title: "Mais disposição",
+        body: "Uma combinação de ingredientes naturais para começar o dia com mais energia e motivação.",
+      },
+      {
+        title: "Metabolismo",
+        body: "Faz parte de uma rotina alimentar voltada para mulheres que desejam perder barriga e emagrecer.",
+      },
+      {
+        title: "Controle da fome",
+        body: "Começar a manhã com um ritual saudável pode facilitar escolhas mais equilibradas durante o restante do dia.",
+      },
+    ],
+    practicalNote: "Excelente para quem acorda sem energia e quer iniciar a manhã com um ritual rápido antes do café da manhã.",
+    observation: SHOT_DISCLAIMER,
+  },
+  {
+    id: "shot-05-desinflamar",
+    category: "Cúrcuma + Gengibre + Limão + Pimenta-do-Reino",
+    name: "Shot Desinflamar",
+    cover: "warm",
+    image: `${SHOT_IMG}5- shot desinflamar.png`,
+    ingredients: "• Suco de ½ limão\n• ½ colher (chá) de cúrcuma\n• 1 fatia fina de gengibre\n• 1 pitada de pimenta-do-reino\n• 50 ml de água",
+    method: "Misture todos os ingredientes até ficar homogêneo.\nConsumir logo após o preparo.",
+    swaps: "• Limão → laranja\n• Gengibre → canela\n• Pimenta-do-reino → pitada de noz-moscada",
+    bestMoment: "Pela manhã, antes do café da manhã.",
+    whyPoints: [
+      {
+        title: "Desinflamar",
+        body: "A cúrcuma e o gengibre são tradicionalmente utilizados em preparações voltadas para uma alimentação menos inflamatória.",
+      },
+      {
+        title: "Barriga mais leve",
+        body: "Uma alimentação rica em ingredientes naturais pode contribuir para reduzir a sensação de inchaço.",
+      },
+      {
+        title: "Antioxidantes",
+        body: "Combinação rica em compostos antioxidantes naturalmente presentes nos alimentos.",
+      },
+    ],
+    practicalNote:
+      "Ideal para mulheres que desejam reduzir a sensação de barriga pesada enquanto constroem uma rotina de alimentação, movimento e sono mais equilibrada.",
+    observation: SHOT_DISCLAIMER,
+  },
+  {
+    id: "shot-06-curcuma-gold",
+    category: "Cúrcuma + Limão + Canela",
+    name: "Shot Cúrcuma Gold",
+    cover: "green",
+    image: `${SHOT_IMG}6- shot cúrcuma gold.png`,
+    ingredients: "• Suco de ½ limão\n• ½ colher (chá) de cúrcuma\n• Canela a gosto\n• 50 ml de água",
+    method: "Misture todos os ingredientes até incorporar completamente.\nConsumir imediatamente.",
+    swaps: "• Limão → laranja\n• Canela → gengibre\n• Cúrcuma → açafrão fresco ralado",
+    bestMoment: "Pela manhã.",
+    whyPoints: [
+      {
+        title: "Desinflamar",
+        body: "A cúrcuma é um dos ingredientes naturais mais utilizados em preparações voltadas para uma alimentação menos inflamatória.",
+      },
+      {
+        title: "Antioxidantes",
+        body: "Ingredientes naturalmente ricos em compostos antioxidantes que fazem parte de uma alimentação equilibrada.",
+      },
+      {
+        title: "Bem-estar",
+        body: "Uma forma prática de incluir ingredientes funcionais na rotina logo no início do dia.",
+      },
+    ],
+    practicalNote:
+      "Perfeito para quem quer variar os shots da semana sem abrir mão de ingredientes simples, naturais e alinhados ao Plano Barriga Hormonal 40+.",
+    observation: SHOT_DISCLAIMER,
+  },
 ];
 
 type GoalKey = "relaxar" | "desinchar" | "metabolismo";
@@ -502,33 +631,98 @@ const SHAKE_GOALS: ShakeGoal[] = [
   },
 ];
 
+type ShotGoalKey = "vitalidade" | "metabolismo" | "desinflamar";
+
+interface ShotGoal {
+  key: ShotGoalKey;
+  emoji: string;
+  title: string;
+  subtitle: string;
+  pageTitle: string;
+  intro: string;
+  // shortPhrase é conteúdo só do card de prévia (nesta página), não faz parte do FoodItem/Drawer compartilhado.
+  shots: { id: string; shortPhrase: string }[];
+}
+
+const SHOT_GOALS: ShotGoal[] = [
+  {
+    key: "vitalidade",
+    emoji: "☀️",
+    title: "Vitalidade",
+    subtitle: "Para começar o dia com mais disposição, energia e bem-estar.",
+    pageTitle: "Vitalidade",
+    intro: "Começar o dia com pequenos hábitos que fortalecem sua energia, equilíbrio e vitalidade.",
+    shots: [
+      { id: "shot-01-bom-dia", shortPhrase: "Para começar a manhã com mais disposição e sensação de leveza." },
+      { id: "shot-02-vitalidade", shortPhrase: "Uma combinação antioxidante para trazer mais vitalidade à sua manhã." },
+    ],
+  },
+  {
+    key: "metabolismo",
+    emoji: "🔥",
+    title: "Metabolismo",
+    subtitle: "Para apoiar o metabolismo e favorecer uma rotina mais equilibrada.",
+    pageTitle: "Metabolismo",
+    intro: "Apoiar hábitos que favoreçam o metabolismo e uma rotina alimentar mais equilibrada.",
+    shots: [
+      { id: "shot-03-metabolismo", shortPhrase: "Para apoiar uma rotina voltada ao metabolismo e ao controle da fome." },
+      { id: "shot-04-ativacao", shortPhrase: "Para começar a manhã com mais disposição e ativação." },
+    ],
+  },
+  {
+    key: "desinflamar",
+    emoji: "🌿",
+    title: "Desinflamar",
+    subtitle: "Para incluir ingredientes naturais com ação antioxidante e apoiar uma alimentação menos inflamatória.",
+    pageTitle: "Desinflamar",
+    intro: "Apoiar hábitos alimentares que favoreçam uma rotina menos inflamatória e uma sensação maior de leveza.",
+    shots: [
+      { id: "shot-05-desinflamar", shortPhrase: "Para incluir ingredientes naturais associados a uma alimentação menos inflamatória." },
+      { id: "shot-06-curcuma-gold", shortPhrase: "Uma combinação antioxidante para variar seu ritual da manhã." },
+    ],
+  },
+];
+
 function BebidasPage() {
   const [openItem, setOpenItem] = useState<FoodItem | null>(null);
   const [selectedGoal, setSelectedGoal] = useState<GoalKey | null>(null);
   const [selectedShakeGoal, setSelectedShakeGoal] = useState<ShakeGoalKey | null>(null);
+  const [selectedShotGoal, setSelectedShotGoal] = useState<ShotGoalKey | null>(null);
 
   const activeGoal = GOALS.find((g) => g.key === selectedGoal) ?? null;
   const activeShakeGoal = SHAKE_GOALS.find((g) => g.key === selectedShakeGoal) ?? null;
+  const activeShotGoal = SHOT_GOALS.find((g) => g.key === selectedShotGoal) ?? null;
 
   const openTeaGoal = (key: GoalKey) => {
     setSelectedShakeGoal(null);
+    setSelectedShotGoal(null);
     setSelectedGoal(key);
   };
   const openShakeGoal = (key: ShakeGoalKey) => {
     setSelectedGoal(null);
+    setSelectedShotGoal(null);
     setSelectedShakeGoal(key);
+  };
+  const openShotGoal = (key: ShotGoalKey) => {
+    setSelectedGoal(null);
+    setSelectedShakeGoal(null);
+    setSelectedShotGoal(key);
   };
 
   const pageTitle = activeGoal
     ? activeGoal.pageTitle
     : activeShakeGoal
       ? activeShakeGoal.pageTitle
-      : "Ferramentas Funcionais";
+      : activeShotGoal
+        ? activeShotGoal.pageTitle
+        : "Ferramentas Funcionais";
   const pageSubtitle = activeGoal
     ? activeGoal.intro
     : activeShakeGoal
       ? activeShakeGoal.intro
-      : "Escolha conforme o que seu corpo precisa hoje.";
+      : activeShotGoal
+        ? activeShotGoal.intro
+        : "Escolha conforme o que seu corpo precisa hoje.";
 
   return (
     <AppShell title={pageTitle} subtitle={pageSubtitle} back="/alimentacao">
@@ -614,6 +808,47 @@ function BebidasPage() {
             <ArrowLeft size={14} aria-hidden /> Voltar aos objetivos
           </button>
         </>
+      ) : activeShotGoal ? (
+        <>
+          <ul className="grid gap-2">
+            {activeShotGoal.shots.map((shot) => {
+              const item = DRINKS.find((d) => d.id === shot.id);
+              if (!item) return null;
+              return (
+                <li key={shot.id}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenItem(item)}
+                    className="flex w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-3 text-left hover:bg-surface"
+                  >
+                    {item.image ? (
+                      <img
+                        src={encodeURI(item.image)}
+                        alt=""
+                        className="h-14 w-14 shrink-0 rounded-lg object-cover"
+                        loading="lazy"
+                      />
+                    ) : null}
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold text-foreground">{item.name}</span>
+                      <span className="block text-xs text-text-muted">{item.category}</span>
+                      <span className="mt-0.5 block text-xs text-text-secondary">{shot.shortPhrase}</span>
+                    </span>
+                    <ChevronRight size={18} className="shrink-0 text-text-muted" aria-hidden />
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          <button
+            type="button"
+            onClick={() => setSelectedShotGoal(null)}
+            className="mt-4 inline-flex min-h-8 items-center gap-1 text-xs font-semibold text-primary hover:underline"
+          >
+            <ArrowLeft size={14} aria-hidden /> Voltar aos objetivos
+          </button>
+        </>
       ) : (
         <>
           <p className="text-sm text-text-secondary">
@@ -675,21 +910,32 @@ function BebidasPage() {
             </ul>
           </section>
 
-          <div className="mt-4 grid gap-4">
-            {CATEGORIES.filter((cat) => cat.title !== "Chás" && cat.title !== "Shakes").map((cat) => (
-              <section key={cat.title} className="rounded-2xl border border-border bg-surface p-5">
-                <div className="flex items-center gap-2">
-                  <cat.icon size={18} className="text-primary" aria-hidden />
-                  <h2 className="text-sm font-semibold">{cat.title}</h2>
-                </div>
-                <ul className="mt-3 grid gap-2">
-                  {DRINKS.filter((d) => d.category === cat.title).map((d) => (
-                    <FoodItemRow key={d.id} item={d} onOpen={setOpenItem} />
-                  ))}
-                </ul>
-              </section>
-            ))}
-          </div>
+          <section className="mt-4 rounded-2xl border border-border bg-surface p-5">
+            <h2 className="text-sm font-semibold">Shots Funcionais</h2>
+            <p className="mt-1 text-xs text-text-secondary">
+              Escolha um objetivo para começar o dia cuidando da sua vitalidade, metabolismo e equilíbrio.
+            </p>
+            <ul className="mt-4 grid gap-2">
+              {SHOT_GOALS.map((g) => (
+                <li key={g.key}>
+                  <button
+                    type="button"
+                    onClick={() => openShotGoal(g.key)}
+                    className="flex min-h-16 w-full items-center gap-3 rounded-xl border border-border bg-surface-2 p-4 text-left hover:bg-surface"
+                  >
+                    <span className="text-xl" aria-hidden>
+                      {g.emoji}
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-semibold text-foreground">{g.title}</span>
+                      <span className="block text-xs text-text-secondary">{g.subtitle}</span>
+                    </span>
+                    <ChevronRight size={18} className="shrink-0 text-text-muted" aria-hidden />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </section>
 
           <Link to="/alimentacao" className="mt-4 inline-flex text-xs font-semibold text-primary hover:underline">
             Voltar para Alimentação
