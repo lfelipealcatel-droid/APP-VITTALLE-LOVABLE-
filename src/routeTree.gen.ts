@@ -56,7 +56,7 @@ import { Route as SequenciaIdRouteImport } from './routes/sequencia.$id'
 import { Route as BonusIdConteudoRouteImport } from './routes/bonus.$id.conteudo'
 import { Route as GuiaIdConteudoRouteImport } from './routes/guia.$id.conteudo'
 import { Route as GuiaIdMaterialRouteImport } from './routes/guia.$id.material'
-import { Route as GuiaIdPdfRouteImport } from './routes/guia.$id.pdf'
+import { Route as GuiaIdPdfRouteImport } from './routes/guia.$id_.pdf'
 import { Route as ProdutoIdIndexRouteImport } from './routes/produto.$id.index'
 import { Route as ProdutoIdAcessarRouteImport } from './routes/produto.$id.acessar'
 import { Route as ProdutoIdCheckoutRouteImport } from './routes/produto.$id.checkout'
@@ -302,9 +302,9 @@ const GuiaIdMaterialRoute = GuiaIdMaterialRouteImport.update({
   getParentRoute: () => GuiaIdRoute,
 } as any)
 const GuiaIdPdfRoute = GuiaIdPdfRouteImport.update({
-  id: '/pdf',
-  path: '/pdf',
-  getParentRoute: () => GuiaIdRoute,
+  id: '/guia/$id_/pdf',
+  path: '/guia/$id/pdf',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProdutoIdIndexRoute = ProdutoIdIndexRouteImport.update({
   id: '/produto/$id/',
@@ -477,7 +477,7 @@ export interface FileRoutesById {
   '/bonus/$id/conteudo': typeof BonusIdConteudoRoute
   '/guia/$id/conteudo': typeof GuiaIdConteudoRoute
   '/guia/$id/material': typeof GuiaIdMaterialRoute
-  '/guia/$id/pdf': typeof GuiaIdPdfRoute
+  '/guia/$id_/pdf': typeof GuiaIdPdfRoute
   '/produto/$id/acessar': typeof ProdutoIdAcessarRoute
   '/produto/$id/checkout': typeof ProdutoIdCheckoutRoute
   '/produto/$id/': typeof ProdutoIdIndexRoute
@@ -638,7 +638,7 @@ export interface FileRouteTypes {
     | '/bonus/$id/conteudo'
     | '/guia/$id/conteudo'
     | '/guia/$id/material'
-    | '/guia/$id/pdf'
+    | '/guia/$id_/pdf'
     | '/produto/$id/acessar'
     | '/produto/$id/checkout'
     | '/produto/$id/'
@@ -680,6 +680,7 @@ export interface RootRouteChildren {
   LeituraDiaRoute: typeof LeituraDiaRoute
   SequenciaIdRoute: typeof SequenciaIdRoute
   JornadaIndexRoute: typeof JornadaIndexRoute
+  GuiaIdPdfRoute: typeof GuiaIdPdfRoute
   ProdutoIdAcessarRoute: typeof ProdutoIdAcessarRoute
   ProdutoIdCheckoutRoute: typeof ProdutoIdCheckoutRoute
   ProdutoIdIndexRoute: typeof ProdutoIdIndexRoute
@@ -1016,12 +1017,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GuiaIdMaterialRouteImport
       parentRoute: typeof GuiaIdRoute
     }
-    '/guia/$id/pdf': {
-      id: '/guia/$id/pdf'
-      path: '/pdf'
+    '/guia/$id_/pdf': {
+      id: '/guia/$id_/pdf'
+      path: '/guia/$id/pdf'
       fullPath: '/guia/$id/pdf'
       preLoaderRoute: typeof GuiaIdPdfRouteImport
-      parentRoute: typeof GuiaIdRoute
+      parentRoute: typeof rootRouteImport
     }
     '/produto/$id/': {
       id: '/produto/$id/'
@@ -1098,13 +1099,11 @@ const BonusIdRouteWithChildren =
 interface GuiaIdRouteChildren {
   GuiaIdConteudoRoute: typeof GuiaIdConteudoRoute
   GuiaIdMaterialRoute: typeof GuiaIdMaterialRoute
-  GuiaIdPdfRoute: typeof GuiaIdPdfRoute
 }
 
 const GuiaIdRouteChildren: GuiaIdRouteChildren = {
   GuiaIdConteudoRoute: GuiaIdConteudoRoute,
   GuiaIdMaterialRoute: GuiaIdMaterialRoute,
-  GuiaIdPdfRoute: GuiaIdPdfRoute,
 }
 
 const GuiaIdRouteWithChildren =
@@ -1146,6 +1145,7 @@ const rootRouteChildren: RootRouteChildren = {
   LeituraDiaRoute: LeituraDiaRoute,
   SequenciaIdRoute: SequenciaIdRoute,
   JornadaIndexRoute: JornadaIndexRoute,
+  GuiaIdPdfRoute: GuiaIdPdfRoute,
   ProdutoIdAcessarRoute: ProdutoIdAcessarRoute,
   ProdutoIdCheckoutRoute: ProdutoIdCheckoutRoute,
   ProdutoIdIndexRoute: ProdutoIdIndexRoute,

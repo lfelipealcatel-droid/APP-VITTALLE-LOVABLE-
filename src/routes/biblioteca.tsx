@@ -87,7 +87,9 @@ function Biblioteca() {
                 <div className="p-3">
                   <p className="text-sm font-medium">{g.title}</p>
                   <p className="text-xs text-text-secondary">{g.subtitle}</p>
-                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-primary">{g.cta}</p>
+                  <p className="mt-1 text-[11px] font-semibold uppercase tracking-wide text-primary">
+                    {g.pdf ? "Abrir guia" : g.cta}
+                  </p>
                 </div>
               </Link>
             ))}

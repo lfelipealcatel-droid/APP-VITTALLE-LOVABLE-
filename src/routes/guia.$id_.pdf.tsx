@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-ro
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { guideById } from "@/lib/mock-data";
 
-export const Route = createFileRoute("/guia/$id/pdf")({
+export const Route = createFileRoute("/guia/$id_/pdf")({
   loader: ({ params }) => {
     const g = guideById(params.id);
     if (!g || !g.pdf) throw notFound();
@@ -32,13 +32,7 @@ function GuiaPdfPage() {
   // padrão já usado para as imagens de café/almoço/lanche/jantar/chá/shake/shot.
   const pdfUrl = encodeURI(guide.pdf!);
 
-  const goBack = () => {
-    if (typeof window !== "undefined" && window.history.length > 1) {
-      window.history.back();
-      return;
-    }
-    navigate({ to: "/biblioteca" });
-  };
+  const goBack = () => navigate({ to: "/biblioteca" });
 
   return (
     <div className="fixed inset-0 z-50 flex h-[100dvh] w-screen flex-col bg-background">
