@@ -1,6 +1,12 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink } from "lucide-react";
 import { guideById } from "@/lib/mock-data";
+
+// Download seletivo: só faz sentido como checklist prático de compras. Os demais guias
+// (Método Monta-Prato, Superalimentos e Substituições, Refeições Rápidas) continuam só leitura.
+const DOWNLOAD_LABEL_BY_GUIDE_ID: Record<string, string> = {
+  "lista-de-compras-inteligente": "Baixar checklist",
+};
 
 export const Route = createFileRoute("/guia/$id_/pdf")({
   loader: ({ params }) => {
@@ -31,6 +37,8 @@ function GuiaPdfPage() {
   // guide.pdf contém espaço literal (ex.: "GAMMA PROJETOS"); encodeURI() na hora de usar, mesmo
   // padrão já usado para as imagens de café/almoço/lanche/jantar/chá/shake/shot.
   const pdfUrl = encodeURI(guide.pdf!);
+  const downloadLabel = DOWNLOAD_LABEL_BY_GUIDE_ID[guide.id];
+  const fileName = guide.pdf!.split("/").pop();
 
   const goBack = () => navigate({ to: "/biblioteca" });
 
@@ -45,6 +53,18 @@ function GuiaPdfPage() {
           <ArrowLeft size={18} aria-hidden /> Voltar aos Guias
         </button>
         <h1 className="min-w-0 flex-1 truncate text-center text-sm font-semibold">{guide.title}</h1>
+        {downloadLabel ? (
+          <a
+            href={pdfUrl}
+            download={fileName}
+            aria-label={downloadLabel}
+            title={downloadLabel}
+            className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full px-2 text-xs font-semibold text-primary hover:bg-surface-2 sm:px-3"
+          >
+            <Download size={16} aria-hidden />
+            <span className="hidden sm:inline">{downloadLabel}</span>
+          </a>
+        ) : null}
         <a
           href={pdfUrl}
           target="_blank"

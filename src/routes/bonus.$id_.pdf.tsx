@@ -1,6 +1,13 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink } from "lucide-react";
 import { bonusById } from "@/lib/mock-data";
+
+// Download seletivo: só faz sentido nos materiais imprimíveis/checklist. "Guia de Superalimentos
+// Hormonais" continua só leitura.
+const DOWNLOAD_LABEL_BY_BONUS_ID: Record<string, string> = {
+  "lista-8-pratos": "Baixar checklist",
+  "diario-hormonal-21-dias": "Baixar diário para imprimir",
+};
 
 // Nome de arquivo com "$id_" (não "$id") por design: evita que esta rota seja tratada como filha de
 // /bonus/$id (bonus.$id.tsx), que é uma tela intermediária sem <Outlet />. Mesmo padrão já validado
@@ -34,6 +41,8 @@ function BonusPdfPage() {
   // bonus.pdf contém espaço e "ô" literais (ex.: "bônus"); encodeURI() na hora de usar, mesmo
   // padrão já usado nos Guias Práticos e nas imagens de café/almoço/lanche/jantar/chá/shake/shot.
   const pdfUrl = encodeURI(bonus.pdf!);
+  const downloadLabel = DOWNLOAD_LABEL_BY_BONUS_ID[bonus.id];
+  const fileName = bonus.pdf!.split("/").pop();
 
   const goBack = () => navigate({ to: "/biblioteca" });
 
@@ -48,6 +57,18 @@ function BonusPdfPage() {
           <ArrowLeft size={18} aria-hidden /> Voltar à Biblioteca
         </button>
         <h1 className="min-w-0 flex-1 truncate text-center text-sm font-semibold">{bonus.title}</h1>
+        {downloadLabel ? (
+          <a
+            href={pdfUrl}
+            download={fileName}
+            aria-label={downloadLabel}
+            title={downloadLabel}
+            className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full px-2 text-xs font-semibold text-primary hover:bg-surface-2 sm:px-3"
+          >
+            <Download size={16} aria-hidden />
+            <span className="hidden sm:inline">{downloadLabel}</span>
+          </a>
+        ) : null}
         <a
           href={pdfUrl}
           target="_blank"
