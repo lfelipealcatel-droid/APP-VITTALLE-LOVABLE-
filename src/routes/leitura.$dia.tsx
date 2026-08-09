@@ -1,10 +1,9 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Headphones } from "lucide-react";
-import { AppShell } from "@/components/app-shell";
-import { MediaPlaceholder } from "@/components/media-placeholder";
-import { DAYS, readingByDay } from "@/lib/mock-data";
-import { setDayActivity } from "@/lib/store";
+import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
+import { Check, Clock, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { AppShell } from "@/components/app-shell";
+import { DAYS, readingByDay } from "@/lib/mock-data";
+import { isDayActivityDone, setDayActivity, useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/leitura/$dia")({
   loader: ({ params }) => {
@@ -16,48 +15,56 @@ export const Route = createFileRoute("/leitura/$dia")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: loaderData ? `Leitura do Dia ${loaderData.day.id} — VITTALLE` : "Leitura — VITTALLE" },
-      { name: "description", content: loaderData?.reading.intro ?? "Leitura oficial do dia." },
+      { title: loaderData ? `Insight do Dia ${loaderData.day.id} — ${loaderData.reading.title} · VITTALLE` : "Insight do Dia — VITTALLE" },
+      { name: "description", content: loaderData?.reading.subtitle ?? "Insight oficial do dia." },
     ],
   }),
   component: LeituraPage,
   notFoundComponent: () => (
-    <AppShell title="Leitura" back="/jornada">
-      <p className="text-sm text-text-secondary">Leitura não encontrada.</p>
+    <AppShell title="Insight do Dia" back="/jornada">
+      <p className="text-sm text-text-secondary">Este insight não foi encontrado.</p>
     </AppShell>
   ),
 });
 
 function LeituraPage() {
   const { reading, day } = Route.useLoaderData();
-  const marcar = () => {
+  const [state] = useAppState();
+  const navigate = useNavigate();
+  const done = isDayActivityDone(state, day.id, "leitura");
+
+  const concluir = () => {
     setDayActivity(day.id, "leitura", true);
-    toast.success("Leitura concluída");
+    toast.success("Insight concluído");
+    navigate({ to: "/jornada/$dia", params: { dia: String(day.id) } });
   };
+
   return (
-    <AppShell title={`Leitura do Dia ${day.id}`} subtitle={reading.title} back={`/jornada/${day.id}`}>
-      <article className="rounded-3xl border border-border bg-surface p-6">
-        <MediaPlaceholder type="reading" cover={day.id % 2 === 0 ? "green" : "warm"} aspect="wide" label="Leitura" />
-        <h1 className="mt-4 font-editorial text-2xl">{reading.title}</h1>
-        <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-text-secondary">{reading.body}</p>
-
-        <div className="mt-6 rounded-2xl border border-border bg-surface-2 p-4">
-          <p className="text-[11px] uppercase tracking-wide text-text-muted">Narração da leitura</p>
-          <div className="mt-2 flex items-center gap-3">
-            <Headphones size={20} className="text-primary" aria-hidden />
-            <Link to="/conteudo/$id" params={{ id: reading.audioId }} className="text-sm font-semibold text-primary hover:underline">
-              Ouvir a narração oficial
-            </Link>
-          </div>
+    <AppShell back={`/jornada/${day.id}`}>
+      <article className="mx-auto max-w-[560px]">
+        <div className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
+          <Sparkles size={13} aria-hidden /> Insight do Dia
         </div>
+        <h1 className="mt-2 font-editorial text-3xl font-medium leading-tight text-foreground">{reading.title}</h1>
+        <p className="mt-3 flex items-center gap-1.5 text-xs text-text-muted">
+          <Clock size={13} aria-hidden /> 2 min de leitura
+        </p>
 
-        <button
-          type="button"
-          onClick={marcar}
-          className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground"
-        >
-          Marcar leitura como concluída
-        </button>
+        <div className="mt-6 whitespace-pre-line text-base leading-loose text-text-secondary">{reading.body}</div>
+
+        {done ? (
+          <p className="mt-8 flex items-center gap-1.5 text-sm font-medium text-secondary-dark">
+            <Check size={16} aria-hidden /> Insight concluído
+          </p>
+        ) : (
+          <button
+            type="button"
+            onClick={concluir}
+            className="mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-primary-dark sm:w-auto"
+          >
+            <Check size={16} aria-hidden /> Concluir insight
+          </button>
+        )}
       </article>
     </AppShell>
   );

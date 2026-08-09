@@ -21,7 +21,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
-import { USER, DAYS, WEEK_LABEL, WEEK_HERO_IMAGE, sequenceById } from "@/lib/mock-data";
+import { USER, DAYS, WEEK_LABEL, WEEK_HERO_IMAGE, sequenceById, readingByDay } from "@/lib/mock-data";
 import type { DayActivityKey } from "@/lib/store";
 import {
   canOpenDay,
@@ -74,6 +74,7 @@ function DiaPage() {
   }
 
   const seq = sequenceById(day.sequenceId);
+  const reading = readingByDay(day.id);
   const complete = isDayCompleted(state, day.id);
   const unread = 4 - state.notificationsRead.length;
   const heroImage = WEEK_HERO_IMAGE[day.week as 1 | 2 | 3];
@@ -192,16 +193,14 @@ function DiaPage() {
 
       <h3 className="mb-3 mt-6 text-sm font-semibold text-text-secondary">Passos de hoje</h3>
       <ul className="grid gap-3">
-        <DayBlock
-          icon={Book}
-          title="Leitura do Dia"
-          description="Leia agora ou ouça a narração oficial."
-          durationMin={4}
-          done={isDayActivityDone(state, day.id, "leitura")}
-          onToggle={() => doAction("leitura")}
-          ctaHref={`/leitura/${day.id}`}
-          ctaLabel="Ler agora"
-        />
+        {reading ? (
+          <InsightCard
+            title={reading.title}
+            subtitle={reading.subtitle}
+            done={isDayActivityDone(state, day.id, "leitura")}
+            href={`/leitura/${day.id}`}
+          />
+        ) : null}
 
         <DayBlock
           icon={Dumbbell}
@@ -320,6 +319,52 @@ function DiaPage() {
   }
 }
 
+
+function InsightCard({
+  title,
+  subtitle,
+  done,
+  href,
+}: {
+  title: string;
+  subtitle: string;
+  done: boolean;
+  href: string;
+}) {
+  return (
+    <li>
+      <Link
+        to={href}
+        className={cn(
+          "block rounded-2xl border p-4 shadow-soft transition duration-150 active:shadow-none",
+          done ? "border-secondary/30 bg-soft-green/40" : "border-primary/20 bg-warm",
+        )}
+      >
+        <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary-dark">
+          <Sparkles size={13} aria-hidden /> Insight do Dia
+        </p>
+        <h4 className="mt-1.5 font-editorial text-lg leading-snug text-foreground">{title}</h4>
+        <p className="mt-1 line-clamp-3 text-sm text-text-secondary">{subtitle}</p>
+        <div className="mt-3 flex items-center justify-between gap-2">
+          <span className="flex items-center gap-1 text-[11px] text-text-muted">
+            <Clock size={12} aria-hidden /> 2 min de leitura
+          </span>
+          <span className={cn("flex shrink-0 items-center gap-1 text-xs font-semibold", done ? "text-secondary-dark" : "text-primary")}>
+            {done ? (
+              <>
+                <Check size={14} aria-hidden /> Insight concluído
+              </>
+            ) : (
+              <>
+                Ler insight <ArrowRight size={14} aria-hidden />
+              </>
+            )}
+          </span>
+        </div>
+      </Link>
+    </li>
+  );
+}
 
 function DayBlock({
   icon: Icon,
