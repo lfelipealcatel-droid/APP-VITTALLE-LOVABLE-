@@ -719,7 +719,7 @@ export const PRODUCTS: Product[] = [
     ],
     includes: [
       "21 dias guiados",
-      "21 leituras com narração",
+      "21 insights guiados",
       "Sequências oficiais de movimento",
       "Biblioteca Alimentar",
       "Bônus oficiais em PDF",

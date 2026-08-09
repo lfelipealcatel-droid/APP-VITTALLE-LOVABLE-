@@ -34,6 +34,10 @@ function ProdutoPage() {
   const productState = productStateFor(state, product);
   const navigate = useNavigate();
   const bg = product.cover === "green" ? "bg-soft-green" : "bg-warm";
+  // Hero secundária em imagem (ver public/imagens/biblioteca/secundario) — só para o produto principal.
+  // Os demais produtos continuam com o hero em gradiente/cor existente, sem alteração.
+  const secondaryHeroImage =
+    product.id === "plano-barriga-hormonal-40" ? "/imagens/biblioteca/secundario/plano barriga secundario.png" : null;
 
   const primaryAction = () => {
     if (productState === "acquired") {
@@ -52,18 +56,24 @@ function ProdutoPage() {
 
   return (
     <AppShell title={product.title} back="/biblioteca" hideMiniPlayer>
-      <div className={`relative -mx-5 mb-6 aspect-[16/9] overflow-hidden md:-mx-8 ${bg}`}>
-        <div className="absolute inset-0 bg-gradient-to-tr from-black/10 via-transparent to-white/40" aria-hidden />
-        <div className="absolute left-6 top-6">
-          <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${PRODUCT_STATE_STYLE[productState]}`}>
-            {PRODUCT_STATE_LABEL[productState]}
-          </span>
+      {secondaryHeroImage ? (
+        <div className="-mx-5 mb-6 md:-mx-8">
+          <img src={encodeURI(secondaryHeroImage)} alt={product.title} className="h-auto w-full" loading="eager" />
         </div>
-        <div className="absolute bottom-6 left-6 right-6">
-          <p className="text-xs uppercase tracking-wide text-primary-dark">{product.subtitle}</p>
-          <h1 className="mt-1 font-editorial text-2xl leading-tight text-primary-dark md:text-3xl">{product.title}</h1>
+      ) : (
+        <div className={`relative -mx-5 mb-6 aspect-[16/9] overflow-hidden md:-mx-8 ${bg}`}>
+          <div className="absolute inset-0 bg-gradient-to-tr from-black/10 via-transparent to-white/40" aria-hidden />
+          <div className="absolute left-6 top-6">
+            <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${PRODUCT_STATE_STYLE[productState]}`}>
+              {PRODUCT_STATE_LABEL[productState]}
+            </span>
+          </div>
+          <div className="absolute bottom-6 left-6 right-6">
+            <p className="text-xs uppercase tracking-wide text-primary-dark">{product.subtitle}</p>
+            <h1 className="mt-1 font-editorial text-2xl leading-tight text-primary-dark md:text-3xl">{product.title}</h1>
+          </div>
         </div>
-      </div>
+      )}
 
       <section className="rounded-2xl border border-border bg-surface p-5">
         <p className="text-sm">{product.longDescription}</p>
