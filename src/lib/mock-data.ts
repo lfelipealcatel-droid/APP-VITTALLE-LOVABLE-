@@ -492,6 +492,96 @@ export function readingByDay(dayId: number) {
   return READINGS.find((r) => r.dayId === dayId);
 }
 
+// ---------- Micro-hábitos oficiais (4 no total, introduzidos progressivamente) ----------
+// São só 4 hábitos ao longo dos 21 dias — não 21 hábitos diferentes. Cada um entra em um dia oficial
+// (1, 2, 5, 8) e continua fazendo parte da rotina depois disso. day.habit (texto genérico usado só na
+// descrição do card "Hábito do dia" da tela do Dia) não foi tocado por esta tarefa.
+export type HabitId = "copo-antes-cafe" | "desligar" | "luz-manha" | "pausa-3-minutos";
+
+export interface Habit {
+  id: HabitId;
+  eyebrow: string;
+  title: string;
+  intro: string; // explicação curta
+  whatToDoToday: string;
+  why: string;
+  closing: string;
+  introducedOnDay: number;
+  // Descritor de uma linha, usado só na revisão do Dia 7 (não inventado: vem do conteúdo oficial).
+  reviewLabel?: string;
+}
+
+export const HABITS: Habit[] = [
+  {
+    id: "copo-antes-cafe",
+    eyebrow: "Comece pelo simples",
+    title: "O copo antes do café",
+    intro:
+      "Antes do café da manhã, tome um copo de água.\n\nÉ um gesto pequeno para começar o dia se hidratando e criar um primeiro sinal de cuidado com o corpo logo pela manhã.",
+    whatToDoToday: "Tome 1 copo de água antes do seu café da manhã.",
+    why: "Você começa o dia com uma ação simples, rápida e fácil de repetir — sem precisar mudar toda a sua rotina.",
+    closing: "Não precisa ser perfeito.\n\nSó precisa acontecer.",
+    introducedOnDay: 1,
+    reviewLabel: "Hidratação logo no começo do dia.",
+  },
+  {
+    id: "desligar",
+    eyebrow: "Desacelere o dia",
+    title: "O desligar",
+    intro:
+      "Antes de dormir, crie alguns minutos de desaceleração.\n\nReduza estímulos, diminua o ritmo e dê ao corpo um sinal claro de que o dia está terminando.",
+    whatToDoToday: "Escolha alguns minutos antes de dormir para diminuir luz, tela e agitação.",
+    why: "Um pequeno ritual noturno ajuda a separar o ritmo do dia do momento de descanso.",
+    closing: "Você não precisa ter uma noite perfeita.\n\nSó precisa criar um momento de transição.",
+    introducedOnDay: 2,
+    reviewLabel: "Um momento para desacelerar antes de dormir.",
+  },
+  {
+    id: "luz-manha",
+    eyebrow: "Comece o dia lá fora",
+    title: "A luz da manhã",
+    intro:
+      "Pela manhã, procure alguns minutos de contato com a luz natural.\n\nPode ser na varanda, na janela aberta, no quintal ou durante uma pequena caminhada.",
+    whatToDoToday: "Passe alguns minutos em contato com a luz natural no início do dia.",
+    why: "A luz da manhã ajuda o corpo a reconhecer que o dia começou e favorece uma rotina mais organizada entre manhã e noite.",
+    closing: "Poucos minutos já transformam isso em um hábito possível.",
+    introducedOnDay: 5,
+    reviewLabel: "Contato com luz natural no início do dia.",
+  },
+  {
+    id: "pausa-3-minutos",
+    eyebrow: "Pare por 3 minutos",
+    title: "A pausa de 3 minutos",
+    intro: "Em algum momento do dia, interrompa o ritmo por apenas três minutos.\n\nSem tarefa.\nSem cobrança.\nSem precisar produzir nada.",
+    whatToDoToday:
+      "Pare por 3 minutos.\n\nSente-se ou fique em pé de forma confortável.\n\nRespire mais devagar e permita que o corpo saia, por alguns instantes, do ritmo automático do dia.",
+    why: "Uma pausa curta pode ajudar você a perceber o próprio ritmo e evitar passar o dia inteiro funcionando no automático.",
+    closing: "Três minutos cabem até nos dias difíceis.",
+    introducedOnDay: 8,
+  },
+];
+
+const HABIT_ORDER: HabitId[] = ["copo-antes-cafe", "desligar", "luz-manha", "pausa-3-minutos"];
+
+export function habitById(id: HabitId) {
+  return HABITS.find((h) => h.id === id)!;
+}
+
+// Hábitos já introduzidos até (e incluindo) o dia informado — usado nos recaps "Seus hábitos até aqui".
+export function habitsIntroducedUpTo(dayId: number): Habit[] {
+  return HABITS.filter((h) => h.introducedOnDay <= dayId);
+}
+
+// Hábito em foco ("hábito principal do dia") — nos dias oficiais de estreia, é sempre o hábito novo.
+// Nos demais dias, alterna de forma simples entre os hábitos já disponíveis (determinístico, sem sorteio).
+export function habitForDay(dayId: number): Habit {
+  const justIntroduced = HABITS.find((h) => h.introducedOnDay === dayId);
+  if (justIntroduced) return justIntroduced;
+  const pool = habitsIntroducedUpTo(dayId - 1).length > 0 ? habitsIntroducedUpTo(dayId - 1) : [HABITS[0]];
+  const chosen = pool[(dayId - 1) % pool.length];
+  return chosen ?? HABITS[0];
+}
+
 // ---------- Áudios oficiais ----------
 export type AudioOwner = "front" | "bump2" | "upsell";
 
