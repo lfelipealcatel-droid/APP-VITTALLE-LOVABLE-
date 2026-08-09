@@ -56,8 +56,22 @@ function Medidas() {
         </div>
         <Field label="Peso (kg)"><input type="number" step="0.1" value={form.weight} onChange={(e) => setForm({ ...form, weight: e.target.value })} className="input" placeholder="Ex.: 68.5" /></Field>
         <div className="grid grid-cols-2 gap-3">
-          <Field label="Energia (1 a 5)"><input type="range" min={1} max={5} value={form.energy} onChange={(e) => setForm({ ...form, energy: e.target.value })} /></Field>
-          <Field label="Inchaço (1 a 5)"><input type="range" min={1} max={5} value={form.bloating} onChange={(e) => setForm({ ...form, bloating: e.target.value })} /></Field>
+          <label className="grid gap-1 text-xs text-text-secondary">
+            <span>Energia (1 a 5): <b className="text-text-primary">{form.energy}</b></span>
+            <input type="range" min={1} max={5} value={form.energy} onChange={(e) => setForm({ ...form, energy: e.target.value })} />
+            <div className="flex justify-between text-[10px] text-text-muted">
+              <span>1 = muito baixa</span>
+              <span>5 = muito alta</span>
+            </div>
+          </label>
+          <label className="grid gap-1 text-xs text-text-secondary">
+            <span>Inchaço (1 a 5): <b className="text-text-primary">{form.bloating}</b></span>
+            <input type="range" min={1} max={5} value={form.bloating} onChange={(e) => setForm({ ...form, bloating: e.target.value })} />
+            <div className="flex justify-between text-[10px] text-text-muted">
+              <span>1 = nenhum</span>
+              <span>5 = muito</span>
+            </div>
+          </label>
         </div>
         <Field label="Observações"><textarea rows={2} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className="input" placeholder="Como você se sentiu?" /></Field>
         <button type="submit" className="mt-2 inline-flex min-h-12 items-center justify-center rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground">
