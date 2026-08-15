@@ -22,6 +22,7 @@ export const USER = {
 
 // ---------- Sequências oficiais (nomes amigáveis) ----------
 export type SequenceId =
+  | "ativacao-corpo-inteiro"
   | "respirar-e-soltar"
   | "soltar-e-mover"
   | "acordar-o-corpo"
@@ -33,10 +34,27 @@ export interface Sequence {
   id: SequenceId;
   name: string;
   durationMin: number;
-  description: string;
+  description: string; // usado no card "Aula do Dia" (jornada.$dia.tsx)
+  // Campos opcionais da experiência de videoaula real (por enquanto, só a do Dia 1 os usa).
+  // Quando ausentes, a tela da aula (sequencia.$id.tsx) mantém o layout/placeholder já existente.
+  focusArea?: string;
+  screenTagline?: string;
+  screenDescription?: string;
+  // Playback ID do Mux (vídeo oficial, hospedado). Quando presente, a tela da aula usa o Mux Player.
+  muxPlaybackId?: string;
 }
 
 export const SEQUENCES: Sequence[] = [
+  {
+    id: "ativacao-corpo-inteiro",
+    name: "Ativação de Corpo Inteiro",
+    durationMin: 8,
+    description: "8 minutos para despertar o corpo, ativar a circulação e começar a se movimentar.",
+    focusArea: "Corpo inteiro",
+    screenTagline: "Comece no seu ritmo",
+    screenDescription: "Desperte o corpo, ganhe mobilidade e dê o primeiro passo para sair da inércia.",
+    muxPlaybackId: "3L67HDOq3XI9kPNPduCpPKdd4s01x1mWfr7vZCkHv007o",
+  },
   { id: "respirar-e-soltar", name: "Respirar e Soltar", durationMin: 8, description: "Uma abertura suave para o corpo e para a respiração." },
   { id: "soltar-e-mover", name: "Soltar e Mover", durationMin: 8, description: "Mobilidade leve para desinchar e destravar." },
   { id: "acordar-o-corpo", name: "Acordar o Corpo", durationMin: 8, description: "Ativação de baixo impacto para começar a acordar o core." },
@@ -631,6 +649,7 @@ export interface JourneyDay {
 }
 
 function seqForDay(dayId: number): SequenceId {
+  if (dayId === 1) return "ativacao-corpo-inteiro";
   if (dayId <= 3) return "respirar-e-soltar";
   if (dayId <= 7) return "soltar-e-mover";
   if (dayId <= 10) return "acordar-o-corpo";

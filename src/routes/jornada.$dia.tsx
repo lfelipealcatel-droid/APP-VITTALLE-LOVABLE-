@@ -205,12 +205,13 @@ function DiaPage() {
         <DayBlock
           icon={Dumbbell}
           title="Aula do Dia"
-          description={day.id === 1 ? "Uma abertura suave para o corpo e para a respiração." : (seq?.description ?? "Aula oficial de baixo impacto.")}
+          subtitle={day.id === 1 ? seq?.name : undefined}
+          description={seq?.description ?? "Aula oficial de baixo impacto."}
           durationMin={seq?.durationMin ?? 8}
           done={isDayActivityDone(state, day.id, "sequencia")}
           onToggle={() => doAction("sequencia")}
           ctaHref={`/sequencia/${day.sequenceId}`}
-          ctaLabel="Assistir aula"
+          ctaLabel={day.id === 1 ? "Começar a aula" : "Assistir aula"}
         />
 
         <DayBlock
@@ -369,6 +370,7 @@ function InsightCard({
 function DayBlock({
   icon: Icon,
   title,
+  subtitle,
   description,
   durationMin,
   done,
@@ -382,6 +384,10 @@ function DayBlock({
 }: {
   icon: typeof Book;
   title: string;
+  // Linha opcional, mais destacada que a description — usada hoje só pelo card "Aula do Dia" do
+  // Dia 1, para mostrar o nome da aula (ex.: "Ativação de Corpo Inteiro"). Quando ausente, o card
+  // renderiza exatamente como antes.
+  subtitle?: string;
   description: string;
   durationMin: number;
   done: boolean;
@@ -417,6 +423,7 @@ function DayBlock({
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold text-foreground">{title}</p>
+            {subtitle ? <p className="text-sm font-medium text-primary-dark">{subtitle}</p> : null}
             <p className="text-xs text-text-secondary">{description}</p>
             <p className="mt-1 flex items-center gap-1 text-[11px] text-text-muted">
               <Clock size={12} aria-hidden /> {durationMin} min

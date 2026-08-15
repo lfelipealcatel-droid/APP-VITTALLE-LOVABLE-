@@ -30,3 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Vídeos de produção das aulas — hospedados no Mux, não devem ir para o Git (arquivos grandes,
+# ultrapassam o limite de tamanho de arquivo do GitHub). Local apenas para uso/teste no disco.
+/public/imagens/biblioteca/AULAS/*.mp4
