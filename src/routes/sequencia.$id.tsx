@@ -108,18 +108,15 @@ function SequenciaPage() {
           >
             <Check size={16} aria-hidden /> {done ? "Aula concluída" : "Concluir aula"}
           </button>
-          <button
-            type="button"
-            onClick={() => setDor((v) => !v)}
-            className={
-              hasRealVideo
-                ? "inline-flex min-h-9 items-center gap-1.5 text-xs font-medium text-text-muted hover:text-text-secondary hover:underline"
-                : "inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-medium"
-            }
-          >
-            <AlertTriangle size={hasRealVideo ? 14 : 16} aria-hidden />{" "}
-            {hasRealVideo ? "Senti dor ou desconforto" : "Senti dor"}
-          </button>
+          {hasRealVideo ? null : (
+            <button
+              type="button"
+              onClick={() => setDor((v) => !v)}
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-medium"
+            >
+              <AlertTriangle size={16} aria-hidden /> Senti dor
+            </button>
+          )}
         </div>
 
         {dor ? (
