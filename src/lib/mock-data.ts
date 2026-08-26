@@ -20,47 +20,138 @@ export const USER = {
   totalDays: 21,
 };
 
-// ---------- Sequências oficiais (nomes amigáveis) ----------
+// ---------- Aulas oficiais (videoaulas reais A–H, hospedadas no Mux) ----------
+// Substitui o sistema antigo de sequências por intervalo de dias. São 8 aulas reais,
+// reutilizadas ao longo dos 21 dias conforme o mapa oficial aprovado (ver DAY_SEQUENCE_MAP).
 export type SequenceId =
-  | "ativacao-corpo-inteiro"
-  | "respirar-e-soltar"
-  | "soltar-e-mover"
-  | "acordar-o-corpo"
-  | "ganhar-forca"
-  | "firmar"
-  | "sequencia-completa";
+  | "ativacao-corpo-inteiro" // Aula A
+  | "cardio-em-pe-moderado" // Aula B
+  | "abdomen-iniciante" // Aula C
+  | "corpo-inteiro-core-tapete" // Aula D
+  | "forca-corpo-inteiro" // Aula E
+  | "cardio-sem-saltos" // Aula F
+  | "abdomen-core-avancado" // Aula G
+  | "cardio-hiit-sem-saltos"; // Aula H
 
 export interface Sequence {
   id: SequenceId;
   name: string;
   durationMin: number;
   description: string; // usado no card "Aula do Dia" (jornada.$dia.tsx)
-  // Campos opcionais da experiência de videoaula real (por enquanto, só a do Dia 1 os usa).
-  // Quando ausentes, a tela da aula (sequencia.$id.tsx) mantém o layout/placeholder já existente.
   focusArea?: string;
   screenTagline?: string;
   screenDescription?: string;
-  // Playback ID do Mux (vídeo oficial, hospedado). Quando presente, a tela da aula usa o Mux Player.
+  // Playback ID do Mux (vídeo oficial, hospedado). Todas as 8 aulas oficiais possuem este campo.
   muxPlaybackId?: string;
 }
 
 export const SEQUENCES: Sequence[] = [
   {
+    // Aula A — copy definitiva aprovada.
     id: "ativacao-corpo-inteiro",
     name: "Ativação de Corpo Inteiro",
     durationMin: 8,
-    description: "8 minutos para despertar o corpo, ativar a circulação e começar a se movimentar.",
+    description:
+      "Movimente o corpo inteiro, desperte a musculatura e saia da inércia. Um começo leve para ganhar disposição e colocar seu corpo novamente em movimento rumo a menos barriga e medidas.",
     focusArea: "Corpo inteiro",
-    screenTagline: "Comece no seu ritmo",
-    screenDescription: "Desperte o corpo, ganhe mobilidade e dê o primeiro passo para sair da inércia.",
+    screenTagline: "Comece fazendo seu corpo voltar a responder",
+    screenDescription:
+      "Movimente o corpo inteiro, desperte a musculatura e saia da inércia. Um começo leve para ganhar disposição e colocar seu corpo novamente em movimento rumo a menos barriga e medidas.",
     muxPlaybackId: "3L67HDOq3XI9kPNPduCpPKdd4s01x1mWfr7vZCkHv007o",
   },
-  { id: "respirar-e-soltar", name: "Respirar e Soltar", durationMin: 8, description: "Uma abertura suave para o corpo e para a respiração." },
-  { id: "soltar-e-mover", name: "Soltar e Mover", durationMin: 8, description: "Mobilidade leve para desinchar e destravar." },
-  { id: "acordar-o-corpo", name: "Acordar o Corpo", durationMin: 8, description: "Ativação de baixo impacto para começar a acordar o core." },
-  { id: "ganhar-forca", name: "Ganhar Força", durationMin: 9, description: "Fortalecimento suave e progressivo, sem impacto." },
-  { id: "firmar", name: "Firmar", durationMin: 9, description: "Consolidação: postura, core e presença." },
-  { id: "sequencia-completa", name: "Sua Sequência Completa", durationMin: 10, description: "A integração de tudo que você aprendeu." },
+  {
+    // Aula B — copy definitiva aprovada.
+    id: "cardio-em-pe-moderado",
+    name: "Cardio em Pé",
+    durationMin: 11,
+    description:
+      "Uma sequência em pé para elevar o ritmo, aumentar o gasto calórico e movimentar o corpo inteiro — sem precisar de exercícios complicados.",
+    focusArea: "Cardio",
+    screenTagline: "Mais ritmo para queimar mais calorias",
+    screenDescription:
+      "Uma sequência em pé para elevar o ritmo, aumentar o gasto calórico e movimentar o corpo inteiro — sem precisar de exercícios complicados.",
+    muxPlaybackId: "vurkfwyXrXg4Jng01TqQc02qvCP027lBo0002r4Gilkv6XlI",
+  },
+  {
+    // Aula C — copy definitiva aprovada.
+    id: "abdomen-iniciante",
+    name: "Abdômen Iniciante",
+    durationMin: 10,
+    description:
+      "Movimentos focados no abdômen para fortalecer a região, melhorar o controle dos movimentos e começar a construir uma barriga mais firme.",
+    focusArea: "Abdômen",
+    screenTagline: "Sua barriga vai sentir a diferença",
+    screenDescription:
+      "Movimentos focados no abdômen para fortalecer a região, melhorar o controle dos movimentos e começar a construir uma barriga mais firme.",
+    muxPlaybackId: "XrhvAA00sdcBJGIX1CkmrFRFnKfempsO4koDQEBnpHX4",
+  },
+  {
+    // Aula D — copy definitiva aprovada. focusArea ajustado de "Corpo inteiro e core" para
+    // "Corpo inteiro e abdômen" só para manter consistência com o novo nome (não é copy nova).
+    id: "corpo-inteiro-core-tapete",
+    name: "Corpo Inteiro + Abdômen",
+    durationMin: 8,
+    description:
+      "Combine movimentos para o abdômen, pernas e outras partes do corpo para trabalhar mais músculos, aumentar o gasto calórico e conquistar mais firmeza.",
+    focusArea: "Corpo inteiro e abdômen",
+    screenTagline: "Barriga e corpo inteiro trabalhando juntos",
+    screenDescription:
+      "Combine movimentos para o abdômen, pernas e outras partes do corpo para trabalhar mais músculos, aumentar o gasto calórico e conquistar mais firmeza.",
+    muxPlaybackId: "XHRC8L02cgjF395gCAC5NxrN7X3PwWgEUu5005GdiAox00",
+  },
+  {
+    // Aula E — copy definitiva aprovada.
+    id: "forca-corpo-inteiro",
+    name: "Força + Corpo Inteiro",
+    durationMin: 9,
+    description:
+      "Uma sequência de força que coloca grandes grupos musculares em ação para aumentar o gasto calórico, ganhar firmeza e apoiar seu processo de emagrecimento depois dos 40.",
+    focusArea: "Força",
+    screenTagline: "Mais músculos trabalhando. Mais calorias em jogo.",
+    screenDescription:
+      "Uma sequência de força que coloca grandes grupos musculares em ação para aumentar o gasto calórico, ganhar firmeza e apoiar seu processo de emagrecimento depois dos 40.",
+    muxPlaybackId: "v9SwDm9b00NpOpuevLbx5HzfEFa3FyElB8Ql7kQPsTYA",
+  },
+  {
+    // Aula F — copy definitiva aprovada.
+    id: "cardio-sem-saltos",
+    name: "Cardio sem Saltos",
+    durationMin: 8,
+    description:
+      "Aumente o ritmo e o gasto calórico movimentando o corpo inteiro, com uma sequência dinâmica e sem depender de exercícios de alto impacto.",
+    focusArea: "Cardio",
+    screenTagline: "Queime calorias sem precisar saltar",
+    screenDescription:
+      "Aumente o ritmo e o gasto calórico movimentando o corpo inteiro, com uma sequência dinâmica e sem depender de exercícios de alto impacto.",
+    muxPlaybackId: "3AOo1c4S0000Y8y022ANOVEQzUl2tlStd27401remig01J8c",
+  },
+  {
+    // Aula G — copy definitiva aprovada. focusArea ajustado de "Abdômen e core" para "Abdômen"
+    // só para manter consistência com o novo nome (não é copy nova).
+    id: "abdomen-core-avancado",
+    name: "Abdômen Avançado",
+    durationMin: 8,
+    description:
+      "Você evoluiu. Agora entram movimentos mais desafiadores para fortalecer ainda mais o abdômen, aumentar a firmeza e continuar avançando na redução de medidas.",
+    focusArea: "Abdômen",
+    screenTagline: "Agora sua barriga vai trabalhar mais",
+    screenDescription:
+      "Você evoluiu. Agora entram movimentos mais desafiadores para fortalecer ainda mais o abdômen, aumentar a firmeza e continuar avançando na redução de medidas.",
+    muxPlaybackId: "nCLkk9s5vDcluxl5leyHX2W2LNciARWIyIWTno3VXJI",
+  },
+  {
+    // Aula H — copy definitiva aprovada.
+    id: "cardio-hiit-sem-saltos",
+    name: "Cardio Intenso sem Saltos",
+    durationMin: 10,
+    description:
+      "Seu corpo está preparado para um novo desafio. Mais ritmo para elevar o gasto calórico, trabalhar o corpo inteiro e avançar no emagrecimento — sem precisar saltar.",
+    focusArea: "Cardio",
+    screenTagline: "Mais intensidade para acelerar seus resultados",
+    screenDescription:
+      "Seu corpo está preparado para um novo desafio. Mais ritmo para elevar o gasto calórico, trabalhar o corpo inteiro e avançar no emagrecimento — sem precisar saltar.",
+    muxPlaybackId: "rlYnizWYoprwhdP1G1801kr01HMKuZAVOgw00SFXbAgrgg",
+  },
 ];
 
 export function sequenceById(id: string): Sequence | undefined {
@@ -648,14 +739,36 @@ export interface JourneyDay {
   ceremony?: boolean; // Dia 21
 }
 
+// Mapa oficial e explícito de qual aula (A–H) cada um dos 21 dias usa. Aprovado pelo Tech Lead —
+// substitui o cálculo antigo por intervalo de dias. Mesma aula pode aparecer em mais de um dia
+// (ex.: Aula E nos dias 4, 10, 14 e 17) — é intencional, não é duplicação de asset.
+const DAY_SEQUENCE_MAP: Record<number, SequenceId> = {
+  1: "ativacao-corpo-inteiro", // Aula A
+  2: "cardio-em-pe-moderado", // Aula B
+  3: "ativacao-corpo-inteiro", // Aula A
+  4: "forca-corpo-inteiro", // Aula E
+  5: "abdomen-iniciante", // Aula C
+  6: "cardio-sem-saltos", // Aula F
+  7: "corpo-inteiro-core-tapete", // Aula D
+  8: "abdomen-iniciante", // Aula C
+  9: "cardio-sem-saltos", // Aula F
+  10: "forca-corpo-inteiro", // Aula E
+  11: "corpo-inteiro-core-tapete", // Aula D
+  12: "abdomen-core-avancado", // Aula G
+  13: "cardio-em-pe-moderado", // Aula B
+  14: "forca-corpo-inteiro", // Aula E
+  15: "cardio-sem-saltos", // Aula F
+  16: "abdomen-core-avancado", // Aula G
+  17: "forca-corpo-inteiro", // Aula E
+  18: "cardio-hiit-sem-saltos", // Aula H
+  19: "abdomen-core-avancado", // Aula G
+  20: "cardio-hiit-sem-saltos", // Aula H
+  21: "cardio-hiit-sem-saltos", // Aula H
+};
+
 function seqForDay(dayId: number): SequenceId {
-  if (dayId === 1) return "ativacao-corpo-inteiro";
-  if (dayId <= 3) return "respirar-e-soltar";
-  if (dayId <= 7) return "soltar-e-mover";
-  if (dayId <= 10) return "acordar-o-corpo";
-  if (dayId <= 14) return "ganhar-forca";
-  if (dayId <= 20) return "firmar";
-  return "sequencia-completa";
+  // Fallback nunca deveria disparar: DAYS cobre exatamente os dias 1–21, todos presentes no mapa acima.
+  return DAY_SEQUENCE_MAP[dayId] ?? "ativacao-corpo-inteiro";
 }
 
 function weekForDay(dayId: number): { week: 1 | 2 | 3; phase: WeekPhase } {

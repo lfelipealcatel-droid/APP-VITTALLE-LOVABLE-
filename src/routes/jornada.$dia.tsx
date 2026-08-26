@@ -205,13 +205,14 @@ function DiaPage() {
         <DayBlock
           icon={Dumbbell}
           title="Aula do Dia"
-          subtitle={day.id === 1 ? seq?.name : undefined}
+          subtitle={seq?.muxPlaybackId ? seq.name : undefined}
           description={seq?.description ?? "Aula oficial de baixo impacto."}
           durationMin={seq?.durationMin ?? 8}
           done={isDayActivityDone(state, day.id, "sequencia")}
           onToggle={() => doAction("sequencia")}
           ctaHref={`/sequencia/${day.sequenceId}`}
-          ctaLabel={day.id === 1 ? "Começar a aula" : "Assistir aula"}
+          ctaSearch={{ dia: day.id }}
+          ctaLabel={seq?.muxPlaybackId ? "Começar a aula" : "Assistir aula"}
         />
 
         <DayBlock
@@ -376,6 +377,7 @@ function DayBlock({
   done,
   onToggle,
   ctaHref,
+  ctaSearch,
   ctaLabel,
   disabled,
   disabledHint,
@@ -393,6 +395,9 @@ function DayBlock({
   done: boolean;
   onToggle: () => void;
   ctaHref?: string;
+  // Search params opcionais do CTA (ex.: { dia: day.id } no card "Aula do Dia", para a tela da
+  // sequência saber de qual dia a usuária veio, já que a mesma aula pode pertencer a vários dias).
+  ctaSearch?: Record<string, unknown>;
   ctaLabel: string;
   disabled?: boolean;
   disabledHint?: string;
@@ -442,6 +447,7 @@ function DayBlock({
             ) : (
               <Link
                 to={ctaHref}
+                search={ctaSearch}
                 className={cn(
                   "inline-flex min-h-10 items-center justify-center gap-1 rounded-full px-4 text-xs font-semibold text-white transition",
                   accent === "secondary" ? "bg-secondary-dark hover:bg-secondary" : "bg-primary hover:bg-primary-dark",

@@ -3,12 +3,20 @@ import MuxPlayer from "@mux/mux-player-react";
 import { AlertTriangle, Check, Play, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 import { AppShell } from "@/components/app-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
 import { EXERCISES, sequenceById } from "@/lib/mock-data";
 import { activeDay, isDayActivityDone, setDayActivity, useAppState } from "@/lib/store";
 
+// Uma mesma aula (A–H) é reutilizada em vários dias (ex.: Aula E nos dias 4, 10, 14 e 17), então a
+// tela precisa saber de qual dia a usuária veio — não dá para inferir isso só pelo id da aula.
+const searchSchema = z.object({
+  dia: z.coerce.number().int().min(1).max(21).optional().catch(undefined),
+});
+
 export const Route = createFileRoute("/sequencia/$id")({
+  validateSearch: searchSchema,
   loader: ({ params }) => {
     const seq = sequenceById(params.id);
     if (!seq) throw notFound();
@@ -31,10 +39,13 @@ export const Route = createFileRoute("/sequencia/$id")({
 
 function SequenciaPage() {
   const { seq } = Route.useLoaderData();
+  const { dia } = Route.useSearch();
   const [dor, setDor] = useState(false);
   const nav = useNavigate();
   const [state] = useAppState();
-  const dayId = activeDay(state);
+  // Dia de origem explícito (veio do card "Aula do Dia"). Sem ele — acesso direto à rota, ou valor
+  // inválido/fora de 1–21 (já filtrado pelo searchSchema) — cai de volta no dia ativo, como antes.
+  const dayId = dia ?? activeDay(state);
   const done = isDayActivityDone(state, dayId, "sequencia");
   // Experiência de videoaula real (Mux) — hoje só a do Dia 1 (ativacao-corpo-inteiro) tem
   // playbackId/tagline próprios. As demais sequências continuam com o layout/placeholder existente.
