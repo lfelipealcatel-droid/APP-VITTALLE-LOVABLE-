@@ -4,7 +4,15 @@ import {
   Outlet,
   useRouterState,
 } from "@tanstack/react-router";
-import { Apple, Droplets, HelpCircle, Salad, ShoppingBasket, Sparkles } from "lucide-react";
+import {
+  Apple,
+  ArrowRight,
+  Droplets,
+  HelpCircle,
+  Salad,
+  ShoppingBasket,
+  Sparkles,
+} from "lucide-react";
 import { z } from "zod";
 import { AppShell } from "@/components/app-shell";
 import { GUIDES } from "@/lib/mock-data";
@@ -78,21 +86,56 @@ function Alimentacao() {
       </section>
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-text-secondary">Para consultar quando precisar</h2>
-        <ul className="grid gap-2">
-          <Row
+        <h2 className="mb-3 text-sm font-semibold text-text-secondary">
+          Sua alimentação no dia a dia
+        </h2>
+        <div className="grid gap-3 sm:grid-cols-2">
+          <Link
             to="/alimentacao/refeicoes-modelo"
-            icon={ShoppingBasket}
-            title="Refeições Inteligentes"
-            description="Sugestões simples para montar refeições equilibradas no café da manhã, almoço, lanche e jantar."
-          />
-          <Row
+            className="flex flex-col gap-3 rounded-2xl border border-secondary/20 bg-soft-green p-5"
+          >
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface/70 text-secondary-dark">
+              <ShoppingBasket size={20} aria-hidden />
+            </span>
+            <div>
+              <p className="text-sm font-semibold text-foreground">Refeições Inteligentes</p>
+              <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-secondary-dark">
+                Café da manhã • Almoço • Lanche • Jantar
+              </p>
+              <p className="mt-2 text-xs text-text-secondary">
+                Sugestões que mudam ao longo da sua jornada para facilitar suas escolhas todos os
+                dias.
+              </p>
+            </div>
+            <span className="mt-1 inline-flex min-h-10 w-fit items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-semibold text-primary-foreground">
+              Ver minhas refeições <ArrowRight size={14} aria-hidden />
+            </span>
+          </Link>
+
+          <Link
             to="/alimentacao/bebidas-funcionais"
-            icon={Droplets}
-            title="Chás, Shakes e Shots Funcionais"
-            description="Receitas rápidas para apoiar hidratação, saciedade, energia e escolhas mais equilibradas."
-          />
-        </ul>
+            className="flex flex-col gap-3 rounded-2xl border border-primary/20 bg-warm p-5"
+          >
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface/70 text-primary-dark">
+              <Droplets size={20} aria-hidden />
+            </span>
+            <div>
+              <p className="text-sm font-semibold text-foreground">
+                Chás, Shakes e Shots Funcionais
+              </p>
+              <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary-dark">
+                Para diferentes momentos do seu dia
+              </p>
+              <p className="mt-2 text-xs text-text-secondary">
+                Receitas práticas para desinchar, apoiar o metabolismo, trazer energia, saciedade,
+                vitalidade e relaxamento.
+              </p>
+            </div>
+            <span className="mt-1 inline-flex min-h-10 w-fit items-center gap-1.5 rounded-xl bg-primary px-4 text-xs font-semibold text-primary-foreground">
+              Ver chás, shakes e shots <ArrowRight size={14} aria-hidden />
+            </span>
+          </Link>
+        </div>
       </section>
 
       <section className="mt-6">
@@ -139,7 +182,7 @@ function Row({
   title: string;
   description: string;
   // Repassa o dia de origem (ver searchSchema acima) só nos links que dependem dele
-  // (Missão alimentar, Sugestão do dia). Refeições Inteligentes e Bebidas Funcionais não precisam.
+  // (Missão alimentar, Sugestão do dia).
   search?: Record<string, unknown>;
 }) {
   return (
