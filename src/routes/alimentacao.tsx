@@ -4,15 +4,7 @@ import {
   Outlet,
   useRouterState,
 } from "@tanstack/react-router";
-import {
-  Apple,
-  ArrowRight,
-  Droplets,
-  HelpCircle,
-  Salad,
-  ShoppingBasket,
-  Sparkles,
-} from "lucide-react";
+import { Apple, ArrowRight, HelpCircle, Salad, Sparkles } from "lucide-react";
 import { z } from "zod";
 import { AppShell } from "@/components/app-shell";
 import { GUIDES } from "@/lib/mock-data";
@@ -94,9 +86,6 @@ function Alimentacao() {
             to="/alimentacao/refeicoes-modelo"
             className="flex flex-col gap-3 rounded-2xl border border-secondary/20 bg-soft-green p-5"
           >
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface/70 text-secondary-dark">
-              <ShoppingBasket size={20} aria-hidden />
-            </span>
             <div>
               <p className="text-sm font-semibold text-foreground">Refeições Inteligentes</p>
               <p className="mt-0.5 text-[11px] font-semibold uppercase tracking-wide text-secondary-dark">
@@ -116,9 +105,6 @@ function Alimentacao() {
             to="/alimentacao/bebidas-funcionais"
             className="flex flex-col gap-3 rounded-2xl border border-primary/20 bg-warm p-5"
           >
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface/70 text-primary-dark">
-              <Droplets size={20} aria-hidden />
-            </span>
             <div>
               <p className="text-sm font-semibold text-foreground">
                 Chás, Shakes e Shots Funcionais
