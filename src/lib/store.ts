@@ -296,12 +296,25 @@ export function setDemoDayOverride(day: number | null) {
   setState({ demoDayOverride: day });
 }
 
+// Passos exigidos para considerar o onboarding concluído. "absolvicao" e "horario" ficaram de fora
+// porque não fazem mais parte do bloco "Prepare seu primeiro dia" (Dia 1) — sem isso, `onboarded`
+// nunca viraria true, já que nada na experiência da usuária ainda marca esses dois passos.
+const REQUIRED_ONBOARDING_STEPS: (keyof OnboardingState)[] = [
+  "inaugural",
+  "orientacaoMedicao",
+  "medicaoInicial",
+  "mapa",
+];
+
 export function completeOnboardingStep(step: keyof OnboardingState, value = true) {
-  setState((prev) => ({
-    onboarding: { ...prev.onboarding, [step]: value },
-    onboarded: value && Object.entries({ ...prev.onboarding, [step]: value }).every(([, v]) => v),
-    startDateISO: prev.startDateISO ?? new Date().toISOString(),
-  }));
+  setState((prev) => {
+    const nextOnboarding = { ...prev.onboarding, [step]: value };
+    return {
+      onboarding: nextOnboarding,
+      onboarded: value && REQUIRED_ONBOARDING_STEPS.every((s) => nextOnboarding[s]),
+      startDateISO: prev.startDateISO ?? new Date().toISOString(),
+    };
+  });
 }
 
 export function resetAll() {

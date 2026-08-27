@@ -74,7 +74,6 @@ function Jornada() {
                           {completed ? "Concluído" : canOpen ? `${done} de ${total} passos` : "Se abre no seu tempo"}
                         </p>
                       </div>
-                      <span className="text-[11px] uppercase tracking-wide text-text-muted">{day.totalMin} min</span>
                     </div>
                   </MaybeLink>
                 </li>

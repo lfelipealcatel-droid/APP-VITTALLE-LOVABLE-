@@ -8,7 +8,6 @@ import {
   ClipboardCheck,
   Clock,
   Dumbbell,
-  Headphones,
   Heart,
   HeartHandshake,
   Leaf,
@@ -146,10 +145,8 @@ function DiaPage() {
           <p className="mt-1 text-sm text-text-secondary">Faça estes passos rápidos para começar com segurança.</p>
           <ol className="mt-4 grid gap-2.5">
             <ChegadaStep step="inaugural" icon={Video} label="Vídeo de boas-vindas" openLabel="Assistir" />
-            <ChegadaStep step="absolvicao" icon={Headphones} label="Áudio da Absolvição" openLabel="Ouvir" />
             <ChegadaStep step="orientacaoMedicao" icon={Tag} label="Como fazer sua medição" openLabel="Ver orientação" />
             <ChegadaStep step="medicaoInicial" icon={Ruler} label="Medição inicial" openLabel="Registrar" href="/medidas" />
-            <ChegadaStep step="horario" icon={Clock} label="Escolha seu melhor horário" openLabel="Configurar" />
             <ChegadaStep step="mapa" icon={Calendar} label="Conheça sua jornada de 21 dias" openLabel="Ver jornada" />
           </ol>
 
