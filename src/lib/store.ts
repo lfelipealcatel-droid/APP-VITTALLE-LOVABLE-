@@ -39,13 +39,21 @@ export interface AppState {
   onboarding: OnboardingState;
   startDateISO: string | null;
 
-  // Progresso por dia por bloco (chave: `${dayId}:${key}`)
+  // Progresso REAL por dia por bloco (chave: `${dayId}:${key}`). Nunca escrito nem lido enquanto
+  // demoMode está ativo — ver `demoDayActivities` abaixo para o equivalente do Modo Demonstração.
   dayActivities: Record<string, boolean>;
 
-  // Data local (YYYY-MM-DD, fuso do navegador) em que cada `dayActivities` virou true — mesma chave
-  // (`${dayId}:${key}`). Usado hoje só para "sequencia" (Aula do Dia): é o que permite saber se já
-  // "virou o dia" desde que a aula foi concluída, sem depender de um timer de 24h corridas.
+  // Data local (YYYY-MM-DD, fuso do navegador) em que cada `dayActivities` REAL virou true — mesma
+  // chave (`${dayId}:${key}`). Usado hoje só para "sequencia" (Aula do Dia): é o que permite saber
+  // se já "virou o dia" desde que a aula foi concluída, sem depender de um timer de 24h corridas.
   activityDates: Record<string, string>;
+
+  // Espelho de `dayActivities`/`activityDates` usado EXCLUSIVAMENTE enquanto demoMode está ativo.
+  // Existem para que marcar/simular atividades no painel de demonstração nunca contamine o
+  // progresso real da usuária (e vice-versa) — os dois pares de mapas nunca são lidos nem escritos
+  // ao mesmo tempo; qual par é usado depende só do valor atual de `demoMode`.
+  demoDayActivities: Record<string, boolean>;
+  demoActivityDates: Record<string, string>;
 
   // Compat: ids de conteúdos "concluídos" (usado por Home/telas antigas)
   completedActivities: string[];
@@ -56,11 +64,15 @@ export interface AppState {
   checklist: Record<string, boolean>;
   measurements: Measurement[];
   notificationsRead: string[];
-  ownedProducts: string[]; // entitlements simulados
+  ownedProducts: string[]; // entitlements REAIS da usuária
 
   // Modo demonstração
   demoMode: boolean;
   demoDayOverride: number | null;
+  // Espelho de `ownedProducts` usado EXCLUSIVAMENTE enquanto demoMode está ativo — mesma lógica de
+  // separação de `demoDayActivities`/`demoActivityDates`: simular produtos adquiridos/bloqueados no
+  // painel /demo nunca deve alterar os entitlements reais da usuária, e vice-versa.
+  demoOwnedProducts: string[];
 
   preferences: {
     reminderTime: string;
@@ -93,6 +105,8 @@ const DEFAULT_STATE: AppState = {
   startDateISO: null,
   dayActivities: {},
   activityDates: {},
+  demoDayActivities: {},
+  demoActivityDates: {},
   completedActivities: [],
   favorites: [],
   downloads: [],
@@ -103,6 +117,7 @@ const DEFAULT_STATE: AppState = {
   ownedProducts: ["plano-barriga-hormonal-40"],
   demoMode: false,
   demoDayOverride: null,
+  demoOwnedProducts: ["plano-barriga-hormonal-40"],
   preferences: {
     reminderTime: "08:00",
     reducedMotion: false,
@@ -218,15 +233,25 @@ function todayLocalDateString(): string {
   return `${year}-${month}-${day}`;
 }
 
+// Escreve SOMENTE no par de mapas correspondente ao modo atual — real (dayActivities/activityDates)
+// quando demoMode é false, ou de demonstração (demoDayActivities/demoActivityDates) quando é true.
+// Nunca escreve nos dois ao mesmo tempo: é isso que impede que marcar uma atividade durante um
+// teste no Modo Demonstração contamine o progresso real da usuária, e vice-versa.
 export function setDayActivity(dayId: number, key: DayActivityKey, done: boolean) {
   setState((prev) => {
     const activityKey = `${dayId}:${key}`;
-    const nextDates = { ...prev.activityDates };
-    if (done) {
-      nextDates[activityKey] = todayLocalDateString();
-    } else {
-      delete nextDates[activityKey];
+    if (prev.demoMode) {
+      const nextDemoDates = { ...prev.demoActivityDates };
+      if (done) nextDemoDates[activityKey] = todayLocalDateString();
+      else delete nextDemoDates[activityKey];
+      return {
+        demoDayActivities: { ...prev.demoDayActivities, [activityKey]: done },
+        demoActivityDates: nextDemoDates,
+      };
     }
+    const nextDates = { ...prev.activityDates };
+    if (done) nextDates[activityKey] = todayLocalDateString();
+    else delete nextDates[activityKey];
     return {
       dayActivities: { ...prev.dayActivities, [activityKey]: done },
       activityDates: nextDates,
@@ -234,22 +259,41 @@ export function setDayActivity(dayId: number, key: DayActivityKey, done: boolean
   });
 }
 
+// Lê do mesmo par de mapas que `setDayActivity` escreveria agora, conforme `demoMode` — garante que
+// a leitura sempre reflita o modo atual, sem misturar progresso real com progresso simulado.
 export function isDayActivityDone(state: AppState, dayId: number, key: DayActivityKey) {
-  return !!state.dayActivities[`${dayId}:${key}`];
+  const activityKey = `${dayId}:${key}`;
+  return state.demoMode
+    ? !!state.demoDayActivities[activityKey]
+    : !!state.dayActivities[activityKey];
 }
 
 export const DAY_KEYS: DayActivityKey[] = ["leitura", "sequencia", "alimentacao", "habito", "checkin"];
 
-// Remove somente as chaves de dayActivities do dia informado (uso: painel /demo). Não toca outros dias, onboarding, medições ou produtos.
+// Remove somente as chaves do dia informado, no mapa correspondente ao modo atual (uso: painel
+// /demo, "Limpar somente este dia"). Não toca outros dias, onboarding, medições ou produtos — e,
+// fora do Modo Demonstração, nunca toca no progresso real.
 export function clearDayActivities(dayId: number) {
   setState((prev) => {
+    const dayPrefix = `${dayId}:`;
+    if (prev.demoMode) {
+      const nextDemo = { ...prev.demoDayActivities };
+      const nextDemoDates = { ...prev.demoActivityDates };
+      for (const key of Object.keys(nextDemo)) {
+        if (key.startsWith(dayPrefix)) delete nextDemo[key];
+      }
+      for (const key of Object.keys(nextDemoDates)) {
+        if (key.startsWith(dayPrefix)) delete nextDemoDates[key];
+      }
+      return { demoDayActivities: nextDemo, demoActivityDates: nextDemoDates };
+    }
     const next = { ...prev.dayActivities };
     const nextDates = { ...prev.activityDates };
     for (const key of Object.keys(next)) {
-      if (key.startsWith(`${dayId}:`)) delete next[key];
+      if (key.startsWith(dayPrefix)) delete next[key];
     }
     for (const key of Object.keys(nextDates)) {
-      if (key.startsWith(`${dayId}:`)) delete nextDates[key];
+      if (key.startsWith(dayPrefix)) delete nextDates[key];
     }
     return { dayActivities: next, activityDates: nextDates };
   });
@@ -257,7 +301,8 @@ export function clearDayActivities(dayId: number) {
 
 export function dayProgress(state: AppState, dayId: number, includesMeasurement = false) {
   const keys = includesMeasurement ? [...DAY_KEYS, "medicao" as DayActivityKey] : DAY_KEYS;
-  const done = keys.filter((k) => state.dayActivities[`${dayId}:${k}`]).length;
+  const activities = state.demoMode ? state.demoDayActivities : state.dayActivities;
+  const done = keys.filter((k) => activities[`${dayId}:${k}`]).length;
   return { done, total: keys.length, ratio: done / keys.length };
 }
 
@@ -322,17 +367,24 @@ export function hasFinalMeasurement(state: AppState) {
   return state.measurements.some((m) => m.final);
 }
 
+// Lê do mesmo array que `setOwnedProduct` escreveria agora, conforme `demoMode` — entitlements
+// simulados no painel /demo nunca aparecem como adquiridos no modo normal, e vice-versa.
 export function ownsProduct(state: AppState, id: string) {
-  return state.ownedProducts.includes(id);
+  const owned = state.demoMode ? state.demoOwnedProducts : state.ownedProducts;
+  return owned.includes(id);
 }
 
+// Escreve SOMENTE no array correspondente ao modo atual — real (ownedProducts) quando demoMode é
+// false, ou de demonstração (demoOwnedProducts) quando é true. Mesma regra de `setDayActivity`.
 export function setOwnedProduct(id: string, owned: boolean) {
   setState((prev) => {
-    const has = prev.ownedProducts.includes(id);
+    const field = prev.demoMode ? "demoOwnedProducts" : "ownedProducts";
+    const list = prev[field];
+    const has = list.includes(id);
     if (has === owned) return {};
     return {
-      ownedProducts: owned ? [...prev.ownedProducts, id] : prev.ownedProducts.filter((x) => x !== id),
-    };
+      [field]: owned ? [...list, id] : list.filter((x) => x !== id),
+    } as Partial<AppState>;
   });
 }
 
@@ -371,15 +423,16 @@ export function resetAll() {
   listeners.forEach((l) => l(current!));
 }
 
+// "Reiniciar demonstração": limpa SOMENTE o estado de teste do Modo Demonstração (atividades, dia
+// simulado e entitlements simulados, voltando ao mesmo baseline de um usuário real novo). O painel
+// /demo não controla measurements, onboarding, completedActivities nem startDateISO — então este
+// reset não deve tocar nesses campos reais, para não apagar progresso/compra de verdade só porque a
+// demonstração foi reiniciada.
 export function resetDemo() {
   setState({
-    dayActivities: {},
-    activityDates: {},
-    completedActivities: [],
-    measurements: [],
+    demoDayActivities: {},
+    demoActivityDates: {},
     demoDayOverride: null,
-    onboarding: DEFAULT_STATE.onboarding,
-    onboarded: false,
-    startDateISO: null,
+    demoOwnedProducts: DEFAULT_STATE.demoOwnedProducts,
   });
 }

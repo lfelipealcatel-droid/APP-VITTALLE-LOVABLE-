@@ -10,6 +10,7 @@ import {
   hasFinalMeasurement,
   hasInitialMeasurement,
   isDayActivityDone,
+  ownsProduct,
   resetDemo,
   setDayActivity,
   setDemoDayOverride,
@@ -253,7 +254,7 @@ function DemoPage() {
         <h2 className="text-sm font-semibold">Entitlements simulados</h2>
         <ul className="mt-3 grid gap-2">
           {PRODUCTS.map((p) => {
-            const owned = state.ownedProducts.includes(p.id);
+            const owned = ownsProduct(state, p.id);
             return (
               <li key={p.id} className="flex items-center justify-between gap-3 rounded-xl border border-border p-3">
                 <div className="min-w-0">

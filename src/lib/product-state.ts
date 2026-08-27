@@ -1,8 +1,8 @@
-import type { AppState } from "@/lib/store";
+import { ownsProduct, type AppState } from "@/lib/store";
 import type { Product, ProductState } from "@/lib/mock-data";
 
 export function productStateFor(state: AppState, p: Product): ProductState {
-  if (state.ownedProducts.includes(p.id)) return "acquired";
+  if (ownsProduct(state, p.id)) return "acquired";
   if (p.category === "core") return "acquired";
   if (p.category === "upsell") return "recommended";
   return "available";

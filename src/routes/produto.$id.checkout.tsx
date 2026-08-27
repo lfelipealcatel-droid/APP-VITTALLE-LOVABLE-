@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
 import { productById } from "@/lib/mock-data";
-import { setOwnedProduct, useAppState } from "@/lib/store";
+import { ownsProduct, setOwnedProduct, useAppState } from "@/lib/store";
 import { USER } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/produto/$id/checkout")({
@@ -38,7 +38,7 @@ function CheckoutPage() {
   const [agree, setAgree] = useState(true);
   const [confirmed, setConfirmed] = useState(false);
 
-  const alreadyOwns = state.ownedProducts.includes(product.id);
+  const alreadyOwns = ownsProduct(state, product.id);
 
   const finalize = (e: React.FormEvent) => {
     e.preventDefault();
