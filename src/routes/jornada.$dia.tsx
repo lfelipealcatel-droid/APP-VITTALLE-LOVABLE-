@@ -173,18 +173,9 @@ function DiaPage() {
         <div className="mt-4 rounded-2xl border border-secondary/30 bg-soft-green p-5">
           <p className="font-editorial text-lg">Dia concluído</p>
           <p className="mt-1 text-sm text-text-secondary">Você deu mais um passo importante hoje.</p>
-          {day.ceremony ? (
-            <Link
-              to="/cerimonia"
-              className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-medium text-primary-foreground"
-            >
-              Abrir a Cerimônia do Dia 21 <ArrowRight size={16} aria-hidden />
-            </Link>
-          ) : (
-            <Link to="/jornada" className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-4 text-sm font-medium text-secondary-foreground">
-              Voltar para a jornada <ArrowRight size={16} aria-hidden />
-            </Link>
-          )}
+          <Link to="/jornada" className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-secondary px-4 text-sm font-medium text-secondary-foreground">
+            Voltar para a jornada <ArrowRight size={16} aria-hidden />
+          </Link>
         </div>
       ) : null}
 

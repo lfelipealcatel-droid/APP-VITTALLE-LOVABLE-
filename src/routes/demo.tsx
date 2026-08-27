@@ -83,9 +83,6 @@ function DemoPage() {
           ))}
         </div>
         <div className="mt-3 flex flex-wrap gap-2">
-          <Link to="/cerimonia" className="inline-flex min-h-10 items-center rounded-xl border border-border bg-surface px-3 text-xs font-medium hover:bg-surface-2">
-            Abrir cerimônia do Dia 21
-          </Link>
           <button
             type="button"
             disabled={!state.demoMode}
@@ -248,9 +245,6 @@ function DemoPage() {
           </Link>
           <Link to="/medidas" className="inline-flex min-h-10 items-center rounded-xl border border-border bg-surface px-3 text-xs font-medium hover:bg-surface-2">
             Abrir Medidas
-          </Link>
-          <Link to="/cerimonia" className="inline-flex min-h-10 items-center rounded-xl border border-border bg-surface px-3 text-xs font-medium hover:bg-surface-2">
-            Abrir Cerimônia
           </Link>
         </div>
       </section>

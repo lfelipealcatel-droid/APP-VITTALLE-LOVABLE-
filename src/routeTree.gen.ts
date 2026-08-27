@@ -14,7 +14,6 @@ import { Route as AjudaRouteImport } from './routes/ajuda'
 import { Route as AlimentacaoRouteImport } from './routes/alimentacao'
 import { Route as BibliotecaRouteImport } from './routes/biblioteca'
 import { Route as BuscarRouteImport } from './routes/buscar'
-import { Route as CerimoniaRouteImport } from './routes/cerimonia'
 import { Route as ConclusaoRouteImport } from './routes/conclusao'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as DemoRouteImport } from './routes/demo'
@@ -85,11 +84,6 @@ const BibliotecaRoute = BibliotecaRouteImport.update({
 const BuscarRoute = BuscarRouteImport.update({
   id: '/buscar',
   path: '/buscar',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CerimoniaRoute = CerimoniaRouteImport.update({
-  id: '/cerimonia',
-  path: '/cerimonia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConclusaoRoute = ConclusaoRouteImport.update({
@@ -334,7 +328,6 @@ export interface FileRoutesByFullPath {
   '/alimentacao': typeof AlimentacaoRouteWithChildren
   '/biblioteca': typeof BibliotecaRoute
   '/buscar': typeof BuscarRoute
-  '/cerimonia': typeof CerimoniaRoute
   '/conclusao': typeof ConclusaoRoute
   '/contato': typeof ContatoRoute
   '/demo': typeof DemoRoute
@@ -388,7 +381,6 @@ export interface FileRoutesByTo {
   '/alimentacao': typeof AlimentacaoRouteWithChildren
   '/biblioteca': typeof BibliotecaRoute
   '/buscar': typeof BuscarRoute
-  '/cerimonia': typeof CerimoniaRoute
   '/conclusao': typeof ConclusaoRoute
   '/contato': typeof ContatoRoute
   '/demo': typeof DemoRoute
@@ -443,7 +435,6 @@ export interface FileRoutesById {
   '/alimentacao': typeof AlimentacaoRouteWithChildren
   '/biblioteca': typeof BibliotecaRoute
   '/buscar': typeof BuscarRoute
-  '/cerimonia': typeof CerimoniaRoute
   '/conclusao': typeof ConclusaoRoute
   '/contato': typeof ContatoRoute
   '/demo': typeof DemoRoute
@@ -499,7 +490,6 @@ export interface FileRouteTypes {
     | '/alimentacao'
     | '/biblioteca'
     | '/buscar'
-    | '/cerimonia'
     | '/conclusao'
     | '/contato'
     | '/demo'
@@ -553,7 +543,6 @@ export interface FileRouteTypes {
     | '/alimentacao'
     | '/biblioteca'
     | '/buscar'
-    | '/cerimonia'
     | '/conclusao'
     | '/contato'
     | '/demo'
@@ -607,7 +596,6 @@ export interface FileRouteTypes {
     | '/alimentacao'
     | '/biblioteca'
     | '/buscar'
-    | '/cerimonia'
     | '/conclusao'
     | '/contato'
     | '/demo'
@@ -662,7 +650,6 @@ export interface RootRouteChildren {
   AlimentacaoRoute: typeof AlimentacaoRouteWithChildren
   BibliotecaRoute: typeof BibliotecaRoute
   BuscarRoute: typeof BuscarRoute
-  CerimoniaRoute: typeof CerimoniaRoute
   ConclusaoRoute: typeof ConclusaoRoute
   ContatoRoute: typeof ContatoRoute
   DemoRoute: typeof DemoRoute
@@ -734,13 +721,6 @@ declare module '@tanstack/react-router' {
       path: '/buscar'
       fullPath: '/buscar'
       preLoaderRoute: typeof BuscarRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cerimonia': {
-      id: '/cerimonia'
-      path: '/cerimonia'
-      fullPath: '/cerimonia'
-      preLoaderRoute: typeof CerimoniaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conclusao': {
@@ -1135,7 +1115,6 @@ const rootRouteChildren: RootRouteChildren = {
   AlimentacaoRoute: AlimentacaoRouteWithChildren,
   BibliotecaRoute: BibliotecaRoute,
   BuscarRoute: BuscarRoute,
-  CerimoniaRoute: CerimoniaRoute,
   ConclusaoRoute: ConclusaoRoute,
   ContatoRoute: ContatoRoute,
   DemoRoute: DemoRoute,

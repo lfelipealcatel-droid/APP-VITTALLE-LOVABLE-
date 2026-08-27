@@ -1,6 +1,6 @@
-import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import MuxPlayer from "@mux/mux-player-react";
-import { AlertTriangle, Check, Play, ShieldCheck } from "lucide-react";
+import { AlertTriangle, ArrowRight, Check, Play, ShieldCheck } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -41,6 +41,9 @@ function SequenciaPage() {
   const { seq } = Route.useLoaderData();
   const { dia } = Route.useSearch();
   const [dor, setDor] = useState(false);
+  // Estado transitório (não persistido): mostra a experiência pós-aula só logo após o clique em
+  // "Concluir aula" nesta visita à página. Reabrir uma aula já concluída depois não repete a tela.
+  const [justCompleted, setJustCompleted] = useState(false);
   const nav = useNavigate();
   const [state] = useAppState();
   // Dia de origem explícito (veio do card "Aula do Dia"). Sem ele — acesso direto à rota, ou valor
@@ -50,12 +53,89 @@ function SequenciaPage() {
   // Experiência de videoaula real (Mux) — hoje só a do Dia 1 (ativacao-corpo-inteiro) tem
   // playbackId/tagline próprios. As demais sequências continuam com o layout/placeholder existente.
   const hasRealVideo = Boolean(seq.muxPlaybackId);
+  const isLastDay = dayId >= 21;
 
   const concluir = () => {
     setDayActivity(dayId, "sequencia", true);
-    toast.success("Aula concluída");
-    nav({ to: "/jornada/$dia", params: { dia: String(dayId) } });
+    setJustCompleted(true);
   };
+
+  if (justCompleted) {
+    return (
+      <AppShell title={seq.name} subtitle="Aula do Dia · Baixo impacto" back={`/jornada/${dayId}`}>
+        <div className="rounded-3xl border border-secondary/30 bg-soft-green p-6 text-center">
+          <p className="font-editorial text-2xl text-foreground">
+            {isLastDay ? "✓ Última aula concluída!" : "✓ Aula concluída!"}
+          </p>
+          <p className="mt-2 text-sm font-semibold text-secondary-dark">
+            {isLastDay
+              ? "Você chegou ao último dia da sua jornada."
+              : "Seu movimento de hoje está feito."}
+          </p>
+          <p className="mt-2 text-sm text-text-secondary">
+            {isLastDay
+              ? "Seu movimento de hoje está concluído. Agora complete as outras partes do Dia 21 para fechar sua experiência com tudo o que o Plano Barriga Hormonal 40+ preparou para você."
+              : "Você concluiu a etapa que garante seu avanço na jornada. Seu próximo dia será liberado amanhã."}
+          </p>
+        </div>
+
+        <div className="mt-4 rounded-2xl border border-primary/20 bg-warm p-5">
+          <p className="text-sm font-semibold text-foreground">
+            Mas seu dia ainda não terminou por aqui.
+          </p>
+          <p className="mt-2 text-sm text-text-secondary">
+            O Plano Barriga Hormonal 40+ foi pensado para combinar movimento, alimentação e hábitos
+            do dia. É essa combinação, repetida ao longo da jornada, que ajuda você a construir seus
+            resultados.
+          </p>
+        </div>
+
+        <div className="mt-5">
+          <p className="text-[11px] font-semibold uppercase tracking-wide text-text-muted">
+            Próximo passo recomendado
+          </p>
+          <div className="mt-2 rounded-2xl border border-border bg-surface p-4">
+            <p className="text-sm font-semibold text-foreground">🥗 Alimentação do Dia</p>
+            <p className="mt-1 text-xs text-text-secondary">
+              Veja sua missão, sua sugestão e as escolhas preparadas para hoje.
+            </p>
+            <Link
+              to="/alimentacao"
+              search={{ dia: dayId }}
+              className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
+            >
+              Continuar na alimentação <ArrowRight size={16} aria-hidden />
+            </Link>
+          </div>
+
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Link
+              to="/habito/$dia"
+              params={{ dia: String(dayId) }}
+              className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-medium hover:bg-surface-2"
+            >
+              Hábito do Dia
+            </Link>
+            <Link
+              to="/checkin/$dia"
+              params={{ dia: String(dayId) }}
+              className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-medium hover:bg-surface-2"
+            >
+              Check-in
+            </Link>
+          </div>
+        </div>
+
+        <Link
+          to="/jornada/$dia"
+          params={{ dia: String(dayId) }}
+          className="mt-5 block text-center text-xs font-semibold text-text-muted hover:underline"
+        >
+          Voltar para meu dia
+        </Link>
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell title={seq.name} subtitle="Aula do Dia · Baixo impacto" back={`/jornada/${dayId}`}>

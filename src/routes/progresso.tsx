@@ -5,7 +5,7 @@ import { DAYS, MILESTONES, USER } from "@/lib/mock-data";
 import {
   useAppState,
   currentUnlockedDay,
-  isDayCompleted,
+  isDayActivityDone,
   hasInitialMeasurement,
   hasFinalMeasurement,
 } from "@/lib/store";
@@ -23,7 +23,10 @@ export const Route = createFileRoute("/progresso")({
 function Progresso() {
   const [state] = useAppState();
   const unlocked = currentUnlockedDay(state);
-  const daysCompleted = DAYS.filter((d) => isDayCompleted(state, d.id)).length;
+  // A Aula do Dia é o marco técnico de progressão da jornada (regra aprovada): 1 aula concluída =
+  // 1 de 21 dias. Leitura, Alimentação, Hábito e Check-in continuam existindo e sendo marcáveis,
+  // mas não entram nesta contagem principal — só na Missão/Sugestão/telas próprias de cada um.
+  const daysCompleted = DAYS.filter((d) => isDayActivityDone(state, d.id, "sequencia")).length;
   const ratio = daysCompleted / USER.totalDays;
 
   const achievements: Record<string, boolean> = {
@@ -49,7 +52,7 @@ function Progresso() {
       </section>
 
       <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-text-secondary">Marcos</h2>
+        <h2 className="mb-3 text-sm font-semibold text-text-secondary">Suas conquistas</h2>
         <ul className="grid gap-2">
           {MILESTONES.map((m) => {
             const achieved = achievements[m.id];

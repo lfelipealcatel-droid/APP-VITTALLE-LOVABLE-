@@ -42,6 +42,11 @@ export interface AppState {
   // Progresso por dia por bloco (chave: `${dayId}:${key}`)
   dayActivities: Record<string, boolean>;
 
+  // Data local (YYYY-MM-DD, fuso do navegador) em que cada `dayActivities` virou true — mesma chave
+  // (`${dayId}:${key}`). Usado hoje só para "sequencia" (Aula do Dia): é o que permite saber se já
+  // "virou o dia" desde que a aula foi concluída, sem depender de um timer de 24h corridas.
+  activityDates: Record<string, string>;
+
   // Compat: ids de conteúdos "concluídos" (usado por Home/telas antigas)
   completedActivities: string[];
 
@@ -87,6 +92,7 @@ const DEFAULT_STATE: AppState = {
   },
   startDateISO: null,
   dayActivities: {},
+  activityDates: {},
   completedActivities: [],
   favorites: [],
   downloads: [],
@@ -202,10 +208,30 @@ export function removeMeasurement(id: string) {
   setState((prev) => ({ measurements: prev.measurements.filter((m) => m.id !== id) }));
 }
 
+// Data local (fuso do navegador, não UTC) no formato YYYY-MM-DD — usada para saber se "já virou o
+// dia" desde uma conclusão, sem depender de uma espera móvel de 24 horas corridas.
+function todayLocalDateString(): string {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 export function setDayActivity(dayId: number, key: DayActivityKey, done: boolean) {
-  setState((prev) => ({
-    dayActivities: { ...prev.dayActivities, [`${dayId}:${key}`]: done },
-  }));
+  setState((prev) => {
+    const activityKey = `${dayId}:${key}`;
+    const nextDates = { ...prev.activityDates };
+    if (done) {
+      nextDates[activityKey] = todayLocalDateString();
+    } else {
+      delete nextDates[activityKey];
+    }
+    return {
+      dayActivities: { ...prev.dayActivities, [activityKey]: done },
+      activityDates: nextDates,
+    };
+  });
 }
 
 export function isDayActivityDone(state: AppState, dayId: number, key: DayActivityKey) {
@@ -218,10 +244,14 @@ export const DAY_KEYS: DayActivityKey[] = ["leitura", "sequencia", "alimentacao"
 export function clearDayActivities(dayId: number) {
   setState((prev) => {
     const next = { ...prev.dayActivities };
+    const nextDates = { ...prev.activityDates };
     for (const key of Object.keys(next)) {
       if (key.startsWith(`${dayId}:`)) delete next[key];
     }
-    return { dayActivities: next };
+    for (const key of Object.keys(nextDates)) {
+      if (key.startsWith(`${dayId}:`)) delete nextDates[key];
+    }
+    return { dayActivities: next, activityDates: nextDates };
   });
 }
 
@@ -236,15 +266,31 @@ export function isDayCompleted(state: AppState, dayId: number, includesMeasureme
   return done >= total;
 }
 
+// A Aula do Dia é o requisito técnico de progressão (aprovado): dia N libera o dia N+1 somente
+// quando a aula de N foi concluída E a data local já mudou desde essa conclusão — não é uma espera
+// de 24h corridas, é literalmente "virar o calendário" no fuso do navegador. Leitura, Alimentação,
+// Hábito e Check-in continuam existindo e podendo ser marcados, mas não bloqueiam a progressão.
+function hasAdvancedPastDay(state: AppState, dayId: number): boolean {
+  const aulaDone = !!state.dayActivities[`${dayId}:sequencia`];
+  if (!aulaDone) return false;
+  const completedOn = state.activityDates[`${dayId}:sequencia`];
+  // Compatibilidade com estado legado: conclusões gravadas antes de `activityDates` existir não têm
+  // essa data. Não inventamos uma data retroativa nem apagamos o progresso — uma aula já concluída
+  // sem data registrada é tratada como já elegível para a progressão (não fica presa esperando para
+  // sempre só porque o campo novo ainda não existia quando ela foi marcada).
+  if (!completedOn) return true;
+  return completedOn !== todayLocalDateString();
+}
+
 // Regra do Modo Cliente: dia N está liberado se:
-// - o dia N-1 foi concluído (todos os blocos principais), OU
+// - a aula do dia N-1 foi concluída E a data local mudou desde então, OU
 // - N = 1 (sempre disponível para começar)
 // - Modo Demo: qualquer dia é acessível.
 export function currentUnlockedDay(state: AppState): number {
   if (state.demoMode) return 21;
   let day = 1;
   for (let i = 1; i <= 20; i++) {
-    if (isDayCompleted(state, i)) day = i + 1;
+    if (hasAdvancedPastDay(state, i)) day = i + 1;
     else break;
   }
   return day;
@@ -255,15 +301,17 @@ export function canOpenDay(state: AppState, dayId: number): boolean {
   return dayId <= currentUnlockedDay(state);
 }
 
-// "Dia atual" para a experiência da cliente
+// "Dia atual" para a experiência da cliente — o primeiro dia liberado cuja aula ainda não foi
+// concluída. Se a aula de todos os dias liberados já está feita (aguardando a data virar para
+// liberar o próximo), permanece no último dia liberado. Visitar um dia anterior para revisão não
+// muda este cálculo: ele só olha `dayActivities`/`activityDates`, nunca a rota atual.
 export function activeDay(state: AppState): number {
   if (state.demoMode && state.demoDayOverride) return state.demoDayOverride;
   const unlocked = currentUnlockedDay(state);
-  // se o dia atual está completo e existe próximo desbloqueado, ir para ele; senão continuar no atual
-  for (let i = 1; i <= 21; i++) {
-    if (!isDayCompleted(state, i)) return Math.min(i, unlocked);
+  for (let i = 1; i <= unlocked; i++) {
+    if (!isDayActivityDone(state, i, "sequencia")) return i;
   }
-  return 21;
+  return unlocked;
 }
 
 export function hasInitialMeasurement(state: AppState) {
@@ -326,6 +374,7 @@ export function resetAll() {
 export function resetDemo() {
   setState({
     dayActivities: {},
+    activityDates: {},
     completedActivities: [],
     measurements: [],
     demoDayOverride: null,
