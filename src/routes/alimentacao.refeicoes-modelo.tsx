@@ -7,7 +7,7 @@ import { FoodItemDrawer, FoodItemRow, type FoodItem } from "@/components/food-it
 import { activeDay, useAppState } from "@/lib/store";
 
 const FILTERS = ["rapidas", "completas", "poucos-ingredientes", "leves", "vegetais"] as const;
-type FilterKey = (typeof FILTERS)[number];
+export type FilterKey = (typeof FILTERS)[number];
 
 const FILTER_LABELS: Record<FilterKey, string> = {
   rapidas: "Opções rápidas",
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/alimentacao/refeicoes-modelo")({
   component: RefeicoesPage,
 });
 
-interface Meal extends FoodItem {
+export interface Meal extends FoodItem {
   tags: FilterKey[];
 }
 
@@ -41,7 +41,7 @@ const LUNCH_IMG = "/imagens/biblioteca/almoço/";
 const SNACK_IMG = "/imagens/biblioteca/lanche/";
 const DINNER_IMG = "/imagens/biblioteca/jantar/";
 
-const MEALS: Meal[] = [
+export const MEALS: Meal[] = [
   {
     id: "cafe-01-ovos-mexidos-mamao",
     category: "Café da manhã",
@@ -1135,6 +1135,12 @@ const MEALS: Meal[] = [
   },
 ];
 
+// Usado por "Me ajude a escolher" (decisao-rapida.tsx) para abrir o detalhe/preparo de uma
+// refeição real da base a partir do id, reaproveitando o mesmo FoodItemDrawer desta tela.
+export function mealById(id: string): Meal | undefined {
+  return MEALS.find((m) => m.id === id);
+}
+
 const CATEGORIES = [
   { title: "Café da manhã", icon: Coffee },
   { title: "Almoço", icon: Salad },
@@ -1318,6 +1324,31 @@ function dinnersForDay(dayId: number): Meal[] {
     .filter((m): m is Meal => !!m);
 }
 
+// Acesso contextual (vindo de "Me ajude a escolher" ou "Sugestão do dia"): mostra uma seleção curta
+// e equilibrada entre as 4 categorias, em vez de todas as refeições que têm aquela tag — algumas tags
+// (ex.: "vegetais", "completas") aparecem em mais de 20 das 36 refeições da base, o que misturava
+// café/almoço/lanche/jantar numa lista longa e destruía o contexto da situação escolhida.
+// Não remove nem duplica nenhuma refeição da base: apenas limita quantas aparecem nesse acesso.
+const MAX_CONTEXTUAL_MEALS = 8;
+
+function curatedByFiltro(filtro: FilterKey): Meal[] {
+  const byCategory = CATEGORIES.map((cat) =>
+    MEALS.filter((m) => m.category === cat.title && m.tags.includes(filtro)),
+  );
+  const picked: Meal[] = [];
+  let round = 0;
+  while (picked.length < MAX_CONTEXTUAL_MEALS) {
+    const before = picked.length;
+    for (const bucket of byCategory) {
+      if (bucket[round]) picked.push(bucket[round]);
+      if (picked.length >= MAX_CONTEXTUAL_MEALS) break;
+    }
+    if (picked.length === before) break; // nenhuma categoria tinha mais itens nesta rodada
+    round++;
+  }
+  return picked;
+}
+
 function RefeicoesPage() {
   const [state] = useAppState();
   const dayId = activeDay(state);
@@ -1350,7 +1381,7 @@ function RefeicoesPage() {
           </div>
           <p className="mt-1 text-sm text-text-secondary">Use como referência, sem obrigação.</p>
           <ul className="mt-4 grid gap-2">
-            {MEALS.filter((m) => m.tags.includes(filtro)).map((m) => (
+            {curatedByFiltro(filtro).map((m) => (
               <FoodItemRow key={m.id} item={m} onOpen={setOpenItem} />
             ))}
           </ul>

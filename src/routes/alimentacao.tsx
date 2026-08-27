@@ -5,10 +5,20 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { Apple, Droplets, HelpCircle, Salad, ShoppingBasket, Sparkles } from "lucide-react";
+import { z } from "zod";
 import { AppShell } from "@/components/app-shell";
 import { GUIDES } from "@/lib/mock-data";
+import { activeDay, useAppState } from "@/lib/store";
+
+// Dia de origem explícito (veio do card "Alimentação do dia" em /jornada/$dia). Sem ele — acesso
+// direto a /alimentacao, ou valor inválido/fora de 1–21 — cai de volta no dia ativo. O mesmo `dia`
+// é repassado para Missão alimentar e Sugestão do dia, que dependem dele para escolher o conteúdo certo.
+const searchSchema = z.object({
+  dia: z.coerce.number().int().min(1).max(21).optional().catch(undefined),
+});
 
 export const Route = createFileRoute("/alimentacao")({
+  validateSearch: searchSchema,
   head: () => ({
     meta: [
       { title: "Alimentação — VITTALLE" },
@@ -22,6 +32,9 @@ function Alimentacao() {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   });
+  const { dia } = Route.useSearch();
+  const [state] = useAppState();
+  const dayId = dia ?? activeDay(state);
 
   if (pathname !== "/alimentacao") {
     return <Outlet />;
@@ -52,12 +65,14 @@ function Alimentacao() {
             icon={Sparkles}
             title="Missão alimentar"
             description="Uma ação simples para colocar em prática hoje."
+            search={{ dia: dayId }}
           />
           <Row
             to="/alimentacao/sugestao-do-dia"
             icon={Salad}
             title="Sugestão do dia"
             description="Ideias práticas para facilitar a missão de hoje."
+            search={{ dia: dayId }}
           />
         </ul>
       </section>
@@ -113,6 +128,7 @@ function Row({
   icon: Icon,
   title,
   description,
+  search,
 }: {
   to:
     | "/alimentacao/sugestao-do-dia"
@@ -122,10 +138,17 @@ function Row({
   icon: typeof Salad;
   title: string;
   description: string;
+  // Repassa o dia de origem (ver searchSchema acima) só nos links que dependem dele
+  // (Missão alimentar, Sugestão do dia). Refeições Inteligentes e Bebidas Funcionais não precisam.
+  search?: Record<string, unknown>;
 }) {
   return (
     <li>
-      <Link to={to} className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-4 hover:bg-surface-2">
+      <Link
+        to={to}
+        search={search}
+        className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-4 hover:bg-surface-2"
+      >
         <Icon size={18} className="mt-0.5 text-primary" aria-hidden />
         <div>
           <p className="text-sm font-medium">{title}</p>

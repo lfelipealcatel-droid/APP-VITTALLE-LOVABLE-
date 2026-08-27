@@ -11,6 +11,8 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
+import { FoodItemDrawer, FoodItemRow, type FoodItem } from "@/components/food-item";
+import { mealById, type Meal } from "@/routes/alimentacao.refeicoes-modelo";
 
 export const Route = createFileRoute("/alimentacao/decisao-rapida")({
   head: () => ({
@@ -27,7 +29,12 @@ type FiltroKey = "rapidas" | "completas" | "poucos-ingredientes" | "leves" | "ve
 interface Situation {
   title: string;
   guidance: string;
-  suggestions: string[];
+  // Texto simples (não clicável) — usado só pela situação "doce" hoje, que já tem seu próprio
+  // fluxo de preparo (SWEET_RECIPES + Drawer abaixo).
+  suggestions?: string[];
+  // Refeições reais da base (MEALS, em refeicoes-modelo.tsx) — cada uma vira uma linha clicável
+  // que abre o mesmo detalhe/preparo (FoodItemDrawer) já usado em Refeições Inteligentes.
+  mealIds?: string[];
   action: { label: string; filtro: FiltroKey } | null;
   teaser?: string;
   recipesButtonLabel?: string;
@@ -55,13 +62,25 @@ const SITUATIONS: Situation[] = [
   {
     title: "Tenho apenas 5 minutos",
     guidance: "Escolha uma combinação simples com uma fonte de proteína e algo que forneça energia.",
-    suggestions: ["Iogurte com fruta e aveia", "Pão com ovo ou queijo", "Shake de banana com leite ou whey"],
+    mealIds: [
+      "cafe-02-iogurte-fruta-aveia-chia",
+      "cafe-07-shake-proteico-banana-aveia-canela",
+      "cafe-01-ovos-mexidos-mamao",
+      "cafe-08-cottage-frutas-castanhas",
+      "lanche-04-mix-castanhas-maca",
+    ],
     action: { label: "Ver opções rápidas", filtro: "rapidas" },
   },
   {
     title: "Estou com muita fome",
     guidance: "Procure montar uma refeição mais completa para não continuar beliscando pouco tempo depois.",
-    suggestions: ["Arroz, feijão, proteína e vegetais", "Omelete completa com acompanhamento", "Frango, legumes e uma fonte de carboidrato"],
+    mealIds: [
+      "almoco-08-file-grelhado-arroz-feijao-salada",
+      "almoco-06-omelete-completa-salada",
+      "almoco-05-carne-moida-arroz-legumes",
+      "almoco-01-frango-grelhado-legumes-salada",
+      "almoco-02-peixe-assado-legumes",
+    ],
     action: { label: "Ver refeições mais completas", filtro: "completas" },
   },
   {
@@ -75,19 +94,37 @@ const SITUATIONS: Situation[] = [
   {
     title: "Tenho poucos ingredientes em casa",
     guidance: "Não espere uma refeição perfeita. Combine dois ou três alimentos disponíveis e faça uma escolha possível.",
-    suggestions: ["Pão com ovo", "Arroz, ovo e algum vegetal", "Fruta com iogurte ou leite"],
+    mealIds: [
+      "cafe-02-iogurte-fruta-aveia-chia",
+      "almoco-06-omelete-completa-salada",
+      "jantar-02-omelete-espinafre-queijo-branco",
+      "lanche-03-ovos-cozidos-tomate-fruta",
+      "cafe-05-aveia-cremosa-iogurte-frutas",
+    ],
     action: { label: "Ver opções com poucos ingredientes", filtro: "poucos-ingredientes" },
   },
   {
     title: "Quero algo mais leve",
     guidance: "Escolha algo simples, mas que ainda ofereça saciedade.",
-    suggestions: ["Sopa completa", "Omelete com vegetais", "Prato leve com proteína e legumes"],
+    mealIds: [
+      "jantar-04-sopa-cremosa-abobora-frango",
+      "jantar-02-omelete-espinafre-queijo-branco",
+      "almoco-01-frango-grelhado-legumes-salada",
+      "almoco-02-peixe-assado-legumes",
+      "jantar-03-peixe-grelhado-legumes-vapor",
+    ],
     action: { label: "Ver opções mais leves", filtro: "leves" },
   },
 ];
 
+function mealsFor(s: Situation): Meal[] {
+  if (!s.mealIds) return [];
+  return s.mealIds.map((id) => mealById(id)).filter((m): m is Meal => !!m);
+}
+
 function DecisaoRapida() {
   const [recipesOpen, setRecipesOpen] = useState(false);
+  const [openItem, setOpenItem] = useState<FoodItem | null>(null);
 
   return (
     <AppShell title="Me ajude a escolher" subtitle="Uma decisão simples para o momento em que você está." back="/alimentacao">
@@ -101,13 +138,21 @@ function DecisaoRapida() {
             <AccordionTrigger className="text-sm font-medium">{s.title}</AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-text-secondary">{s.guidance}</p>
-              <ul className="mt-3 grid gap-2">
-                {s.suggestions.map((sug) => (
-                  <li key={sug} className="rounded-xl border border-border bg-surface-2 p-3 text-sm text-text-secondary">
-                    {sug}
-                  </li>
-                ))}
-              </ul>
+              {s.mealIds ? (
+                <ul className="mt-3 grid gap-2">
+                  {mealsFor(s).map((m) => (
+                    <FoodItemRow key={m.id} item={m} onOpen={setOpenItem} />
+                  ))}
+                </ul>
+              ) : s.suggestions ? (
+                <ul className="mt-3 grid gap-2">
+                  {s.suggestions.map((sug) => (
+                    <li key={sug} className="rounded-xl border border-border bg-surface-2 p-3 text-sm text-text-secondary">
+                      {sug}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
               {s.action ? (
                 <Link
                   to="/alimentacao/refeicoes-modelo"
@@ -173,6 +218,13 @@ function DecisaoRapida() {
           </div>
         </DrawerContent>
       </Drawer>
+
+      <FoodItemDrawer
+        item={openItem}
+        onOpenChange={(open) => {
+          if (!open) setOpenItem(null);
+        }}
+      />
     </AppShell>
   );
 }

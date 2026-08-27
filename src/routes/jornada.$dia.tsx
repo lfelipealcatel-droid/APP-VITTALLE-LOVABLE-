@@ -223,6 +223,7 @@ function DiaPage() {
           done={isDayActivityDone(state, day.id, "alimentacao")}
           onToggle={() => doAction("alimentacao")}
           ctaHref="/alimentacao"
+          ctaSearch={{ dia: day.id }}
           ctaLabel="Abrir"
           accent="secondary"
         />
