@@ -2,20 +2,18 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   Bell,
   ChevronRight,
-  Download,
   FileText,
   FlaskConical,
-  Heart,
   HelpCircle,
   Info,
   Lock,
   LogOut,
-  MessageCircle,
   ShieldCheck,
   User as UserIcon,
 } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { USER } from "@/lib/mock-data";
+import { useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/perfil")({
   head: () => ({
@@ -30,6 +28,8 @@ export const Route = createFileRoute("/perfil")({
 });
 
 function Perfil() {
+  const [state] = useAppState();
+
   return (
     <AppShell title="Perfil" hideMiniPlayer>
       <div className="animate-fade-in">
@@ -49,14 +49,8 @@ function Perfil() {
           <Item to="/perfil/seguranca" icon={Lock} label="Segurança" />
         </Group>
 
-        <Group title="Sua biblioteca">
-          <Item to="/favoritos" icon={Heart} label="Favoritos" />
-          <Item to="/downloads" icon={Download} label="Conteúdos baixados" />
-        </Group>
-
-        <Group title="Suporte">
+        <Group title="Ajuda">
           <Item to="/ajuda" icon={HelpCircle} label="Central de ajuda" />
-          <Item to="/contato" icon={MessageCircle} label="Falar com o suporte" />
         </Group>
 
         <Group title="Sobre">
@@ -71,9 +65,11 @@ function Perfil() {
           </div>
         </Group>
 
-        <Group title="Uso interno">
-          <Item to="/demo" icon={FlaskConical} label="Modo demonstração" />
-        </Group>
+        {state.demoMode ? (
+          <Group title="Uso interno">
+            <Item to="/demo" icon={FlaskConical} label="Modo demonstração" />
+          </Group>
+        ) : null}
 
         <div className="mt-6">
           <Link
