@@ -10,7 +10,7 @@ export const Route = createFileRoute("/perfil/dados")({
 });
 
 function Dados() {
-  const [form, setForm] = useState({ name: USER.fullName, email: USER.email, dob: "" });
+  const [form, setForm] = useState({ name: USER.fullName, email: USER.email, whatsapp: "" });
   const [photo, setPhoto] = useState<string | null>(null);
   const save = (e: React.FormEvent) => { e.preventDefault(); toast.success("Alterações salvas"); };
   const onPhoto = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,7 +34,7 @@ function Dados() {
         </div>
         <Field label="Nome"><input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="input" /></Field>
         <Field label="E-mail"><input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="input" /></Field>
-        <Field label="Data de nascimento"><input type="date" value={form.dob} onChange={(e) => setForm({ ...form, dob: e.target.value })} className="input" /></Field>
+        <Field label="WhatsApp"><input value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} placeholder="(00) 00000-0000" className="input" /></Field>
         <div className="mt-2 flex gap-2">
           <button type="submit" className="min-h-12 flex-1 rounded-xl bg-primary text-sm font-semibold text-primary-foreground">Salvar alterações</button>
           <button type="button" onClick={() => history.back()} className="min-h-12 rounded-xl border border-border px-4 text-sm">Cancelar</button>
