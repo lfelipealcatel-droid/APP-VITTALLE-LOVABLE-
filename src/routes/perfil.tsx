@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   Bell,
   ChevronRight,
@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { USER } from "@/lib/mock-data";
-import { useAppState } from "@/lib/store";
 
 export const Route = createFileRoute("/perfil")({
   head: () => ({
@@ -28,7 +27,16 @@ export const Route = createFileRoute("/perfil")({
 });
 
 function Perfil() {
-  const [state] = useAppState();
+  const pathname = useRouterState({
+    select: (s) => s.location.pathname,
+  });
+
+  // /perfil é rota-pai das subrotas (dados, seguranca, preferencias, notificacoes) na convenção de
+  // arquivos do TanStack Router — sem este Outlet, navegar para /perfil/dados ou /perfil/seguranca
+  // não tinha onde renderizar o componente filho, e a tela do hub continuava sendo exibida.
+  if (pathname !== "/perfil") {
+    return <Outlet />;
+  }
 
   return (
     <AppShell title="Perfil" hideMiniPlayer>
@@ -65,11 +73,9 @@ function Perfil() {
           </div>
         </Group>
 
-        {state.demoMode ? (
-          <Group title="Uso interno">
-            <Item to="/demo" icon={FlaskConical} label="Modo demonstração" />
-          </Group>
-        ) : null}
+        <Group title="Uso interno">
+          <Item to="/demo" icon={FlaskConical} label="Modo demonstração" />
+        </Group>
 
         <div className="mt-6">
           <Link
