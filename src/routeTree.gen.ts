@@ -20,6 +20,7 @@ import { Route as DemoRouteImport } from './routes/demo'
 import { Route as DevPreviewRouteImport } from './routes/dev-preview'
 import { Route as DownloadsRouteImport } from './routes/downloads'
 import { Route as DownsellRouteImport } from './routes/downsell'
+import { Route as EsqueciSenhaRouteImport } from './routes/esqueci-senha'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MedidasRouteImport } from './routes/medidas'
@@ -29,6 +30,7 @@ import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ProgramaRouteImport } from './routes/programa'
 import { Route as ProgressoRouteImport } from './routes/progresso'
+import { Route as RedefinirSenhaRouteImport } from './routes/redefinir-senha'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SplashRouteImport } from './routes/splash'
 import { Route as TermosRouteImport } from './routes/termos'
@@ -37,6 +39,7 @@ import { Route as AlimentacaoDecisaoRapidaRouteImport } from './routes/alimentac
 import { Route as AlimentacaoMissaoAlimentarRouteImport } from './routes/alimentacao.missao-alimentar'
 import { Route as AlimentacaoRefeicoesModeloRouteImport } from './routes/alimentacao.refeicoes-modelo'
 import { Route as AlimentacaoSugestaoDoDiaRouteImport } from './routes/alimentacao.sugestao-do-dia'
+import { Route as AuthConfirmRouteImport } from './routes/auth.confirm'
 import { Route as BonusIdRouteImport } from './routes/bonus.$id'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as CheckinDiaRouteImport } from './routes/checkin.$dia'
@@ -116,6 +119,11 @@ const DownsellRoute = DownsellRouteImport.update({
   path: '/downsell',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EsqueciSenhaRoute = EsqueciSenhaRouteImport.update({
+  id: '/esqueci-senha',
+  path: '/esqueci-senha',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FavoritosRoute = FavoritosRouteImport.update({
   id: '/favoritos',
   path: '/favoritos',
@@ -159,6 +167,11 @@ const ProgramaRoute = ProgramaRouteImport.update({
 const ProgressoRoute = ProgressoRouteImport.update({
   id: '/progresso',
   path: '/progresso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RedefinirSenhaRoute = RedefinirSenhaRouteImport.update({
+  id: '/redefinir-senha',
+  path: '/redefinir-senha',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SobreRoute = SobreRouteImport.update({
@@ -206,6 +219,11 @@ const AlimentacaoSugestaoDoDiaRoute =
     path: '/sugestao-do-dia',
     getParentRoute: () => AlimentacaoRoute,
   } as any)
+const AuthConfirmRoute = AuthConfirmRouteImport.update({
+  id: '/auth/confirm',
+  path: '/auth/confirm',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BonusIdRoute = BonusIdRouteImport.update({
   id: '/bonus/$id',
   path: '/bonus/$id',
@@ -334,6 +352,7 @@ export interface FileRoutesByFullPath {
   '/dev-preview': typeof DevPreviewRoute
   '/downloads': typeof DownloadsRoute
   '/downsell': typeof DownsellRoute
+  '/esqueci-senha': typeof EsqueciSenhaRoute
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
   '/medidas': typeof MedidasRoute
@@ -343,6 +362,7 @@ export interface FileRoutesByFullPath {
   '/privacidade': typeof PrivacidadeRoute
   '/programa': typeof ProgramaRoute
   '/progresso': typeof ProgressoRoute
+  '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
@@ -351,6 +371,7 @@ export interface FileRoutesByFullPath {
   '/alimentacao/missao-alimentar': typeof AlimentacaoMissaoAlimentarRoute
   '/alimentacao/refeicoes-modelo': typeof AlimentacaoRefeicoesModeloRoute
   '/alimentacao/sugestao-do-dia': typeof AlimentacaoSugestaoDoDiaRoute
+  '/auth/confirm': typeof AuthConfirmRoute
   '/bonus/$id': typeof BonusIdRouteWithChildren
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/checkin/$dia': typeof CheckinDiaRoute
@@ -387,6 +408,7 @@ export interface FileRoutesByTo {
   '/dev-preview': typeof DevPreviewRoute
   '/downloads': typeof DownloadsRoute
   '/downsell': typeof DownsellRoute
+  '/esqueci-senha': typeof EsqueciSenhaRoute
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
   '/medidas': typeof MedidasRoute
@@ -396,6 +418,7 @@ export interface FileRoutesByTo {
   '/privacidade': typeof PrivacidadeRoute
   '/programa': typeof ProgramaRoute
   '/progresso': typeof ProgressoRoute
+  '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
@@ -404,6 +427,7 @@ export interface FileRoutesByTo {
   '/alimentacao/missao-alimentar': typeof AlimentacaoMissaoAlimentarRoute
   '/alimentacao/refeicoes-modelo': typeof AlimentacaoRefeicoesModeloRoute
   '/alimentacao/sugestao-do-dia': typeof AlimentacaoSugestaoDoDiaRoute
+  '/auth/confirm': typeof AuthConfirmRoute
   '/bonus/$id': typeof BonusIdRouteWithChildren
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/checkin/$dia': typeof CheckinDiaRoute
@@ -441,6 +465,7 @@ export interface FileRoutesById {
   '/dev-preview': typeof DevPreviewRoute
   '/downloads': typeof DownloadsRoute
   '/downsell': typeof DownsellRoute
+  '/esqueci-senha': typeof EsqueciSenhaRoute
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
   '/medidas': typeof MedidasRoute
@@ -450,6 +475,7 @@ export interface FileRoutesById {
   '/privacidade': typeof PrivacidadeRoute
   '/programa': typeof ProgramaRoute
   '/progresso': typeof ProgressoRoute
+  '/redefinir-senha': typeof RedefinirSenhaRoute
   '/sobre': typeof SobreRoute
   '/splash': typeof SplashRoute
   '/termos': typeof TermosRoute
@@ -458,6 +484,7 @@ export interface FileRoutesById {
   '/alimentacao/missao-alimentar': typeof AlimentacaoMissaoAlimentarRoute
   '/alimentacao/refeicoes-modelo': typeof AlimentacaoRefeicoesModeloRoute
   '/alimentacao/sugestao-do-dia': typeof AlimentacaoSugestaoDoDiaRoute
+  '/auth/confirm': typeof AuthConfirmRoute
   '/bonus/$id': typeof BonusIdRouteWithChildren
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/checkin/$dia': typeof CheckinDiaRoute
@@ -496,6 +523,7 @@ export interface FileRouteTypes {
     | '/dev-preview'
     | '/downloads'
     | '/downsell'
+    | '/esqueci-senha'
     | '/favoritos'
     | '/login'
     | '/medidas'
@@ -505,6 +533,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/programa'
     | '/progresso'
+    | '/redefinir-senha'
     | '/sobre'
     | '/splash'
     | '/termos'
@@ -513,6 +542,7 @@ export interface FileRouteTypes {
     | '/alimentacao/missao-alimentar'
     | '/alimentacao/refeicoes-modelo'
     | '/alimentacao/sugestao-do-dia'
+    | '/auth/confirm'
     | '/bonus/$id'
     | '/categoria/$slug'
     | '/checkin/$dia'
@@ -549,6 +579,7 @@ export interface FileRouteTypes {
     | '/dev-preview'
     | '/downloads'
     | '/downsell'
+    | '/esqueci-senha'
     | '/favoritos'
     | '/login'
     | '/medidas'
@@ -558,6 +589,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/programa'
     | '/progresso'
+    | '/redefinir-senha'
     | '/sobre'
     | '/splash'
     | '/termos'
@@ -566,6 +598,7 @@ export interface FileRouteTypes {
     | '/alimentacao/missao-alimentar'
     | '/alimentacao/refeicoes-modelo'
     | '/alimentacao/sugestao-do-dia'
+    | '/auth/confirm'
     | '/bonus/$id'
     | '/categoria/$slug'
     | '/checkin/$dia'
@@ -602,6 +635,7 @@ export interface FileRouteTypes {
     | '/dev-preview'
     | '/downloads'
     | '/downsell'
+    | '/esqueci-senha'
     | '/favoritos'
     | '/login'
     | '/medidas'
@@ -611,6 +645,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/programa'
     | '/progresso'
+    | '/redefinir-senha'
     | '/sobre'
     | '/splash'
     | '/termos'
@@ -619,6 +654,7 @@ export interface FileRouteTypes {
     | '/alimentacao/missao-alimentar'
     | '/alimentacao/refeicoes-modelo'
     | '/alimentacao/sugestao-do-dia'
+    | '/auth/confirm'
     | '/bonus/$id'
     | '/categoria/$slug'
     | '/checkin/$dia'
@@ -656,6 +692,7 @@ export interface RootRouteChildren {
   DevPreviewRoute: typeof DevPreviewRoute
   DownloadsRoute: typeof DownloadsRoute
   DownsellRoute: typeof DownsellRoute
+  EsqueciSenhaRoute: typeof EsqueciSenhaRoute
   FavoritosRoute: typeof FavoritosRoute
   LoginRoute: typeof LoginRoute
   MedidasRoute: typeof MedidasRoute
@@ -665,9 +702,11 @@ export interface RootRouteChildren {
   PrivacidadeRoute: typeof PrivacidadeRoute
   ProgramaRoute: typeof ProgramaRoute
   ProgressoRoute: typeof ProgressoRoute
+  RedefinirSenhaRoute: typeof RedefinirSenhaRoute
   SobreRoute: typeof SobreRoute
   SplashRoute: typeof SplashRoute
   TermosRoute: typeof TermosRoute
+  AuthConfirmRoute: typeof AuthConfirmRoute
   BonusIdRoute: typeof BonusIdRouteWithChildren
   CategoriaSlugRoute: typeof CategoriaSlugRoute
   CheckinDiaRoute: typeof CheckinDiaRoute
@@ -765,6 +804,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DownsellRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/esqueci-senha': {
+      id: '/esqueci-senha'
+      path: '/esqueci-senha'
+      fullPath: '/esqueci-senha'
+      preLoaderRoute: typeof EsqueciSenhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/favoritos': {
       id: '/favoritos'
       path: '/favoritos'
@@ -828,6 +874,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProgressoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/redefinir-senha': {
+      id: '/redefinir-senha'
+      path: '/redefinir-senha'
+      fullPath: '/redefinir-senha'
+      preLoaderRoute: typeof RedefinirSenhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -883,6 +936,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/alimentacao/sugestao-do-dia'
       preLoaderRoute: typeof AlimentacaoSugestaoDoDiaRouteImport
       parentRoute: typeof AlimentacaoRoute
+    }
+    '/auth/confirm': {
+      id: '/auth/confirm'
+      path: '/auth/confirm'
+      fullPath: '/auth/confirm'
+      preLoaderRoute: typeof AuthConfirmRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/bonus/$id': {
       id: '/bonus/$id'
@@ -1121,6 +1181,7 @@ const rootRouteChildren: RootRouteChildren = {
   DevPreviewRoute: DevPreviewRoute,
   DownloadsRoute: DownloadsRoute,
   DownsellRoute: DownsellRoute,
+  EsqueciSenhaRoute: EsqueciSenhaRoute,
   FavoritosRoute: FavoritosRoute,
   LoginRoute: LoginRoute,
   MedidasRoute: MedidasRoute,
@@ -1130,9 +1191,11 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacidadeRoute: PrivacidadeRoute,
   ProgramaRoute: ProgramaRoute,
   ProgressoRoute: ProgressoRoute,
+  RedefinirSenhaRoute: RedefinirSenhaRoute,
   SobreRoute: SobreRoute,
   SplashRoute: SplashRoute,
   TermosRoute: TermosRoute,
+  AuthConfirmRoute: AuthConfirmRoute,
   BonusIdRoute: BonusIdRouteWithChildren,
   CategoriaSlugRoute: CategoriaSlugRoute,
   CheckinDiaRoute: CheckinDiaRoute,

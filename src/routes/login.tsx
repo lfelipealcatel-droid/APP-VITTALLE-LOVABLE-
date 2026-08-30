@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/login")({
   head: () => ({ meta: [{ title: "Entrar — VITTALLE" }, { name: "description", content: "Acesse sua jornada VITTALLE." }] }),
@@ -9,16 +10,31 @@ export const Route = createFileRoute("/login")({
 });
 
 function Login() {
-  const [email, setEmail] = useState("mariana@exemplo.com");
-  const [pass, setPass] = useState("vittalle");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const nav = useNavigate();
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (loading) return;
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+    setLoading(false);
+    if (error) {
+      toast.error("E-mail ou senha inválidos.");
+      return;
+    }
+    nav({ to: "/" });
+  };
+
   return (
     <div className="grid min-h-screen place-items-center bg-background px-6">
       <div className="w-full max-w-sm">
         <p className="text-center font-editorial text-3xl text-primary-dark">VITTALLE</p>
         <p className="mt-2 text-center text-sm text-text-secondary">Que bom ter você de volta.</p>
-        <form onSubmit={(e) => { e.preventDefault(); toast.success("Bem-vinda de volta"); nav({ to: "/" }); }} className="mt-8 grid gap-3">
+        <form onSubmit={onSubmit} className="mt-8 grid gap-3">
           <label className="grid gap-1 text-xs text-text-secondary"><span>E-mail</span>
             <input type="email" required className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
           </label>
@@ -30,13 +46,11 @@ function Login() {
               </button>
             </div>
           </label>
-          <a href="#" className="text-right text-xs text-primary hover:underline">Esqueci minha senha</a>
-          <button type="submit" className="mt-2 min-h-12 rounded-xl bg-primary text-sm font-semibold text-primary-foreground">Entrar</button>
-          <button type="button" onClick={() => { toast.success("Entrou com Google"); nav({ to: "/" }); }} className="min-h-12 rounded-xl border border-border bg-surface text-sm font-medium">Continuar com Google</button>
+          <Link to="/esqueci-senha" className="text-right text-xs text-primary hover:underline">Esqueci minha senha</Link>
+          <button type="submit" disabled={loading} className="mt-2 min-h-12 rounded-xl bg-primary text-sm font-semibold text-primary-foreground disabled:opacity-60">
+            {loading ? "Entrando…" : "Entrar"}
+          </button>
         </form>
-        <p className="mt-6 text-center text-xs text-text-secondary">
-          Ainda não tem conta? <Link to="/onboarding" className="text-primary hover:underline">Criar conta</Link>
-        </p>
       </div>
       <style>{`.input{width:100%;border:1px solid var(--color-border);background:var(--color-surface);border-radius:12px;padding:12px;font-size:14px;outline:none}.input:focus{border-color:var(--color-primary)}`}</style>
     </div>

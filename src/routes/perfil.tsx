@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   Bell,
   ChevronRight,
@@ -12,7 +12,9 @@ import {
   User as UserIcon,
 } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
+import { useAuth } from "@/lib/auth";
 import { USER } from "@/lib/mock-data";
+import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/perfil")({
   head: () => ({
@@ -30,6 +32,8 @@ function Perfil() {
   const pathname = useRouterState({
     select: (s) => s.location.pathname,
   });
+  const { isAdmin } = useAuth();
+  const nav = useNavigate();
 
   // /perfil é rota-pai das subrotas (dados, seguranca, preferencias, notificacoes) na convenção de
   // arquivos do TanStack Router — sem este Outlet, navegar para /perfil/dados ou /perfil/seguranca
@@ -73,17 +77,23 @@ function Perfil() {
           </div>
         </Group>
 
-        <Group title="Uso interno">
-          <Item to="/demo" icon={FlaskConical} label="Modo demonstração" />
-        </Group>
+        {isAdmin ? (
+          <Group title="Uso interno">
+            <Item to="/demo" icon={FlaskConical} label="Modo demonstração" />
+          </Group>
+        ) : null}
 
         <div className="mt-6">
-          <Link
-            to="/login"
-            className="flex items-center justify-center gap-2 rounded-2xl border border-border bg-surface px-4 py-3 text-sm font-medium text-text-secondary transition hover:bg-surface-2"
+          <button
+            type="button"
+            onClick={async () => {
+              await supabase.auth.signOut();
+              nav({ to: "/login" });
+            }}
+            className="flex w-full items-center justify-center gap-2 rounded-2xl border border-border bg-surface px-4 py-3 text-sm font-medium text-text-secondary transition hover:bg-surface-2"
           >
             <LogOut size={16} aria-hidden /> Sair da conta
-          </Link>
+          </button>
         </div>
       </div>
     </AppShell>

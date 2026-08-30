@@ -8,7 +8,9 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { RouteGuard } from "@/components/route-guard";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/lib/auth";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -120,9 +122,13 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. */}
-      <Outlet />
-      <Toaster position="top-center" />
+      <AuthProvider>
+        <RouteGuard>
+          {/* Required: nested routes render here. */}
+          <Outlet />
+        </RouteGuard>
+        <Toaster position="top-center" />
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

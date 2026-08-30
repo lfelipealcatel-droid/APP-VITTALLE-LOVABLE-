@@ -1,6 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
+import { useAuth } from "@/lib/auth";
 import { DAYS, PRODUCTS, WEEK_LABEL, dayById } from "@/lib/mock-data";
 import type { DayActivityKey } from "@/lib/store";
 import {
@@ -40,6 +42,22 @@ export const Route = createFileRoute("/demo")({
 
 function DemoPage() {
   const [state] = useAppState();
+  const { session, loading, isAdmin } = useAuth();
+  const nav = useNavigate();
+
+  useEffect(() => {
+    if (loading) return;
+    if (!session) {
+      nav({ to: "/login", replace: true });
+      return;
+    }
+    if (!isAdmin) {
+      nav({ to: "/", replace: true });
+    }
+  }, [loading, session, isAdmin, nav]);
+
+  if (loading || !session || !isAdmin) return null;
+
   const selectedDay = state.demoMode ? dayById(state.demoDayOverride ?? -1) : undefined;
   const selectedProgress = selectedDay ? dayProgress(state, selectedDay.id) : null;
   const selectedStatus = selectedProgress
