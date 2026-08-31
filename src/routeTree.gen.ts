@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcessoPendenteRouteImport } from './routes/acesso-pendente'
 import { Route as AjudaRouteImport } from './routes/ajuda'
 import { Route as AlimentacaoRouteImport } from './routes/alimentacao'
 import { Route as BibliotecaRouteImport } from './routes/biblioteca'
@@ -67,6 +68,11 @@ import { Route as ProdutoIdCheckoutRouteImport } from './routes/produto.$id.chec
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcessoPendenteRoute = AcessoPendenteRouteImport.update({
+  id: '/acesso-pendente',
+  path: '/acesso-pendente',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AjudaRoute = AjudaRouteImport.update({
@@ -342,6 +348,7 @@ const ProdutoIdCheckoutRoute = ProdutoIdCheckoutRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acesso-pendente': typeof AcessoPendenteRoute
   '/ajuda': typeof AjudaRoute
   '/alimentacao': typeof AlimentacaoRouteWithChildren
   '/biblioteca': typeof BibliotecaRoute
@@ -398,6 +405,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acesso-pendente': typeof AcessoPendenteRoute
   '/ajuda': typeof AjudaRoute
   '/alimentacao': typeof AlimentacaoRouteWithChildren
   '/biblioteca': typeof BibliotecaRoute
@@ -455,6 +463,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/acesso-pendente': typeof AcessoPendenteRoute
   '/ajuda': typeof AjudaRoute
   '/alimentacao': typeof AlimentacaoRouteWithChildren
   '/biblioteca': typeof BibliotecaRoute
@@ -513,6 +522,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/acesso-pendente'
     | '/ajuda'
     | '/alimentacao'
     | '/biblioteca'
@@ -569,6 +579,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/acesso-pendente'
     | '/ajuda'
     | '/alimentacao'
     | '/biblioteca'
@@ -625,6 +636,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/acesso-pendente'
     | '/ajuda'
     | '/alimentacao'
     | '/biblioteca'
@@ -682,6 +694,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcessoPendenteRoute: typeof AcessoPendenteRoute
   AjudaRoute: typeof AjudaRoute
   AlimentacaoRoute: typeof AlimentacaoRouteWithChildren
   BibliotecaRoute: typeof BibliotecaRoute
@@ -732,6 +745,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/acesso-pendente': {
+      id: '/acesso-pendente'
+      path: '/acesso-pendente'
+      fullPath: '/acesso-pendente'
+      preLoaderRoute: typeof AcessoPendenteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ajuda': {
@@ -1171,6 +1191,7 @@ const GuiaIdRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcessoPendenteRoute: AcessoPendenteRoute,
   AjudaRoute: AjudaRoute,
   AlimentacaoRoute: AlimentacaoRouteWithChildren,
   BibliotecaRoute: BibliotecaRoute,
