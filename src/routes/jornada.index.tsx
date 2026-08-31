@@ -9,6 +9,7 @@ import {
   currentUnlockedDay,
   dayProgress,
   isDayActivityDone,
+  isDemoActive,
 } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -59,7 +60,7 @@ function Jornada() {
               const aulaDone = isDayActivityDone(state, day.id, "sequencia");
               const { done, total } = dayProgress(state, day.id);
               const isCurrent = day.id === today;
-              const availableTomorrow = !canOpen && !state.demoMode && day.id === unlocked + 1 && frontierAulaDone;
+              const availableTomorrow = !canOpen && !isDemoActive(state) && day.id === unlocked + 1 && frontierAulaDone;
               return (
                 <li key={day.id}>
                   <MaybeLink dayId={day.id} enabled={canOpen}>

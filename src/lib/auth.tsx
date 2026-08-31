@@ -1,6 +1,11 @@
 import type { Session, User } from "@supabase/supabase-js";
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { setDemoAuthorization } from "@/lib/store";
 import { supabase } from "@/lib/supabase";
+
+function isAdminSession(session: Session | null) {
+  return session?.user?.app_metadata?.role === "admin";
+}
 
 interface AuthContextValue {
   session: Session | null;
@@ -21,6 +26,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       setSession(data.session);
+      // Sincronizado no mesmo instante que a sessão, nunca num efeito separado — evita uma sessão
+      // ADMIN residual (ou um demoMode salvo no navegador) vazar para outra conta por uma renderização
+      // de defasagem entre "sessão já trocou" e "autorização de Demo ainda não foi atualizada".
+      setDemoAuthorization(isAdminSession(data.session));
       setLoading(false);
     });
 
@@ -28,6 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, nextSession) => {
       setSession(nextSession);
+      setDemoAuthorization(isAdminSession(nextSession));
       setLoading(false);
 
       // O flag de recuperação só é ligado por PASSWORD_RECOVERY e só é desligado por SIGNED_OUT
@@ -47,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     session,
     user: session?.user ?? null,
     loading,
-    isAdmin: session?.user?.app_metadata?.role === "admin",
+    isAdmin: isAdminSession(session),
     isPasswordRecovery,
     finishPasswordRecovery: () => setIsPasswordRecovery(false),
   };

@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { FlaskConical } from "lucide-react";
-import { useAppState, toggleDemoMode } from "@/lib/store";
+import { isDemoActive, useAppState, toggleDemoMode } from "@/lib/store";
 
 export function DemoBadge() {
   const [state] = useAppState();
-  if (!state.demoMode) return null;
+  if (!isDemoActive(state)) return null;
   return (
     <div className="sticky top-0 z-50 flex items-center justify-between gap-3 bg-primary-dark px-4 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary-foreground">
       <span className="inline-flex items-center gap-2">

@@ -165,6 +165,22 @@ type Listener = (s: AppState) => void;
 const listeners = new Set<Listener>();
 let current: AppState | null = null;
 
+// Autorização de Demo: setada por AuthProvider (src/lib/auth.tsx) a cada mudança de sessão do
+// Supabase, nunca lida/escrita em nenhum outro lugar. Existe para que um `demoMode=true` deixado no
+// localStorage por uma sessão ADMIN anterior nunca seja "herdado" por uma conta sem role=admin no
+// mesmo navegador — sem isso, o campo persistido por si só não sabe quem está logado agora.
+let demoAuthorized = false;
+
+export function setDemoAuthorization(authorized: boolean) {
+  demoAuthorized = authorized;
+}
+
+// Única condição de "Demo efetivamente ativo" — todo ponto do app que decide entre estado Demo e
+// estado Normal deve usar esta função, nunca `state.demoMode` diretamente.
+export function isDemoActive(state: AppState): boolean {
+  return demoAuthorized && state.demoMode;
+}
+
 function getState(): AppState {
   if (current) return current;
   current = readState();
@@ -240,7 +256,7 @@ function todayLocalDateString(): string {
 export function setDayActivity(dayId: number, key: DayActivityKey, done: boolean) {
   setState((prev) => {
     const activityKey = `${dayId}:${key}`;
-    if (prev.demoMode) {
+    if (isDemoActive(prev)) {
       const nextDemoDates = { ...prev.demoActivityDates };
       if (done) nextDemoDates[activityKey] = todayLocalDateString();
       else delete nextDemoDates[activityKey];
@@ -263,7 +279,7 @@ export function setDayActivity(dayId: number, key: DayActivityKey, done: boolean
 // a leitura sempre reflita o modo atual, sem misturar progresso real com progresso simulado.
 export function isDayActivityDone(state: AppState, dayId: number, key: DayActivityKey) {
   const activityKey = `${dayId}:${key}`;
-  return state.demoMode
+  return isDemoActive(state)
     ? !!state.demoDayActivities[activityKey]
     : !!state.dayActivities[activityKey];
 }
@@ -276,7 +292,7 @@ export const DAY_KEYS: DayActivityKey[] = ["leitura", "sequencia", "alimentacao"
 export function clearDayActivities(dayId: number) {
   setState((prev) => {
     const dayPrefix = `${dayId}:`;
-    if (prev.demoMode) {
+    if (isDemoActive(prev)) {
       const nextDemo = { ...prev.demoDayActivities };
       const nextDemoDates = { ...prev.demoActivityDates };
       for (const key of Object.keys(nextDemo)) {
@@ -301,7 +317,7 @@ export function clearDayActivities(dayId: number) {
 
 export function dayProgress(state: AppState, dayId: number, includesMeasurement = false) {
   const keys = includesMeasurement ? [...DAY_KEYS, "medicao" as DayActivityKey] : DAY_KEYS;
-  const activities = state.demoMode ? state.demoDayActivities : state.dayActivities;
+  const activities = isDemoActive(state) ? state.demoDayActivities : state.dayActivities;
   const done = keys.filter((k) => activities[`${dayId}:${k}`]).length;
   return { done, total: keys.length, ratio: done / keys.length };
 }
@@ -332,7 +348,7 @@ function hasAdvancedPastDay(state: AppState, dayId: number): boolean {
 // - N = 1 (sempre disponível para começar)
 // - Modo Demo: qualquer dia é acessível.
 export function currentUnlockedDay(state: AppState): number {
-  if (state.demoMode) return 21;
+  if (isDemoActive(state)) return 21;
   let day = 1;
   for (let i = 1; i <= 20; i++) {
     if (hasAdvancedPastDay(state, i)) day = i + 1;
@@ -342,7 +358,7 @@ export function currentUnlockedDay(state: AppState): number {
 }
 
 export function canOpenDay(state: AppState, dayId: number): boolean {
-  if (state.demoMode) return true;
+  if (isDemoActive(state)) return true;
   return dayId <= currentUnlockedDay(state);
 }
 
@@ -351,7 +367,7 @@ export function canOpenDay(state: AppState, dayId: number): boolean {
 // liberar o próximo), permanece no último dia liberado. Visitar um dia anterior para revisão não
 // muda este cálculo: ele só olha `dayActivities`/`activityDates`, nunca a rota atual.
 export function activeDay(state: AppState): number {
-  if (state.demoMode && state.demoDayOverride) return state.demoDayOverride;
+  if (isDemoActive(state) && state.demoDayOverride) return state.demoDayOverride;
   const unlocked = currentUnlockedDay(state);
   for (let i = 1; i <= unlocked; i++) {
     if (!isDayActivityDone(state, i, "sequencia")) return i;
@@ -370,7 +386,7 @@ export function hasFinalMeasurement(state: AppState) {
 // Lê do mesmo array que `setOwnedProduct` escreveria agora, conforme `demoMode` — entitlements
 // simulados no painel /demo nunca aparecem como adquiridos no modo normal, e vice-versa.
 export function ownsProduct(state: AppState, id: string) {
-  const owned = state.demoMode ? state.demoOwnedProducts : state.ownedProducts;
+  const owned = isDemoActive(state) ? state.demoOwnedProducts : state.ownedProducts;
   return owned.includes(id);
 }
 
@@ -378,7 +394,7 @@ export function ownsProduct(state: AppState, id: string) {
 // false, ou de demonstração (demoOwnedProducts) quando é true. Mesma regra de `setDayActivity`.
 export function setOwnedProduct(id: string, owned: boolean) {
   setState((prev) => {
-    const field = prev.demoMode ? "demoOwnedProducts" : "ownedProducts";
+    const field = isDemoActive(prev) ? "demoOwnedProducts" : "ownedProducts";
     const list = prev[field];
     const has = list.includes(id);
     if (has === owned) return {};
