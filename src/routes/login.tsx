@@ -33,7 +33,7 @@ function Login() {
     <div className="grid min-h-screen place-items-center bg-background px-6">
       <div className="w-full max-w-sm">
         <p className="text-center font-editorial text-3xl text-primary-dark">VITTALLE</p>
-        <p className="mt-2 text-center text-sm text-text-secondary">Que bom ter você de volta.</p>
+        <p className="mt-2 text-center text-sm text-text-secondary">Acesse sua conta VITTALLE.</p>
         <form onSubmit={onSubmit} className="mt-8 grid gap-3">
           <label className="grid gap-1 text-xs text-text-secondary"><span>E-mail</span>
             <input type="email" required className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
