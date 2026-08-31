@@ -14,6 +14,7 @@ import {
 import { AppShell } from "@/components/app-shell";
 import { useAuth } from "@/lib/auth";
 import { USER } from "@/lib/mock-data";
+import { useProfile } from "@/lib/profile";
 import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/perfil")({
@@ -32,8 +33,11 @@ function Perfil() {
   const pathname = useRouterState({
     select: (s) => s.location.pathname,
   });
-  const { isAdmin } = useAuth();
+  const { isAdmin, user } = useAuth();
+  const { profile } = useProfile();
   const nav = useNavigate();
+  const displayName = profile?.name?.trim();
+  const avatarLetter = (displayName || user?.email || "").slice(0, 1).toUpperCase();
 
   // /perfil é rota-pai das subrotas (dados, seguranca, preferencias, notificacoes) na convenção de
   // arquivos do TanStack Router — sem este Outlet, navegar para /perfil/dados ou /perfil/seguranca
@@ -47,11 +51,17 @@ function Perfil() {
       <div className="animate-fade-in">
         <section className="flex items-center gap-4 rounded-3xl border border-primary/20 bg-warm p-5 shadow-soft">
           <div className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-primary text-xl font-semibold text-primary-foreground">
-            {USER.firstName.slice(0, 1)}
+            {avatarLetter}
           </div>
           <div className="min-w-0">
-            <p className="font-editorial text-xl leading-tight">{USER.fullName}</p>
-            <p className="truncate text-xs text-text-secondary">{USER.email}</p>
+            {displayName ? (
+              <>
+                <p className="font-editorial text-xl leading-tight">{displayName}</p>
+                <p className="truncate text-xs text-text-secondary">{user?.email}</p>
+              </>
+            ) : (
+              <p className="truncate font-editorial text-xl leading-tight">{user?.email}</p>
+            )}
             <p className="mt-1 text-xs font-medium text-primary-dark">{USER.program}</p>
           </div>
         </section>

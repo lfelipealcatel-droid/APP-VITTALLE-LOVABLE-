@@ -2,16 +2,23 @@ import { Link } from "@tanstack/react-router";
 import { Bell, Leaf } from "lucide-react";
 import type { ReactNode } from "react";
 import { useAppState } from "@/lib/store";
-import { USER } from "@/lib/mock-data";
+import { useAuth } from "@/lib/auth";
+import { useProfile } from "@/lib/profile";
 
 export function TopUserBar({ message }: { message?: ReactNode }) {
   const [state] = useAppState();
+  const { user } = useAuth();
+  const { profile, loading: profileLoading } = useProfile();
   const unread = 4 - state.notificationsRead.length;
+  // Enquanto o profile ainda carrega, firstName fica undefined (nunca um nome mock) — evita o flash
+  // de qualquer identidade fictícia antes do dado real do Supabase chegar.
+  const firstName = profileLoading ? undefined : profile?.name?.trim().split(/\s+/)[0];
+  const avatarLetter = (firstName || user?.email || "").slice(0, 1).toUpperCase();
   return (
     <div className="flex items-center gap-3">
       <div className="min-w-0 flex-1">
         <p className="flex items-center gap-1.5 font-editorial text-xl">
-          Olá, {USER.firstName} <Leaf size={16} className="text-secondary" aria-hidden />
+          {firstName ? `Olá, ${firstName}` : "Olá!"} <Leaf size={16} className="text-secondary" aria-hidden />
         </p>
         {message ? <div className="mt-1 text-sm text-text-secondary">{message}</div> : null}
       </div>
@@ -30,7 +37,7 @@ export function TopUserBar({ message }: { message?: ReactNode }) {
         aria-label="Perfil"
         className="grid h-11 w-11 place-items-center rounded-full bg-secondary-light font-semibold text-secondary-dark"
       >
-        {USER.firstName.slice(0, 1)}
+        {avatarLetter}
       </Link>
     </div>
   );

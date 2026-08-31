@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 import { RouteGuard } from "@/components/route-guard";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/lib/auth";
+import { ProfileProvider } from "@/lib/profile";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -123,11 +124,13 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <RouteGuard>
-          {/* Required: nested routes render here. */}
-          <Outlet />
-        </RouteGuard>
-        <Toaster position="top-center" />
+        <ProfileProvider>
+          <RouteGuard>
+            {/* Required: nested routes render here. */}
+            <Outlet />
+          </RouteGuard>
+          <Toaster position="top-center" />
+        </ProfileProvider>
       </AuthProvider>
     </QueryClientProvider>
   );

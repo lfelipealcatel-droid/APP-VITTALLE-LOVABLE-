@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
+import { supabase } from "@/lib/supabase";
 
 export const Route = createFileRoute("/perfil/seguranca")({
   head: () => ({
@@ -13,25 +14,49 @@ export const Route = createFileRoute("/perfil/seguranca")({
   component: Seguranca,
 });
 
+const PASSWORD_RULE = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
 function Seguranca() {
   const [form, setForm] = useState({ current: "", next: "", confirm: "" });
-  const save = (e: React.FormEvent) => {
+  const [loading, setLoading] = useState(false);
+
+  const save = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
     if (!form.current || !form.next) {
       toast.error("Preencha os campos obrigatórios");
       return;
     }
     if (form.next !== form.confirm) {
-      toast.error("A confirmação não confere");
+      toast.error("As senhas não coincidem.");
       return;
     }
-    if (form.next.length < 6) {
-      toast.error("A nova senha deve ter ao menos 6 caracteres");
+    if (!PASSWORD_RULE.test(form.next)) {
+      toast.error("A nova senha deve ter ao menos 8 caracteres, com letras e números.");
       return;
     }
-    toast.success("Senha alterada");
+    setLoading(true);
+    const { error } = await supabase.auth.updateUser({
+      password: form.next,
+      current_password: form.current,
+    });
+    setLoading(false);
+    if (error) {
+      if (error.code === "reauthentication_not_valid" || error.code === "invalid_credentials") {
+        toast.error("Senha atual incorreta.");
+      } else if (error.code === "same_password") {
+        toast.error("A nova senha deve ser diferente da atual.");
+      } else if (error.code === "weak_password") {
+        toast.error("A nova senha deve ter ao menos 8 caracteres, com letras e números.");
+      } else {
+        toast.error("Não foi possível alterar sua senha. Tente novamente.");
+      }
+      return;
+    }
+    toast.success("Senha alterada com sucesso.");
     setForm({ current: "", next: "", confirm: "" });
   };
+
   return (
     <AppShell title="Segurança" back="/perfil" hideMiniPlayer>
       <form onSubmit={save} className="grid gap-3 rounded-2xl border border-border bg-surface p-5">
@@ -63,9 +88,10 @@ function Seguranca() {
             className="input"
           />
         </label>
+        <p className="text-[11px] text-text-muted">Mínimo de 8 caracteres, com letras e números.</p>
         <div className="mt-2 flex gap-2">
-          <button type="submit" className="min-h-12 flex-1 rounded-xl bg-primary text-sm font-semibold text-primary-foreground">
-            Salvar alterações
+          <button type="submit" disabled={loading} className="min-h-12 flex-1 rounded-xl bg-primary text-sm font-semibold text-primary-foreground disabled:opacity-60">
+            {loading ? "Salvando…" : "Salvar alterações"}
           </button>
           <button type="button" onClick={() => history.back()} className="min-h-12 rounded-xl border border-border px-4 text-sm">
             Cancelar
