@@ -817,18 +817,22 @@ export function dayById(id: number) {
 export type ProductState = "acquired" | "available" | "recommended" | "locked" | "future";
 
 export interface Product {
-  id: string;
+  id: string; // igual ao product_code da tabela entitlements (Supabase)
   title: string;
   subtitle: string;
   benefit: string;
   category: "core" | "bump" | "upsell" | "downsell";
-  price?: number; // referência de demonstração
+  price?: string; // rótulo já formatado, ex. "R$ 17,90"
   durationLabel: string;
   cover: "warm" | "green";
   image?: string;
+  imageUrl?: string; // foto real do produto (public/produtos/...); tem prioridade sobre `image`
   longDescription: string;
   highlights: string[];
   includes: string[]; // o que está incluído
+  checkoutUrl?: string; // link de checkout da Lastlink
+  visibleInStore?: boolean; // padrão true — false nunca aparece na loja/biblioteca
+  materialUrl?: string; // link do material (Gamma) exibido em /produto/$id/acessar
 }
 
 export const PRODUCTS: Product[] = [
@@ -863,7 +867,7 @@ export const PRODUCTS: Product[] = [
     subtitle: "PDF · 12 a 16 páginas",
     benefit: "Chás e tônicos organizados pelas funções do sistema.",
     category: "bump",
-    price: 19,
+    price: "R$ 19",
     durationLabel: "Consulta rápida · PDF",
     cover: "green",
     image: "/imagens/biblioteca/chas-tonicos.webp.png",
@@ -879,14 +883,15 @@ export const PRODUCTS: Product[] = [
       "Três tônicos rápidos",
       "Cuidados e disclaimers",
     ],
+    visibleInStore: false,
   },
   {
     id: "desinchar-express-24h",
-    title: "Protocolo Desinchar Express 24H",
+    title: "Desinchar Express 24h",
     subtitle: "PDF + 1 áudio guiado",
     benefit: "Um protocolo de 24 horas organizado hora a hora.",
     category: "bump",
-    price: 17,
+    price: "R$ 17,90",
     durationLabel: "24 horas · PDF + áudio",
     cover: "warm",
     image: "/imagens/biblioteca/desinchar-24h.webp.png",
@@ -902,57 +907,86 @@ export const PRODUCTS: Product[] = [
       "Sequência de drenagem express",
       "Áudio guiado da véspera",
     ],
+    checkoutUrl: "https://lastlink.com/p/C2D5B98C9/checkout-payment",
   },
   {
-    id: "cozinha-hormonal-21-dias",
-    title: "Cozinha Hormonal 21 Dias",
-    subtitle: "Cardápio, guia e áudios",
-    benefit: "Cardápio hormonal completo com apoio prático e ritual noturno.",
-    category: "upsell",
-    price: 67,
-    durationLabel: "21 dias · cardápio completo",
+    id: "noite-inteira-sono-40-plus",
+    title: "Protocolo Noite Inteira – Sono Hormonal 40+",
+    subtitle: "PDF + áudios guiados",
+    benefit: "Ritual noturno + áudios guiados para voltar a dormir a noite inteira.",
+    category: "bump",
+    price: "R$ 17,90",
+    durationLabel: "Ritual noturno · PDF + áudios",
     cover: "green",
-    image: "/imagens/biblioteca/cozinha-hormonal.webp.png",
+    imageUrl: "/produtos/noite-inteira.jpg",
     longDescription:
-      "Um cardápio hormonal estruturado com apoio prático, lista de compras semanal e três áudios de ritual noturno.",
+      "Um ritual noturno completo para quem vive travando o sono por causa das oscilações hormonais 40+, com áudios guiados para relaxar o corpo e a mente antes de dormir.",
     highlights: [
-      "Cardápio de 21 dias",
-      "Lista de compras por semana",
-      "Guia de Sobrevivência Social",
-      "Três áudios de ritual noturno",
+      "Ritual noturno passo a passo",
+      "Áudios guiados para relaxar antes de dormir",
+      "Ajustes práticos para noites mais estáveis",
     ],
     includes: [
-      "Café, almoço, jantar e lanches",
-      "Rotação de 7 dias, três vezes",
-      "Guia para restaurante, festa, viagem, fim de semana e TPM",
-      "Três áudios de ritual noturno",
+      "Guia do ritual noturno",
+      "Áudios guiados de sono",
+      "Ajustes práticos para a rotina noturna",
     ],
+    checkoutUrl: "https://lastlink.com/p/CB0E4DF9B/checkout-payment",
   },
   {
-    id: "cardapio-hormonal",
-    title: "Cardápio Hormonal",
-    subtitle: "Cardápio + lista de compras",
-    benefit: "A versão essencial do cardápio de 21 dias.",
-    category: "downsell",
-    price: 37,
-    durationLabel: "21 dias · cardápio",
-    cover: "warm",
-    image: "/imagens/biblioteca/cardapio-hormonal.webp.png",
+    id: "acelerador-glp1-natural",
+    title: "Acelerador de Emagrecimento GLP-1 Natural",
+    subtitle: "Protocolo de ativação natural",
+    benefit:
+      "Ative naturalmente o hormônio da saciedade e acelere a perda de peso e barriga do seu plano, sem passar fome.",
+    category: "upsell",
+    price: "R$ 67,90",
+    durationLabel: "Protocolo guiado · PDF + áudios",
+    cover: "green",
+    imageUrl: "/produtos/acelerador.jpg",
     longDescription:
-      "Uma alternativa focada apenas no Cardápio Hormonal de 21 Dias e na lista de compras correspondente.",
+      "Um protocolo natural para ativar o hormônio da saciedade (GLP-1) e potencializar os resultados do seu Plano Barriga Hormonal 40+, sem dietas restritivas ou passar fome.",
     highlights: [
-      "Cardápio hormonal de 21 dias",
-      "Lista de compras correspondente",
+      "Ativação natural do hormônio da saciedade",
+      "Potencializa a perda de peso e barriga do seu plano",
+      "Sem passar fome, sem restrição extrema",
     ],
     includes: [
-      "Cardápio de 21 dias",
-      "Lista de compras",
+      "Protocolo de ativação GLP-1 natural",
+      "Guia prático de aplicação diária",
+      "Ajustes para potencializar o Plano Barriga Hormonal 40+",
     ],
+    checkoutUrl: "https://lastlink.com/p/CA3658F1B/checkout-payment",
+  },
+  {
+    id: "glp1-ativacao-7-dias",
+    title: "GLP-1 Natural – Ativação 7 Dias",
+    subtitle: "Versão essencial · 7 dias",
+    benefit: "A versão essencial do Acelerador GLP-1 Natural, com 7 dias de ativação guiada.",
+    category: "downsell",
+    price: "R$ 27,90",
+    durationLabel: "7 dias · guiado",
+    cover: "warm",
+    longDescription:
+      "Uma versão essencial e mais acessível do Acelerador de Emagrecimento GLP-1 Natural, com um protocolo guiado de 7 dias para começar a ativação.",
+    highlights: [
+      "Ativação guiada de 7 dias",
+      "Versão essencial do protocolo GLP-1 Natural",
+    ],
+    includes: [
+      "Protocolo de 7 dias",
+      "Guia prático de aplicação",
+    ],
+    visibleInStore: false,
   },
 ];
 
 export function productById(id: string): Product | undefined {
   return PRODUCTS.find((p) => p.id === id);
+}
+
+export function isVisibleInStore(p: Product): boolean {
+  return p.visibleInStore !== false;
 }
 
 // ---------- Bônus oficiais (front) ----------
@@ -1169,36 +1203,6 @@ export const LIBRARY: ContentItem[] = [
     durationMin: 9,
     cover: "green",
     ownerProduct: "desinchar-express-24h",
-  },
-  {
-    id: "cozinha-ritual-1",
-    type: "audio",
-    title: "Ritual noturno da Cozinha Hormonal — 1",
-    subtitle: "Áudio do Upsell",
-    category: "Áudios oficiais",
-    durationMin: 8,
-    cover: "green",
-    ownerProduct: "cozinha-hormonal-21-dias",
-  },
-  {
-    id: "cozinha-ritual-2",
-    type: "audio",
-    title: "Ritual noturno da Cozinha Hormonal — 2",
-    subtitle: "Áudio do Upsell",
-    category: "Áudios oficiais",
-    durationMin: 8,
-    cover: "green",
-    ownerProduct: "cozinha-hormonal-21-dias",
-  },
-  {
-    id: "cozinha-ritual-3",
-    type: "audio",
-    title: "Ritual noturno da Cozinha Hormonal — 3",
-    subtitle: "Áudio do Upsell",
-    category: "Áudios oficiais",
-    durationMin: 8,
-    cover: "green",
-    ownerProduct: "cozinha-hormonal-21-dias",
   },
 ];
 

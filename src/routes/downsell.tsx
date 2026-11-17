@@ -6,15 +6,15 @@ import { productById } from "@/lib/mock-data";
 export const Route = createFileRoute("/downsell")({
   head: () => ({
     meta: [
-      { title: "Cardápio Hormonal — VITTALLE" },
-      { name: "description", content: "A versão essencial do cardápio hormonal de 21 dias." },
+      { title: "GLP-1 Natural – Ativação 7 Dias — VITTALLE" },
+      { name: "description", content: "A versão essencial do Acelerador GLP-1 Natural, com 7 dias de ativação guiada." },
     ],
   }),
   component: Downsell,
 });
 
 function Downsell() {
-  const p = productById("cardapio-hormonal")!;
+  const p = productById("glp1-ativacao-7-dias")!;
   const nav = useNavigate();
   return (
     <AppShell title="Uma opção mais simples" back="/biblioteca" hideMiniPlayer>
@@ -36,14 +36,14 @@ function Downsell() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-xs text-text-muted">Valor de referência: R$ {p.price}.</p>
+        <p className="mt-4 text-xs text-text-muted">Valor: {p.price}.</p>
         <div className="mt-4 flex flex-wrap gap-2">
           <button
             type="button"
-            onClick={() => nav({ to: "/produto/$id/checkout", params: { id: p.id } })}
+            onClick={() => nav({ to: "/produto/$id", params: { id: p.id } })}
             className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground"
           >
-            Comprar apenas o Cardápio
+            Ver GLP-1 Natural – Ativação 7 Dias
           </button>
           <Link to="/biblioteca" className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-medium">
             Voltar sem culpa

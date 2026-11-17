@@ -1,8 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Clock, Lock, Sparkles, Star } from "lucide-react";
+import { useState } from "react";
 import type { Product, ProductState } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import { useAppState } from "@/lib/store";
+import { useAuth } from "@/lib/auth";
+import { useEntitlements } from "@/lib/entitlements";
 import { PRODUCT_STATE_LABEL, PRODUCT_STATE_STYLE, productStateFor } from "@/lib/product-state";
 
 function StateIcon({ state }: { state: ProductState }) {
@@ -16,7 +19,9 @@ function StateIcon({ state }: { state: ProductState }) {
 
 export function ProductCard({ product }: { product: Product }) {
   const [state] = useAppState();
-  const productState = productStateFor(state, product);
+  const { isAdmin } = useAuth();
+  const { hasProduct } = useEntitlements();
+  const productState = productStateFor(state, product, hasProduct, isAdmin);
   const disabled = productState === "locked" || productState === "future";
   const bg = product.cover === "green" ? "bg-soft-green" : "bg-warm";
   const cta =
@@ -26,6 +31,10 @@ export function ProductCard({ product }: { product: Product }) {
         : "Acessar material"
       : "Conhecer programa";
 
+  const coverImage = product.imageUrl ?? product.image;
+  const [imgFailed, setImgFailed] = useState(false);
+  const showImage = Boolean(coverImage) && !imgFailed;
+
   const Card = (
     <article
       className={cn(
@@ -34,12 +43,24 @@ export function ProductCard({ product }: { product: Product }) {
         disabled && "opacity-90",
       )}
     >
-      <div className={cn("relative aspect-[16/9] w-full overflow-hidden", bg)}>
-        {product.image ? (
+      <div className={cn("relative aspect-[16/9] w-full overflow-hidden", showImage ? bg : "bg-secondary-dark")}>
+        {showImage ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={product.image} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+          <img
+            src={coverImage}
+            alt=""
+            onError={() => setImgFailed(true)}
+            className="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
+            <p className="font-editorial text-lg leading-tight text-primary-foreground">{product.title}</p>
+          </div>
+        )}
+        {showImage ? (
+          <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-white/40" aria-hidden />
         ) : null}
-        <div className="absolute inset-0 bg-gradient-to-tr from-black/5 via-transparent to-white/40" aria-hidden />
         <div className="absolute left-4 top-4">
           <span
             className={cn(
@@ -51,9 +72,11 @@ export function ProductCard({ product }: { product: Product }) {
             {PRODUCT_STATE_LABEL[productState]}
           </span>
         </div>
-        <div className="absolute bottom-4 left-4 right-4">
-          <p className="font-editorial text-lg leading-tight text-primary-dark">{product.title}</p>
-        </div>
+        {showImage ? (
+          <div className="absolute bottom-4 left-4 right-4">
+            <p className="font-editorial text-lg leading-tight text-primary-dark">{product.title}</p>
+          </div>
+        ) : null}
       </div>
 
       <div className="flex flex-1 flex-col gap-2 p-4">
@@ -61,9 +84,7 @@ export function ProductCard({ product }: { product: Product }) {
         <p className="text-sm font-medium leading-snug">{product.benefit}</p>
         <p className="mt-1 text-[11px] uppercase tracking-wide text-text-muted">{product.durationLabel}</p>
         <div className="mt-auto flex items-center justify-between pt-3">
-          <span className="text-xs text-text-secondary">
-            {product.price ? `R$ ${product.price}` : "Programa VITTALLE"}
-          </span>
+          <span className="text-xs text-text-secondary">{product.price ?? "Programa VITTALLE"}</span>
           <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
             {cta} <ArrowRight size={14} aria-hidden />
           </span>

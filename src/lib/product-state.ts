@@ -1,9 +1,18 @@
 import { ownsProduct, type AppState } from "@/lib/store";
 import type { Product, ProductState } from "@/lib/mock-data";
 
-export function productStateFor(state: AppState, p: Product): ProductState {
-  if (ownsProduct(state, p.id)) return "acquired";
+// Posse de produto extra: para usuárias comuns vem SOMENTE de `hasProduct` (entitlements reais do
+// Supabase); `ownsProduct` (localStorage) só decide para admin, dentro do Modo Demonstração — ver
+// src/lib/entitlements.tsx e src/lib/store.ts.
+export function productStateFor(
+  state: AppState,
+  p: Product,
+  hasProduct: (code: string) => boolean,
+  isAdmin: boolean,
+): ProductState {
   if (p.category === "core") return "acquired";
+  const owned = isAdmin ? ownsProduct(state, p.id) : hasProduct(p.id);
+  if (owned) return "acquired";
   if (p.category === "upsell") return "recommended";
   return "available";
 }
