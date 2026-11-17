@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
 
@@ -16,27 +16,68 @@ interface EntitlementsContextValue {
 
 const EntitlementsContext = createContext<EntitlementsContextValue | undefined>(undefined);
 
+// Sentinela distinta de qualquer user.id real e de `null` (usuária deslogada) — representa "ainda
+// não chegou nenhuma resposta nesta sessão do app".
+const NOT_LOADED = Symbol("not-loaded");
+
 export function EntitlementsProvider({ children }: { children: ReactNode }) {
   const { user, isAdmin, loading: authLoading } = useAuth();
   const [activeCodes, setActiveCodes] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Id do usuário (ou null se deslogada) para o qual já chegou alguma resposta — enquanto a busca
+  // atual for para um user.id diferente deste, é a carga INICIAL dessa conta e `loading` fica true
+  // (RouteGuard mostra "Carregando…"). Qualquer recarga posterior para o MESMO usuário (focus da
+  // aba, visibilitychange, refresh() manual) é silenciosa: não toca `loading`, só atualiza
+  // `activeCodes` quando a resposta chegar — nunca desmonta a tela atual.
+  const loadedForUserRef = useRef<string | null | typeof NOT_LOADED>(NOT_LOADED);
+  // Deduplica buscas simultâneas para o mesmo usuário (ex.: focus e visibilitychange disparando
+  // juntos, ou um clique em "Já comprei" enquanto a busca de foco ainda está em voo).
+  const inFlightRef = useRef<{ userId: string | null; promise: Promise<void> } | null>(null);
+
   // Busca TODAS as linhas ativas da usuária logada — cobre o produto principal e qualquer produto
   // extra (bump/upsell/downsell), sempre por user_id, nunca por e-mail.
-  const fetchEntitlements = useCallback(async () => {
-    if (!user) {
-      setActiveCodes([]);
-      setLoading(false);
-      return;
+  const fetchEntitlements = useCallback((): Promise<void> => {
+    const userId = user?.id ?? null;
+
+    if (inFlightRef.current && inFlightRef.current.userId === userId) {
+      return inFlightRef.current.promise;
     }
-    setLoading(true);
-    const { data, error } = await supabase
-      .from("entitlements")
-      .select("product_code")
-      .eq("user_id", user.id)
-      .eq("status", "active");
-    setActiveCodes(!error && data ? data.map((row) => row.product_code as string) : []);
-    setLoading(false);
+
+    const isInitialLoad = loadedForUserRef.current !== userId;
+    if (isInitialLoad) setLoading(true);
+
+    const run = async () => {
+      if (!userId) {
+        setActiveCodes([]);
+        loadedForUserRef.current = userId;
+        if (isInitialLoad) setLoading(false);
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from("entitlements")
+        .select("product_code")
+        .eq("user_id", userId)
+        .eq("status", "active");
+
+      if (error) {
+        // Recarga silenciosa com falha de rede momentânea: mantém os entitlements já conhecidos em
+        // vez de zerar e expulsar a usuária. Só na carga inicial (ainda sem nenhum dado) um erro
+        // resulta em "sem acesso", igual ao comportamento anterior.
+        if (isInitialLoad) setActiveCodes([]);
+      } else {
+        setActiveCodes((data ?? []).map((row) => row.product_code as string));
+      }
+      loadedForUserRef.current = userId;
+      if (isInitialLoad) setLoading(false);
+    };
+
+    const promise = run().finally(() => {
+      if (inFlightRef.current?.promise === promise) inFlightRef.current = null;
+    });
+    inFlightRef.current = { userId, promise };
+    return promise;
   }, [user]);
 
   useEffect(() => {
@@ -45,7 +86,8 @@ export function EntitlementsProvider({ children }: { children: ReactNode }) {
   }, [authLoading, fetchEntitlements]);
 
   // Recarrega quando a aba volta a ganhar foco/visibilidade — cobre o caso de a usuária comprar um
-  // produto extra na Lastlink (nova aba) e voltar para o app sem recarregar a página.
+  // produto extra na Lastlink (nova aba) e voltar para o app sem recarregar a página. Silenciosa:
+  // não passa por `loading`, então não desmonta a página atual.
   useEffect(() => {
     if (authLoading) return;
     const onFocusOrVisible = () => {
