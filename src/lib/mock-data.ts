@@ -833,6 +833,7 @@ export interface Product {
   checkoutUrl?: string; // link de checkout da Lastlink
   visibleInStore?: boolean; // padrão true — false nunca aparece na loja/biblioteca
   materialUrl?: string; // link do material (Gamma) exibido em /produto/$id/acessar
+  lockedBadge?: string; // texto do selo quando ainda não comprado (estado "available")
 }
 
 export const PRODUCTS: Product[] = [
@@ -908,6 +909,7 @@ export const PRODUCTS: Product[] = [
       "Áudio guiado da véspera",
     ],
     checkoutUrl: "https://lastlink.com/p/C2D5B98C9/checkout-payment",
+    lockedBadge: "Desinche em 24h",
   },
   {
     id: "noite-inteira-sono-40-plus",
@@ -918,7 +920,7 @@ export const PRODUCTS: Product[] = [
     price: "R$ 17,90",
     durationLabel: "Ritual noturno · PDF + áudios",
     cover: "green",
-    imageUrl: "/produtos/noite-inteira.jpg",
+    imageUrl: "/produtos/noite-inteira.png",
     longDescription:
       "Um ritual noturno completo para quem vive travando o sono por causa das oscilações hormonais 40+, com áudios guiados para relaxar o corpo e a mente antes de dormir.",
     highlights: [
@@ -932,6 +934,7 @@ export const PRODUCTS: Product[] = [
       "Ajustes práticos para a rotina noturna",
     ],
     checkoutUrl: "https://lastlink.com/p/CB0E4DF9B/checkout-payment",
+    lockedBadge: "Durma a noite inteira",
   },
   {
     id: "acelerador-glp1-natural",
@@ -943,7 +946,7 @@ export const PRODUCTS: Product[] = [
     price: "R$ 67,90",
     durationLabel: "Protocolo guiado · PDF + áudios",
     cover: "green",
-    imageUrl: "/produtos/acelerador.jpg",
+    imageUrl: "/produtos/acelerador.png",
     longDescription:
       "Um protocolo natural para ativar o hormônio da saciedade (GLP-1) e potencializar os resultados do seu Plano Barriga Hormonal 40+, sem dietas restritivas ou passar fome.",
     highlights: [
