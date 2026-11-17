@@ -99,29 +99,30 @@ function ProdutoPage() {
       ) : (
         <div className={`relative -mx-5 mb-6 aspect-[16/9] overflow-hidden md:-mx-8 ${showHeroImage ? bg : "bg-secondary-dark"}`}>
           {showHeroImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={coverImage}
-              alt=""
-              onError={() => setHeroImgFailed(true)}
-              className="absolute inset-0 h-full w-full object-cover"
-              loading="eager"
-            />
-          ) : null}
-          <div className={`absolute inset-0 ${showHeroImage ? "bg-gradient-to-tr from-black/10 via-transparent to-white/40" : "flex items-center justify-center px-8 text-center"}`} aria-hidden={showHeroImage}>
-            {!showHeroImage ? <p className="font-editorial text-2xl leading-tight text-primary-foreground">{product.title}</p> : null}
-          </div>
-          <div className="absolute left-6 top-6">
-            <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${PRODUCT_STATE_STYLE[productState]}`}>
-              {PRODUCT_STATE_LABEL[productState]}
-            </span>
-          </div>
-          {showHeroImage ? (
-            <div className="absolute bottom-6 left-6 right-6">
-              <p className="text-xs uppercase tracking-wide text-primary-dark">{product.subtitle}</p>
-              <h1 className="mt-1 font-editorial text-2xl leading-tight text-primary-dark md:text-3xl">{product.title}</h1>
-            </div>
-          ) : null}
+            <>
+              {/* A arte já traz o nome do produto — nada de texto/selo sobreposto aqui. */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={coverImage}
+                alt=""
+                onError={() => setHeroImgFailed(true)}
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="eager"
+              />
+              <h1 className="sr-only">{product.title}</h1>
+            </>
+          ) : (
+            <>
+              <div className="absolute inset-0 flex items-center justify-center px-8 text-center">
+                <p className="font-editorial text-2xl leading-tight text-primary-foreground">{product.title}</p>
+              </div>
+              <div className="absolute left-6 top-6">
+                <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${PRODUCT_STATE_STYLE[productState]}`}>
+                  {PRODUCT_STATE_LABEL[productState]}
+                </span>
+              </div>
+            </>
+          )}
         </div>
       )}
 
