@@ -19,8 +19,8 @@ export function productStateFor(
 
 export const PRODUCT_STATE_LABEL: Record<ProductState, string> = {
   acquired: "Adquirido",
-  available: "Disponível",
-  recommended: "Recomendado",
+  available: "Desbloqueie",
+  recommended: "Recomendado para você",
   locked: "Bloqueado",
   future: "Em breve",
 };
