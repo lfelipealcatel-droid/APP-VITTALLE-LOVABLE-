@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Search } from "lucide-react";
+import { useEffect } from "react";
 import { AppShell } from "@/components/app-shell";
-import { BONUSES, GUIDES, PRODUCTS } from "@/lib/mock-data";
+import { BONUSES, GUIDES, PRODUCTS, isVisibleInStore } from "@/lib/mock-data";
 import { ProductCard } from "@/components/product-card";
 import { MediaPlaceholder } from "@/components/media-placeholder";
-import { useAppState } from "@/lib/store";
-import { productStateFor } from "@/lib/product-state";
+import { useEntitlements } from "@/lib/entitlements";
 
 export const Route = createFileRoute("/biblioteca")({
   head: () => ({
@@ -30,10 +30,16 @@ function SectionHeader({ eyebrow, title, description }: { eyebrow: string; title
 }
 
 function Biblioteca() {
-  const [state] = useAppState();
+  const { hasProduct, refresh } = useEntitlements();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    refresh();
+  }, []);
   const core = PRODUCTS.find((p) => p.category === "core")!;
-  const myProducts = PRODUCTS.filter((p) => p.category !== "core" && productStateFor(state, p) === "acquired");
-  const otherProducts = PRODUCTS.filter((p) => p.category !== "core" && productStateFor(state, p) !== "acquired");
+  const myProducts = PRODUCTS.filter((p) => p.category !== "core" && hasProduct(p.id));
+  const otherProducts = PRODUCTS.filter(
+    (p) => p.category !== "core" && isVisibleInStore(p) && !hasProduct(p.id),
+  );
 
   return (
     <AppShell

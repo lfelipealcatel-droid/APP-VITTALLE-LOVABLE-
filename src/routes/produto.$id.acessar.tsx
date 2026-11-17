@@ -1,9 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Download, FileText, Headphones } from "lucide-react";
+import { Headphones } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
 import { OFFICIAL_AUDIOS, productById } from "@/lib/mock-data";
 import { ownsProduct, useAppState } from "@/lib/store";
+import { useAuth } from "@/lib/auth";
+import { useEntitlements } from "@/lib/entitlements";
 
 export const Route = createFileRoute("/produto/$id/acessar")({
   loader: ({ params }) => {
@@ -28,8 +30,14 @@ export const Route = createFileRoute("/produto/$id/acessar")({
 function AcessarProduto() {
   const { product } = Route.useLoaderData();
   const [state] = useAppState();
+  const { isAdmin } = useAuth();
+  const { hasProduct } = useEntitlements();
 
-  if (!ownsProduct(state, product.id)) {
+  // Posse real: para usuárias comuns vem só do Supabase (hasProduct); admin continua podendo
+  // simular posse pelo painel /demo (ownsProduct/localStorage), sem afetar usuárias comuns.
+  const owns = isAdmin ? ownsProduct(state, product.id) : hasProduct(product.id);
+
+  if (!owns) {
     return (
       <AppShell title={product.title} back={`/produto/${product.id}`} hideMiniPlayer>
         <div className="rounded-2xl border border-border bg-surface p-6 text-center">
@@ -46,9 +54,10 @@ function AcessarProduto() {
     );
   }
 
+  // Áudios oficiais existentes do Desinchar — os áudios antigos do Upsell (Cozinha Hormonal)
+  // pertenciam ao produto substituído e não têm equivalente no Acelerador GLP-1 Natural ainda.
   const audios = OFFICIAL_AUDIOS.filter((a) => {
     if (product.id === "desinchar-express-24h") return a.owner === "bump2";
-    if (product.id === "cozinha-hormonal-21-dias") return a.owner === "upsell";
     return false;
   });
 
@@ -59,12 +68,18 @@ function AcessarProduto() {
       <section className="mt-4 rounded-2xl border border-border bg-surface p-5">
         <h2 className="text-sm font-semibold">Material principal</h2>
         <p className="mt-1 text-xs text-text-secondary">{product.subtitle}</p>
-        <button type="button" disabled className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground">
-          <FileText size={16} aria-hidden /> Abrir material
-        </button>
-        <button type="button" disabled className="ml-2 mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-medium">
-          <Download size={16} aria-hidden /> Baixar PDF (em breve)
-        </button>
+        {product.materialUrl ? (
+          <a
+            href={product.materialUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-primary-foreground hover:bg-primary-dark"
+          >
+            Abrir material
+          </a>
+        ) : (
+          <p className="mt-3 text-sm text-text-muted">Seu material está sendo preparado e aparecerá aqui.</p>
+        )}
       </section>
 
       {audios.length > 0 ? (

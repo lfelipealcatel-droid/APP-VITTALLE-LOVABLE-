@@ -6,6 +6,8 @@ import { AppShell } from "@/components/app-shell";
 import { MediaPlaceholder, typeLabel } from "@/components/media-placeholder";
 import { contentById } from "@/lib/mock-data";
 import { markMediaProgress, useAppState, useToggleId, ownsProduct } from "@/lib/store";
+import { useAuth } from "@/lib/auth";
+import { useEntitlements } from "@/lib/entitlements";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/conteudo/$id")({
@@ -31,13 +33,21 @@ export const Route = createFileRoute("/conteudo/$id")({
 function ContentPage() {
   const { item } = Route.useLoaderData();
   const [state] = useAppState();
+  const { isAdmin } = useAuth();
+  const { hasProduct } = useEntitlements();
   const toggleFav = useToggleId("favorites");
   const toggleDone = useToggleId("completedActivities");
   const isFav = state.favorites.includes(item.id);
   const isDone = state.completedActivities.includes(item.id);
 
-  // Gate: áudios pagos exigem entitlement (front sempre acessível)
-  const gated = item.ownerProduct && !ownsProduct(state, item.ownerProduct) && item.ownerProduct !== "plano-barriga-hormonal-40";
+  // Gate: áudios pagos exigem entitlement real (hasProduct); admin continua podendo simular posse
+  // pelo painel /demo (ownsProduct/localStorage), sem afetar usuárias comuns.
+  const owns = item.ownerProduct
+    ? isAdmin
+      ? ownsProduct(state, item.ownerProduct)
+      : hasProduct(item.ownerProduct)
+    : true;
+  const gated = item.ownerProduct && !owns && item.ownerProduct !== "plano-barriga-hormonal-40";
 
   if (gated) {
     return (
