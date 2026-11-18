@@ -32,6 +32,8 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-warm: var(--warm);
   --color-soft-green: var(--soft-green);
+  --color-night: var(--night);
+  --color-night-light: var(--night-light);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
@@ -77,6 +79,10 @@
   --surface-2: oklch(0.945 0.018 65);          /* #F1EAE3 */
   --warm: oklch(0.930 0.030 45);               /* #F7E7DF */
   --soft-green: oklch(0.945 0.020 130);        /* #EBF0E8 */
+
+  /* Night — verde escuro da marca (cartões/telas de destaque) */
+  --night: #33402A;
+  --night-light: #434F38;
 
   /* Text */
   --foreground: oklch(0.245 0.015 40);         /* #2F2926 */
