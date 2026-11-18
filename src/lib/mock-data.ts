@@ -700,6 +700,7 @@ export interface OfficialAudio {
   subtitle: string;
   durationMin: number;
   owner: AudioOwner;
+  audioUrl?: string; // arquivo real do áudio; ainda não preenchido
 }
 
 export const OFFICIAL_AUDIOS: OfficialAudio[] = [
@@ -816,6 +817,43 @@ export function dayById(id: number) {
 // ---------- Produtos oficiais ----------
 export type ProductState = "acquired" | "available" | "recommended" | "locked" | "future";
 
+export type SalesIcon =
+  | "thermometer"
+  | "brain"
+  | "moon"
+  | "book"
+  | "headphones"
+  | "calendar"
+  | "sparkles"
+  | "flame"
+  | "droplet";
+
+export interface SalesPage {
+  eyebrow: string;
+  headline: string;
+  subheadline: string; // aceita **negrito**
+  ctaLabel: string; // botão principal
+  stickyCtaLabel: string; // botão da barra fixa do rodapé
+  painTitle: string;
+  pains: string[];
+  mechanismEyebrow: string;
+  mechanismTitle: string;
+  mechanismParagraphs: string[]; // aceita **negrito**
+  mechanismLead: string;
+  pillars: { icon: SalesIcon; title: string; text: string }[];
+  deliverablesTitle: string;
+  deliverables: { icon: SalesIcon; title: string; text: string }[];
+  benefitsTitle: string;
+  benefits: { strong: string; text: string }[];
+  timelineTitle: string;
+  timeline: { label: string; text: string }[];
+  priceCaption: string;
+  priceNote: string;
+  guaranteeTitle: string;
+  guaranteeText: string;
+  faq: { q: string; a: string }[];
+}
+
 export interface Product {
   id: string; // igual ao product_code da tabela entitlements (Supabase)
   title: string;
@@ -834,6 +872,9 @@ export interface Product {
   visibleInStore?: boolean; // padrão true — false nunca aparece na loja/biblioteca
   materialUrl?: string; // link do material (Gamma) exibido em /produto/$id/acessar
   lockedBadge?: string; // texto do selo quando ainda não comprado (estado "available")
+  salesPage?: SalesPage; // mini página de venda (produto.$id.index) quando ainda não comprado
+  shortName?: string; // nome curto usado em /produto/$id/acessar
+  welcomeText?: string; // texto de boas-vindas em /produto/$id/acessar
 }
 
 export const PRODUCTS: Product[] = [
@@ -911,6 +952,8 @@ export const PRODUCTS: Product[] = [
     checkoutUrl: "https://lastlink.com/p/C2D5B98C9/checkout-payment",
     lockedBadge: "Desinche em 24h",
     materialUrl: "/materiais/desinchar-express-24h.pdf",
+    shortName: "Desinchar",
+    welcomeText: "Siga os 2 passos abaixo. Comece de preferência na véspera do dia em que quer desinchar.",
   },
   {
     id: "noite-inteira-sono-40-plus",
@@ -936,6 +979,87 @@ export const PRODUCTS: Product[] = [
     ],
     checkoutUrl: "https://lastlink.com/p/CB0E4DF9B/checkout-payment",
     lockedBadge: "Durma a noite inteira",
+    shortName: "Noite Inteira",
+    welcomeText: "Siga os 2 passos abaixo. Comece hoje à noite.",
+    salesPage: {
+      eyebrow: "Para mulheres 40+ que acordam de madrugada",
+      headline: "Desligue o “alarme das 3h” do seu corpo e volte a dormir a noite inteira",
+      subheadline:
+        "Um ritual de **15 minutinhos** antes de deitar + 2 áudios guiados para você recuperar o **sono de qualidade** — começando hoje à noite, sem remédio e sem suplemento.",
+      ctaLabel: "Quero dormir a noite inteira",
+      stickyCtaLabel: "Quero dormir melhor",
+      painTitle: "Isso parece com as suas noites?",
+      pains: [
+        "Você deita exausta, mas a cabeça não desliga.",
+        "Acorda entre 2h e 4h — com calor ou com a cabeça a mil — e não volta a dormir.",
+        "Já tentou chá, melatonina, celular desligado… e nada resolveu de verdade.",
+        "Passa o dia cansada, irritada e com mais fome — e a barriga não cede.",
+      ],
+      mechanismEyebrow: "Por que você acorda de madrugada",
+      mechanismTitle: "A culpa não é sua: depois dos 40, um hormônio para de proteger o seu sono",
+      mechanismParagraphs: [
+        "Depois dos 40, cai a **progesterona** — o hormônio que acalma o cérebro à noite. Sem ela, o pico natural de cortisol da madrugada, que antes passava despercebido, agora **te acorda** — muitas vezes com calor e a cabeça a mil.",
+        "Isso começa anos antes da menopausa — por isso acontece até com quem ainda menstrua. E é por isso que chá e desligar o celular, sozinhos, não resolvem.",
+      ],
+      mechanismLead: "O Noite Inteira foi montado para essa fase:",
+      pillars: [
+        {
+          icon: "thermometer",
+          title: "Técnica do Termostato Noturno",
+          text: "Um jeito específico de usar o banho que avisa o seu cérebro: “agora é hora de dormir”.",
+        },
+        {
+          icon: "brain",
+          title: "Método Mente em Silêncio",
+          text: "O princípio que os especialistas em sono usam primeiro contra a insônia — numa versão de 5 minutos, para a cabeça parar de rodar quando você deita.",
+        },
+        {
+          icon: "moon",
+          title: "Protocolo 3h da Manhã",
+          text: "O que fazer — e o que nunca fazer — nos primeiros minutos depois de acordar. É ali que a maioria perde o resto da noite.",
+        },
+      ],
+      deliverablesTitle: "O que você recebe",
+      deliverables: [
+        { icon: "book", title: "Guia do Ritual", text: "Passo a passo com 3 opções para o seu perfil" },
+        { icon: "headphones", title: "Áudio “Desligar”", text: "10 min para relaxar o corpo e adormecer" },
+        { icon: "moon", title: "Áudio “3h da manhã”", text: "6 min para voltar a dormir quando acordar" },
+        { icon: "calendar", title: "Diário de 7 noites", text: "Para você ver a melhora noite após noite" },
+      ],
+      benefitsTitle: "O que muda quando você volta a ter sono de qualidade",
+      benefits: [
+        { strong: "Acordar descansada", text: " — e não mais cansada do que quando deitou" },
+        { strong: "Menos fome e menos vontade de doce", text: " no dia seguinte (noite mal dormida aumenta o apetite)" },
+        { strong: "Seu Plano Barriga rende mais", text: " — o corpo descansado responde melhor" },
+        { strong: "Mais paciência e bom humor", text: " — sem explodir por qualquer coisa" },
+        { strong: "Energia para o seu dia", text: " — sem viver no piloto automático" },
+      ],
+      timelineTitle: "Como vai ser a sua noite",
+      timeline: [
+        { label: "Antes de deitar", text: "15 minutinhos de ritual que avisam o seu corpo que o dia acabou" },
+        { label: "Na cama", text: "Você aperta o play e a voz te conduz até o sono" },
+        { label: "De madrugada", text: "Acordou? Nada de rolar na cama por horas — você já sabe exatamente o que fazer" },
+        { label: "De manhã", text: "Marca a noite no diário e vê a melhora acontecendo" },
+      ],
+      priceCaption: "Protocolo Noite Inteira completo",
+      priceNote: "Pagamento único · menos de R$ 2,60 por noite na primeira semana",
+      guaranteeTitle: "Garantia de 7 dias",
+      guaranteeText: "Experimente nas suas noites. Se não gostar, devolvemos seu dinheiro.",
+      faq: [
+        {
+          q: "Precisa de remédio ou suplemento?",
+          a: "Não. Você usa coisas simples que já tem em casa, mais os áudios guiados.",
+        },
+        {
+          q: "Serve para quem tem calorão à noite?",
+          a: "Sim. O protocolo tem ajustes específicos para as noites de calorão.",
+        },
+        {
+          q: "Quanto tempo leva por noite?",
+          a: "Uns 15 minutinhos antes de deitar. O resto o áudio faz por você, já na cama.",
+        },
+      ],
+    },
   },
   {
     id: "acelerador-glp1-natural",
@@ -961,6 +1085,8 @@ export const PRODUCTS: Product[] = [
       "Ajustes para potencializar o Plano Barriga Hormonal 40+",
     ],
     checkoutUrl: "https://lastlink.com/p/CA3658F1B/checkout-payment",
+    shortName: "Acelerador GLP-1",
+    welcomeText: "Siga os passos abaixo na ordem.",
   },
   {
     id: "glp1-ativacao-7-dias",
@@ -1152,6 +1278,7 @@ export interface ContentItem {
   cover: "warm" | "green";
   body?: string;
   ownerProduct?: string; // id do produto pai (para gating de áudios pagos)
+  audioUrl?: string; // arquivo real do áudio; ainda não preenchido
 }
 
 export const CATEGORY_LIST = ["Alimentação", "Movimento", "Leituras", "Bônus", "Áudios oficiais", "Materiais"];

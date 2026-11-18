@@ -3,6 +3,7 @@ import { ArrowRight, Check, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
+import { ProductSalesPage } from "@/components/sales-page";
 import { PRODUCTS, isVisibleInStore, productById } from "@/lib/mock-data";
 import { setOwnedProduct, useAppState } from "@/lib/store";
 import { productStateFor, PRODUCT_STATE_LABEL, PRODUCT_STATE_STYLE } from "@/lib/product-state";
@@ -126,116 +127,128 @@ function ProdutoPage() {
         </div>
       )}
 
-      <section className="rounded-2xl border border-border bg-surface p-5">
-        <p className="text-sm">{product.longDescription}</p>
-        <p className="mt-4 text-[11px] uppercase tracking-wide text-text-muted">{product.durationLabel}</p>
+      {productState !== "acquired" && product.salesPage && checkoutHref ? (
+        <ProductSalesPage
+          product={product}
+          sales={product.salesPage}
+          checkoutHref={checkoutHref}
+          onAlreadyBought={handleAlreadyBought}
+          checkingAccess={checkingAccess}
+        />
+      ) : (
+        <>
+          <section className="rounded-2xl border border-border bg-surface p-5">
+            <p className="text-sm">{product.longDescription}</p>
+            <p className="mt-4 text-[11px] uppercase tracking-wide text-text-muted">{product.durationLabel}</p>
 
-        {productState === "acquired" ? (
-          <button
-            type="button"
-            onClick={primaryAction}
-            className="mt-4 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary-dark"
-          >
-            {product.category === "core" ? "Acessar programa" : "Acessar material"} <ArrowRight size={16} aria-hidden />
-          </button>
-        ) : checkoutHref ? (
-          <div className="mt-4">
+            {productState === "acquired" ? (
+              <button
+                type="button"
+                onClick={primaryAction}
+                className="mt-4 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary-dark"
+              >
+                {product.category === "core" ? "Acessar programa" : "Acessar material"} <ArrowRight size={16} aria-hidden />
+              </button>
+            ) : checkoutHref ? (
+              <div className="mt-4">
+                <p className="text-xs text-text-muted">
+                  Use o mesmo e-mail da sua conta VITTALLE na compra para liberar automaticamente.
+                </p>
+                <a
+                  href={checkoutHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary-dark"
+                >
+                  Comprar agora <ArrowRight size={16} aria-hidden />
+                </a>
+                <button
+                  type="button"
+                  onClick={handleAlreadyBought}
+                  disabled={checkingAccess}
+                  className="mt-3 block text-xs text-text-muted hover:underline disabled:opacity-60"
+                >
+                  {checkingAccess ? "Verificando…" : "Já comprei — atualizar meu acesso"}
+                </button>
+              </div>
+            ) : (
+              <p className="mt-4 text-sm text-text-muted">Em breve disponível para compra.</p>
+            )}
+
+            {isAdmin && productState === "acquired" && product.category !== "core" ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setOwnedProduct(product.id, false);
+                  toast.success("Acesso removido (demo)");
+                }}
+                className="ml-3 mt-4 inline-flex text-xs text-text-muted hover:underline"
+              >
+                Remover acesso (demo)
+              </button>
+            ) : null}
+
+            {product.price ? (
+              <p className="mt-3 text-xs text-text-muted">Valor: {product.price}.</p>
+            ) : null}
+          </section>
+
+          <section className="mt-6">
+            <h2 className="mb-3 text-sm font-semibold text-text-secondary">O que está incluído</h2>
+            <ul className="grid gap-2">
+              {product.includes.map((h: string) => (
+                <li key={h} className="flex items-start gap-3 rounded-xl border border-border bg-surface p-3">
+                  <span className="mt-0.5 grid h-6 w-6 place-items-center rounded-full bg-secondary-light text-secondary-dark">
+                    <Check size={12} aria-hidden />
+                  </span>
+                  <span className="text-sm">{h}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-6">
+            <h2 className="mb-3 text-sm font-semibold text-text-secondary">Destaques</h2>
+            <ul className="grid gap-2">
+              {product.highlights.map((h: string) => (
+                <li key={h} className="flex items-start gap-3 rounded-xl border border-border bg-surface p-3">
+                  <Sparkles size={16} className="mt-0.5 text-primary" aria-hidden />
+                  <span className="text-sm">{h}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <section className="mt-6">
             <p className="text-xs text-text-muted">
-              Use o mesmo e-mail da sua conta VITTALLE na compra para liberar automaticamente.
+              Outras experiências VITTALLE aparecem em momentos naturais da sua evolução.
             </p>
-            <a
-              href={checkoutHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-primary-foreground transition hover:bg-primary-dark"
-            >
-              Comprar agora <ArrowRight size={16} aria-hidden />
-            </a>
-            <button
-              type="button"
-              onClick={handleAlreadyBought}
-              disabled={checkingAccess}
-              className="mt-3 block text-xs text-text-muted hover:underline disabled:opacity-60"
-            >
-              {checkingAccess ? "Verificando…" : "Já comprei — atualizar meu acesso"}
-            </button>
+            <Link to="/biblioteca" className="mt-1 inline-flex text-xs font-semibold text-primary hover:underline">
+              Ver todas
+            </Link>
+          </section>
+
+          {product.category === "upsell" ? (
+            <section className="mt-6 rounded-2xl border border-border bg-surface-2 p-5">
+              <p className="text-sm">Prefere uma opção mais simples?</p>
+              <Link to="/downsell" className="mt-2 inline-flex text-xs font-semibold text-primary hover:underline">
+                Ver GLP-1 Natural – Ativação 7 Dias (versão essencial)
+              </Link>
+            </section>
+          ) : null}
+
+          <p className="mt-6 text-xs text-text-muted">
+            Programas exibidos aqui compõem o ecossistema VITTALLE.
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            {PRODUCTS.filter((p) => p.id !== product.id && isVisibleInStore(p)).map((p) => (
+              <Link key={p.id} to="/produto/$id" params={{ id: p.id }} className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium hover:bg-surface-2">
+                {p.title}
+              </Link>
+            ))}
           </div>
-        ) : (
-          <p className="mt-4 text-sm text-text-muted">Em breve disponível para compra.</p>
-        )}
-
-        {isAdmin && productState === "acquired" && product.category !== "core" ? (
-          <button
-            type="button"
-            onClick={() => {
-              setOwnedProduct(product.id, false);
-              toast.success("Acesso removido (demo)");
-            }}
-            className="ml-3 mt-4 inline-flex text-xs text-text-muted hover:underline"
-          >
-            Remover acesso (demo)
-          </button>
-        ) : null}
-
-        {product.price ? (
-          <p className="mt-3 text-xs text-text-muted">Valor: {product.price}.</p>
-        ) : null}
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-text-secondary">O que está incluído</h2>
-        <ul className="grid gap-2">
-          {product.includes.map((h: string) => (
-            <li key={h} className="flex items-start gap-3 rounded-xl border border-border bg-surface p-3">
-              <span className="mt-0.5 grid h-6 w-6 place-items-center rounded-full bg-secondary-light text-secondary-dark">
-                <Check size={12} aria-hidden />
-              </span>
-              <span className="text-sm">{h}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="mt-6">
-        <h2 className="mb-3 text-sm font-semibold text-text-secondary">Destaques</h2>
-        <ul className="grid gap-2">
-          {product.highlights.map((h: string) => (
-            <li key={h} className="flex items-start gap-3 rounded-xl border border-border bg-surface p-3">
-              <Sparkles size={16} className="mt-0.5 text-primary" aria-hidden />
-              <span className="text-sm">{h}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section className="mt-6">
-        <p className="text-xs text-text-muted">
-          Outras experiências VITTALLE aparecem em momentos naturais da sua evolução.
-        </p>
-        <Link to="/biblioteca" className="mt-1 inline-flex text-xs font-semibold text-primary hover:underline">
-          Ver todas
-        </Link>
-      </section>
-
-      {product.category === "upsell" ? (
-        <section className="mt-6 rounded-2xl border border-border bg-surface-2 p-5">
-          <p className="text-sm">Prefere uma opção mais simples?</p>
-          <Link to="/downsell" className="mt-2 inline-flex text-xs font-semibold text-primary hover:underline">
-            Ver GLP-1 Natural – Ativação 7 Dias (versão essencial)
-          </Link>
-        </section>
-      ) : null}
-
-      <p className="mt-6 text-xs text-text-muted">
-        Programas exibidos aqui compõem o ecossistema VITTALLE.
-      </p>
-      <div className="mt-2 flex flex-wrap gap-2">
-        {PRODUCTS.filter((p) => p.id !== product.id && isVisibleInStore(p)).map((p) => (
-          <Link key={p.id} to="/produto/$id" params={{ id: p.id }} className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium hover:bg-surface-2">
-            {p.title}
-          </Link>
-        ))}
-      </div>
+        </>
+      )}
     </AppShell>
   );
 }

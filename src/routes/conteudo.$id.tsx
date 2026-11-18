@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Check, Heart, Pause, Play } from "lucide-react";
-import { useState } from "react";
+import { ArrowLeft, Check, Heart, Info, Moon, Pause, Play, RotateCcw, RotateCw } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
 import { MediaPlaceholder, typeLabel } from "@/components/media-placeholder";
@@ -67,12 +67,31 @@ function ContentPage() {
     );
   }
 
+  if (item.type === "audio") {
+    return (
+      <AppShell title={typeLabel(item.type)} subtitle={item.title} back="/biblioteca" hideMiniPlayer>
+        <AudioView
+          id={item.id}
+          title={item.title}
+          subtitle={item.subtitle}
+          durationMin={item.durationMin}
+          audioUrl={item.audioUrl}
+          isFav={isFav}
+          isDone={isDone}
+          onToggleFav={() => toggleFav(item.id)}
+          onToggleDone={() => {
+            toggleDone(item.id, !isDone);
+            toast.success(isDone ? "Marcado como não concluído" : "Marcado como concluído");
+          }}
+        />
+      </AppShell>
+    );
+  }
+
   return (
-    <AppShell title={typeLabel(item.type)} subtitle={item.title} back="/biblioteca" hideMiniPlayer={item.type === "audio"}>
+    <AppShell title={typeLabel(item.type)} subtitle={item.title} back="/biblioteca">
       <div className="mx-auto max-w-[720px]">
-        {item.type === "audio" ? (
-          <AudioView id={item.id} title={item.title} />
-        ) : item.type === "reading" ? (
+        {item.type === "reading" ? (
           <ReadingView title={item.title} body={item.body} />
         ) : (
           <MediaPlaceholder type={item.type} cover={item.cover} />
@@ -112,31 +131,176 @@ function ContentPage() {
   );
 }
 
-function AudioView({ id, title }: { id: string; title: string }) {
-  const [state] = useAppState();
+function formatTime(seconds: number): string {
+  if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${String(s).padStart(2, "0")}`;
+}
+
+function AudioView({
+  id,
+  title,
+  subtitle,
+  durationMin,
+  audioUrl,
+  isFav,
+  isDone,
+  onToggleFav,
+  onToggleDone,
+}: {
+  id: string;
+  title: string;
+  subtitle: string;
+  durationMin: number;
+  audioUrl?: string;
+  isFav: boolean;
+  isDone: boolean;
+  onToggleFav: () => void;
+  onToggleDone: () => void;
+}) {
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
-  const p = state.mediaProgress[id] ?? 0;
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const onTime = () => setCurrentTime(audio.currentTime);
+    const onLoaded = () => setDuration(audio.duration || 0);
+    const onEnded = () => {
+      setPlaying(false);
+      markMediaProgress(id, 1);
+    };
+    audio.addEventListener("timeupdate", onTime);
+    audio.addEventListener("loadedmetadata", onLoaded);
+    audio.addEventListener("ended", onEnded);
+    return () => {
+      audio.removeEventListener("timeupdate", onTime);
+      audio.removeEventListener("loadedmetadata", onLoaded);
+      audio.removeEventListener("ended", onEnded);
+    };
+  }, [id]);
+
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (playing) {
+      audio.pause();
+      setPlaying(false);
+      if (audio.duration) markMediaProgress(id, Math.min(1, audio.currentTime / audio.duration));
+    } else {
+      void audio.play();
+      setPlaying(true);
+    }
+  };
+
+  const skip = (secondsDelta: number) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + secondsDelta));
+  };
+
+  const progress = duration > 0 ? currentTime / duration : 0;
+
   return (
-    <div className="rounded-3xl border border-border bg-surface p-6">
-      <MediaPlaceholder type="audio" cover="green" aspect="wide" />
-      <p className="mt-4 font-editorial text-xl">{title}</p>
-      <div className="mt-4 h-1.5 rounded-full bg-surface-2">
-        <div className="h-1.5 rounded-full bg-primary" style={{ width: `${Math.round(p * 100)}%` }} />
+    <div className="-mx-5 -mt-4 bg-night px-5 pb-10 pt-8 text-primary-foreground md:-mx-8">
+      <div className="mx-auto max-w-[480px]">
+        <div className="rounded-3xl bg-night-light p-8 text-center">
+          <div className="mx-auto grid h-24 w-24 place-items-center rounded-full bg-night">
+            <Moon size={36} className="text-primary-light" aria-hidden />
+          </div>
+          <h1 className="mt-5 font-editorial text-[25px] leading-tight text-white">{title}</h1>
+          <p className="mt-1 text-sm text-primary-foreground/70">
+            {subtitle} · {durationMin} min
+          </p>
+
+          {audioUrl ? <audio ref={audioRef} src={audioUrl} preload="metadata" /> : null}
+
+          <div className="mt-6">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-black/30">
+              <div className="h-1.5 rounded-full bg-primary-light" style={{ width: `${Math.round(progress * 100)}%` }} />
+            </div>
+            <div className="mt-1 flex justify-between text-[11px] text-primary-foreground/60">
+              <span>{formatTime(currentTime)}</span>
+              <span>{duration ? formatTime(duration) : `${durationMin}:00`}</span>
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-center justify-center gap-5">
+            <button
+              type="button"
+              onClick={() => skip(-15)}
+              disabled={!audioUrl}
+              aria-label="Voltar 15 segundos"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-primary-foreground disabled:opacity-40"
+            >
+              <RotateCcw size={22} aria-hidden />
+            </button>
+            <button
+              type="button"
+              onClick={togglePlay}
+              disabled={!audioUrl}
+              aria-label={playing ? "Pausar" : "Reproduzir"}
+              className="inline-flex h-[76px] w-[76px] items-center justify-center rounded-full bg-primary-light text-night disabled:opacity-50"
+            >
+              {playing ? <Pause size={30} aria-hidden /> : <Play size={30} aria-hidden />}
+            </button>
+            <button
+              type="button"
+              onClick={() => skip(15)}
+              disabled={!audioUrl}
+              aria-label="Avançar 15 segundos"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full text-primary-foreground disabled:opacity-40"
+            >
+              <RotateCw size={22} aria-hidden />
+            </button>
+          </div>
+
+          {!audioUrl ? (
+            <p className="mt-5 text-xs text-primary-foreground/70">Áudio em produção — ele aparece aqui em breve.</p>
+          ) : null}
+        </div>
+
+        <div className="mt-4 flex items-start gap-3 rounded-2xl bg-night-light p-4">
+          <Info size={18} className="mt-0.5 shrink-0 text-primary-light" aria-hidden />
+          <p className="text-sm text-primary-foreground/85">
+            Ouça já deitada, com a luz baixa. Pode deixar a tela apagar: o áudio continua tocando.
+          </p>
+        </div>
+
+        <div className="mt-5 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={onToggleFav}
+            className={cn(
+              "inline-flex min-h-11 items-center gap-2 rounded-full border px-3 text-xs font-medium",
+              isFav
+                ? "border-primary-light bg-primary-light/15 text-primary-light"
+                : "border-white/30 text-primary-foreground/85",
+            )}
+          >
+            <Heart size={14} aria-hidden /> {isFav ? "Favoritado" : "Favoritar"}
+          </button>
+          <button
+            type="button"
+            onClick={onToggleDone}
+            className={cn(
+              "inline-flex min-h-11 items-center gap-2 rounded-full border px-3 text-xs font-medium",
+              isDone
+                ? "border-primary-light bg-primary-light/15 text-primary-light"
+                : "border-white/30 text-primary-foreground/85",
+            )}
+          >
+            <Check size={14} aria-hidden /> {isDone ? "Concluído" : "Marcar como feito"}
+          </button>
+        </div>
+
+        <Link to="/biblioteca" className="mt-6 inline-flex items-center gap-1 text-xs text-primary-light">
+          <ArrowLeft size={14} aria-hidden /> Voltar para a biblioteca
+        </Link>
       </div>
-      <div className="mt-4 flex items-center justify-center gap-3">
-        <button
-          type="button"
-          onClick={() => {
-            setPlaying((v) => !v);
-            markMediaProgress(id, Math.min(1, p + 0.1));
-          }}
-          className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground"
-          aria-label={playing ? "Pausar" : "Reproduzir"}
-        >
-          {playing ? <Pause size={20} aria-hidden /> : <Play size={20} aria-hidden />}
-        </button>
-      </div>
-      <p className="mt-3 text-center text-xs text-text-muted">Player placeholder — o áudio real será substituído.</p>
     </div>
   );
 }
