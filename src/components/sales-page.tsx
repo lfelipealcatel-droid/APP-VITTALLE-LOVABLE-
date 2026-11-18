@@ -69,10 +69,14 @@ export function ProductSalesPage({ product, sales, checkoutHref }: ProductSalesP
           href={checkoutHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-5 flex min-h-14 w-full items-center justify-center gap-2 rounded-xl bg-primary-dark px-5 text-base font-bold text-primary-foreground transition hover:opacity-90"
+          className="mt-5 flex min-h-14 w-full flex-col items-center justify-center gap-0.5 rounded-xl bg-primary-dark px-5 py-3 text-primary-foreground transition hover:opacity-90"
         >
-          {sales.ctaLabel}
-          {product.price ? ` · ${product.price}` : ""}
+          <span className="text-balance text-base font-bold leading-tight">{sales.ctaLabel}</span>
+          {product.price ? (
+            <span className="text-[13px] font-medium leading-tight opacity-90">
+              <span className="whitespace-nowrap">{product.price}</span> · {sales.priceNote}
+            </span>
+          ) : null}
         </a>
         <p className="mt-3 text-center text-xs text-text-muted">Acesso imediato aqui no app · Garantia de 7 dias</p>
       </section>
