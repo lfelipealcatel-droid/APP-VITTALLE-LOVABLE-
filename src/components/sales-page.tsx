@@ -3,11 +3,13 @@ import {
   Brain,
   CalendarDays,
   Check,
+  Clock,
   Droplet,
   Flame,
   Headphones,
   Lock,
   Moon,
+  Ruler,
   ShieldCheck,
   Sparkles,
   Thermometer,
@@ -25,6 +27,8 @@ const SALES_ICONS: Record<SalesIcon, LucideIcon> = {
   sparkles: Sparkles,
   flame: Flame,
   droplet: Droplet,
+  clock: Clock,
+  ruler: Ruler,
 };
 
 // Renderiza texto com **negrito** (markdown simples) como <strong>.
@@ -45,11 +49,9 @@ interface ProductSalesPageProps {
   product: Product;
   sales: SalesPageData;
   checkoutHref: string;
-  onAlreadyBought: () => void;
-  checkingAccess: boolean;
 }
 
-export function ProductSalesPage({ product, sales, checkoutHref, onAlreadyBought, checkingAccess }: ProductSalesPageProps) {
+export function ProductSalesPage({ product, sales, checkoutHref }: ProductSalesPageProps) {
   const shortLabel = product.shortName ?? product.title;
 
   const scrollToPrice = () => {
@@ -176,7 +178,7 @@ export function ProductSalesPage({ product, sales, checkoutHref, onAlreadyBought
       <section id="comprar" className="mt-8 rounded-2xl border-2 border-primary-light bg-surface p-6 text-center">
         <p className="text-xs uppercase tracking-wide text-text-muted">{sales.priceCaption}</p>
         {product.price ? <p className="mt-2 font-editorial text-[40px] font-bold leading-none">{product.price}</p> : null}
-        <p className="mt-2 text-sm text-text-secondary">{sales.priceNote}</p>
+        <p className="mt-1 text-base font-semibold text-text-secondary">{sales.priceNote}</p>
         <a
           href={checkoutHref}
           target="_blank"
@@ -192,14 +194,6 @@ export function ProductSalesPage({ product, sales, checkoutHref, onAlreadyBought
           Use o mesmo e-mail da sua conta VITTALLE. O pagamento abre em uma nova aba. Se mudar de ideia, é só fechar a
           aba e você volta para cá.
         </p>
-        <button
-          type="button"
-          onClick={onAlreadyBought}
-          disabled={checkingAccess}
-          className="mt-3 inline-flex min-h-11 items-center text-xs text-text-muted hover:underline disabled:opacity-60"
-        >
-          {checkingAccess ? "Verificando…" : "Já comprei — atualizar meu acesso"}
-        </button>
       </section>
 
       {/* i) Garantia */}
