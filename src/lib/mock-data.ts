@@ -712,7 +712,7 @@ export const OFFICIAL_AUDIOS: OfficialAudio[] = [
     durationMin: 4,
     owner: "front" as const,
   })),
-  { id: "desinchar-express-audio", title: "Ritual noturno — Desinchar Express", subtitle: "Áudio guiado da véspera", durationMin: 9, owner: "bump2" },
+  { id: "desinchar-express-audio", title: "Automassagem guiada — Desinchar", subtitle: "Para fazer na cama, antes de dormir", durationMin: 9, owner: "bump2" },
   { id: "cozinha-ritual-1", title: "Ritual noturno da Cozinha Hormonal — 1", subtitle: "Áudio guiado", durationMin: 8, owner: "upsell" },
   { id: "cozinha-ritual-2", title: "Ritual noturno da Cozinha Hormonal — 2", subtitle: "Áudio guiado", durationMin: 8, owner: "upsell" },
   { id: "cozinha-ritual-3", title: "Ritual noturno da Cozinha Hormonal — 3", subtitle: "Áudio guiado", durationMin: 8, owner: "upsell" },
@@ -826,7 +826,9 @@ export type SalesIcon =
   | "calendar"
   | "sparkles"
   | "flame"
-  | "droplet";
+  | "droplet"
+  | "clock"
+  | "ruler";
 
 export interface SalesPage {
   eyebrow: string;
@@ -954,6 +956,82 @@ export const PRODUCTS: Product[] = [
     materialUrl: "/materiais/desinchar-express-24h.pdf",
     shortName: "Desinchar",
     welcomeText: "Siga os 2 passos abaixo. Comece de preferência na véspera do dia em que quer desinchar.",
+    salesPage: {
+      eyebrow: "Para mulheres 40+ com a barriga estufada",
+      headline: "Desinche a barriga em 24 horas e acorde mais leve amanhã de manhã",
+      subheadline:
+        "Um protocolo **hora a hora** para um único dia, com cardápio pronto, uma automassagem desinchante de **5 minutinhos** e áudio guiado. Ideal para a véspera de um evento ou depois de um fim de semana de exagero.",
+      ctaLabel: "Quero desinchar em 24 horas",
+      stickyCtaLabel: "Quero desinchar",
+      painTitle: "Isso acontece com você?",
+      pains: [
+        "Acorda com a barriga lisa e, à noite, parece que está grávida.",
+        "A calça que serviu de manhã aperta depois do almoço.",
+        "Tem um evento chegando e nenhuma roupa cai bem com essa barriga estufada.",
+        "Gases, sensação de peso e um desconforto que não passa.",
+      ],
+      mechanismEyebrow: "Por que a sua barriga estufa",
+      mechanismTitle: "Nem tudo é gordura: boa parte dessa barriga é inchaço — e inchaço sai rápido",
+      mechanismParagraphs: [
+        "Depois dos 40, a oscilação do **estrogênio** faz o corpo segurar mais líquido e costuma deixar o intestino mais lento. O resultado: gases presos e água retida bem na barriga.",
+        "A boa notícia: diferente da gordura, o inchaço responde em **horas** — quando você faz as escolhas certas, na ordem certa.",
+      ],
+      mechanismLead: "O Desinchar Express faz isso por você em 24 horas:",
+      pillars: [
+        {
+          icon: "droplet",
+          title: "Cardápio Desincha-Barriga",
+          text: "O que comer e beber em cada refeição do dia — com 3 opções para o seu perfil e sem passar fome.",
+        },
+        {
+          icon: "sparkles",
+          title: "Automassagem Desincha-Barriga",
+          text: "5 movimentos de 5 minutinhos, feitos na cama antes de dormir, que ajudam a soltar os gases presos.",
+        },
+        {
+          icon: "clock",
+          title: "Protocolo Hora a Hora",
+          text: "Você não precisa pensar em nada: o guia diz o que fazer do momento em que acorda até a hora de dormir.",
+        },
+      ],
+      deliverablesTitle: "O que você recebe",
+      deliverables: [
+        { icon: "book", title: "Guia Desinchar 24h", text: "Cronograma hora a hora com 3 opções por perfil" },
+        { icon: "headphones", title: "Áudio da Automassagem", text: "Você só segue a voz, já deitada" },
+        { icon: "sparkles", title: "Cartão SOS Inchaço", text: "Para usar sempre que a barriga estufar" },
+        { icon: "ruler", title: "Antes e depois", text: "O jeito certo de medir e ver o resultado" },
+      ],
+      benefitsTitle: "O que você pode sentir já no dia seguinte",
+      benefits: [
+        { strong: "Barriga mais leve e desinchada", text: " logo ao acordar" },
+        { strong: "A roupa vestindo melhor", text: " — sem a calça apertando" },
+        { strong: "Menos gases e sensação de peso", text: " depois das refeições" },
+        { strong: "Mais disposição", text: " — corpo leve, cabeça leve" },
+        { strong: "Um plano pronto para usar de novo", text: " sempre que a barriga estufar" },
+      ],
+      timelineTitle: "Como vai ser o seu dia",
+      timeline: [
+        { label: "Ao acordar", text: "Você mede a barriga e toma uma bebida de 1 minuto que já começa a desinchar" },
+        { label: "Nas refeições", text: "Cardápio pronto: é só escolher entre 3 opções" },
+        { label: "Antes de dormir", text: "5 minutinhos de automassagem, guiada pelo áudio" },
+        { label: "No dia seguinte", text: "Mede de novo e vê a diferença" },
+      ],
+      priceCaption: "Protocolo Desinchar Express 24h completo",
+      priceNote: "ou em até 3x de R$ 6,45",
+      guaranteeTitle: "Garantia de 7 dias",
+      guaranteeText: "Use o protocolo. Se não gostar, devolvemos seu dinheiro.",
+      faq: [
+        { q: "Vou passar fome?", a: "Não. Você come 5 vezes no dia, com opções simples e gostosas." },
+        {
+          q: "Posso repetir outras vezes?",
+          a: "Pode. Use sempre que a barriga estufar: véspera de evento, depois de uma festa ou de um fim de semana de exagero.",
+        },
+        {
+          q: "Serve para quem tem pressão alta ou diabetes?",
+          a: "Sim. O guia tem um perfil “Cuidado redobrado”, com opções pensadas para isso.",
+        },
+      ],
+    },
   },
   {
     id: "noite-inteira-sono-40-plus",
@@ -1042,7 +1120,7 @@ export const PRODUCTS: Product[] = [
         { label: "De manhã", text: "Marca a noite no diário e vê a melhora acontecendo" },
       ],
       priceCaption: "Protocolo Noite Inteira completo",
-      priceNote: "Pagamento único · menos de R$ 2,60 por noite na primeira semana",
+      priceNote: "ou em até 3x de R$ 6,45",
       guaranteeTitle: "Garantia de 7 dias",
       guaranteeText: "Experimente nas suas noites. Se não gostar, devolvemos seu dinheiro.",
       faq: [
@@ -1328,8 +1406,8 @@ export const LIBRARY: ContentItem[] = [
   {
     id: "desinchar-express-audio",
     type: "audio",
-    title: "Ritual noturno — Desinchar Express",
-    subtitle: "Áudio do Bump 2",
+    title: "Automassagem guiada — Desinchar",
+    subtitle: "Para fazer na cama, antes de dormir",
     category: "Áudios oficiais",
     durationMin: 9,
     cover: "green",

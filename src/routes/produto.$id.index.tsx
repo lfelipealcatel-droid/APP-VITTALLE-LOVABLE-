@@ -128,13 +128,7 @@ function ProdutoPage() {
       )}
 
       {productState !== "acquired" && product.salesPage && checkoutHref ? (
-        <ProductSalesPage
-          product={product}
-          sales={product.salesPage}
-          checkoutHref={checkoutHref}
-          onAlreadyBought={handleAlreadyBought}
-          checkingAccess={checkingAccess}
-        />
+        <ProductSalesPage product={product} sales={product.salesPage} checkoutHref={checkoutHref} />
       ) : (
         <>
           <section className="rounded-2xl border border-border bg-surface p-5">
