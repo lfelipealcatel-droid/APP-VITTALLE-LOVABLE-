@@ -910,6 +910,7 @@ export const PRODUCTS: Product[] = [
     ],
     checkoutUrl: "https://lastlink.com/p/C2D5B98C9/checkout-payment",
     lockedBadge: "Desinche em 24h",
+    materialUrl: "/materiais/desinchar-express-24h.pdf",
   },
   {
     id: "noite-inteira-sono-40-plus",
