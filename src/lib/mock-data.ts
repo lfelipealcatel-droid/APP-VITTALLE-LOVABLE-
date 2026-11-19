@@ -955,7 +955,7 @@ export const PRODUCTS: Product[] = [
     ],
     checkoutUrl: "https://lastlink.com/p/C2D5B98C9/checkout-payment",
     lockedBadge: "Desinche em 24h",
-    materialUrl: "/materiais/desinchar-express-24h.pdf",
+    materialUrl: "/materiais/desinchar-express-24h-v3.pdf",
     shortName: "Desinchar",
     welcomeText: "Siga os 2 passos abaixo. Comece de preferência na véspera do dia em que quer desinchar.",
     salesPage: {
