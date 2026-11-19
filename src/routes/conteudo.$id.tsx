@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
 import { MediaPlaceholder, typeLabel } from "@/components/media-placeholder";
-import { contentById } from "@/lib/mock-data";
+import { contentById, productById } from "@/lib/mock-data";
 import { markMediaProgress, useAppState, useToggleId, ownsProduct } from "@/lib/store";
 import { useAuth } from "@/lib/auth";
 import { useEntitlements } from "@/lib/entitlements";
@@ -76,6 +76,7 @@ function ContentPage() {
           subtitle={item.subtitle}
           durationMin={item.durationMin}
           audioUrl={item.audioUrl}
+          ownerProduct={item.ownerProduct}
           isFav={isFav}
           isDone={isDone}
           onToggleFav={() => toggleFav(item.id)}
@@ -144,6 +145,7 @@ function AudioView({
   subtitle,
   durationMin,
   audioUrl,
+  ownerProduct,
   isFav,
   isDone,
   onToggleFav,
@@ -154,6 +156,7 @@ function AudioView({
   subtitle: string;
   durationMin: number;
   audioUrl?: string;
+  ownerProduct?: string;
   isFav: boolean;
   isDone: boolean;
   onToggleFav: () => void;
@@ -164,6 +167,10 @@ function AudioView({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  const ownerProductData = ownerProduct ? productById(ownerProduct) : undefined;
+  const albumName = ownerProductData?.title;
+  const artworkUrl = ownerProductData?.imageUrl ?? ownerProductData?.image;
+
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -172,6 +179,9 @@ function AudioView({
     const onEnded = () => {
       setPlaying(false);
       markMediaProgress(id, 1);
+      if (typeof navigator !== "undefined" && navigator.mediaSession) {
+        navigator.mediaSession.playbackState = "none";
+      }
     };
     audio.addEventListener("timeupdate", onTime);
     audio.addEventListener("loadedmetadata", onLoaded);
@@ -183,23 +193,75 @@ function AudioView({
     };
   }, [id]);
 
-  const togglePlay = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing) {
-      audio.pause();
-      setPlaying(false);
-      if (audio.duration) markMediaProgress(id, Math.min(1, audio.currentTime / audio.duration));
-    } else {
-      void audio.play();
-      setPlaying(true);
-    }
-  };
+  // Limpa os controles da tela de bloqueio ao saída desta tela — nunca deixa handlers/metadata de
+  // um áudio "vazarem" para a navegação seguinte.
+  useEffect(() => {
+    return () => {
+      if (typeof navigator === "undefined" || !navigator.mediaSession) return;
+      try {
+        navigator.mediaSession.setActionHandler("play", null);
+        navigator.mediaSession.setActionHandler("pause", null);
+        navigator.mediaSession.setActionHandler("seekbackward", null);
+        navigator.mediaSession.setActionHandler("seekforward", null);
+        navigator.mediaSession.metadata = null;
+        navigator.mediaSession.playbackState = "none";
+      } catch {
+        /* Media Session API indisponível neste navegador */
+      }
+    };
+  }, []);
 
   const skip = (secondsDelta: number) => {
     const audio = audioRef.current;
     if (!audio) return;
     audio.currentTime = Math.max(0, Math.min(audio.duration || 0, audio.currentTime + secondsDelta));
+  };
+
+  // Configura metadata + controles (play/pause/±15s) da tela de bloqueio e da Central de Controle.
+  // Sem controle de volume: no iPhone o volume é sempre pelos botões físicos do aparelho.
+  const configureMediaSession = () => {
+    if (typeof navigator === "undefined" || !navigator.mediaSession) return;
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title,
+        artist: "VITTALLE",
+        ...(albumName ? { album: albumName } : {}),
+        ...(artworkUrl ? { artwork: [{ src: artworkUrl }] } : {}),
+      });
+      navigator.mediaSession.setActionHandler("play", playAudio);
+      navigator.mediaSession.setActionHandler("pause", pauseAudio);
+      navigator.mediaSession.setActionHandler("seekbackward", () => skip(-15));
+      navigator.mediaSession.setActionHandler("seekforward", () => skip(15));
+    } catch {
+      /* Media Session API indisponível neste navegador */
+    }
+  };
+
+  const playAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    void audio.play();
+    setPlaying(true);
+    configureMediaSession();
+    if (typeof navigator !== "undefined" && navigator.mediaSession) {
+      navigator.mediaSession.playbackState = "playing";
+    }
+  };
+
+  const pauseAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.pause();
+    setPlaying(false);
+    if (audio.duration) markMediaProgress(id, Math.min(1, audio.currentTime / audio.duration));
+    if (typeof navigator !== "undefined" && navigator.mediaSession) {
+      navigator.mediaSession.playbackState = "paused";
+    }
+  };
+
+  const togglePlay = () => {
+    if (playing) pauseAudio();
+    else playAudio();
   };
 
   const progress = duration > 0 ? currentTime / duration : 0;
