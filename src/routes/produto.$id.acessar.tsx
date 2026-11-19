@@ -157,14 +157,14 @@ function AcessarProduto() {
                 <Link
                   to="/conteudo/$id"
                   params={{ id: a.id }}
-                  className="flex items-center gap-3 rounded-xl bg-soft-green p-3 hover:opacity-90"
+                  className="flex w-full items-center gap-3 overflow-hidden rounded-xl border border-primary-light/50 bg-card p-3 hover:opacity-90"
                 >
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-night text-white">
+                  <span className="grid h-10 w-10 flex-none place-items-center rounded-full bg-primary-dark text-white">
                     <Play size={16} aria-hidden />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-bold">{a.title}</p>
-                    <p className="truncate text-xs text-text-secondary">
+                    <p className="break-words text-sm font-bold leading-snug">{a.title}</p>
+                    <p className="break-words text-xs text-text-secondary">
                       {a.subtitle} · {a.durationMin} min
                     </p>
                   </div>
