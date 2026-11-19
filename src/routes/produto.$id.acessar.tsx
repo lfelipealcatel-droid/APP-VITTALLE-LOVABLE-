@@ -67,10 +67,12 @@ function AcessarProduto() {
     );
   }
 
-  // Áudios oficiais existentes do Desinchar — os áudios antigos do Upsell (Cozinha Hormonal)
-  // pertenciam ao produto substituído e não têm equivalente no Acelerador GLP-1 Natural ainda.
+  // Áudios oficiais do Desinchar e do Noite Inteira (Desligar, depois 3h da Manhã) — os áudios
+  // antigos do Upsell (Cozinha Hormonal) pertenciam ao produto substituído e não têm equivalente no
+  // Acelerador GLP-1 Natural ainda.
   const audios = OFFICIAL_AUDIOS.filter((a) => {
     if (product.id === "desinchar-express-24h") return a.owner === "bump2";
+    if (product.id === "noite-inteira-sono-40-plus") return a.owner === "noite";
     return false;
   });
 
