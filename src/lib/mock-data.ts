@@ -692,7 +692,7 @@ export function habitForDay(dayId: number): Habit {
 }
 
 // ---------- Áudios oficiais ----------
-export type AudioOwner = "front" | "bump2" | "upsell";
+export type AudioOwner = "front" | "bump2" | "upsell" | "noite";
 
 export interface OfficialAudio {
   id: string;
@@ -712,7 +712,9 @@ export const OFFICIAL_AUDIOS: OfficialAudio[] = [
     durationMin: 4,
     owner: "front" as const,
   })),
-  { id: "desinchar-express-audio", title: "Automassagem guiada — Desinchar", subtitle: "Para fazer na cama, antes de dormir", durationMin: 9, owner: "bump2" },
+  { id: "desinchar-express-audio", title: "Automassagem guiada — Desinchar", subtitle: "Para fazer na cama, antes de dormir", durationMin: 5, owner: "bump2", audioUrl: "/audios/desinchar-automassagem.mp3" },
+  { id: "noite-desligar", title: "Desligar", subtitle: "Para ouvir já deitada, antes de dormir", durationMin: 14, owner: "noite", audioUrl: "/audios/noite-desligar.mp3" },
+  { id: "noite-3h-da-manha", title: "3h da Manhã", subtitle: "Para quando acordar de madrugada", durationMin: 11, owner: "noite", audioUrl: "/audios/noite-3h-da-manha.mp3" },
   { id: "cozinha-ritual-1", title: "Ritual noturno da Cozinha Hormonal — 1", subtitle: "Áudio guiado", durationMin: 8, owner: "upsell" },
   { id: "cozinha-ritual-2", title: "Ritual noturno da Cozinha Hormonal — 2", subtitle: "Áudio guiado", durationMin: 8, owner: "upsell" },
   { id: "cozinha-ritual-3", title: "Ritual noturno da Cozinha Hormonal — 3", subtitle: "Áudio guiado", durationMin: 8, owner: "upsell" },
@@ -1409,9 +1411,32 @@ export const LIBRARY: ContentItem[] = [
     title: "Automassagem guiada — Desinchar",
     subtitle: "Para fazer na cama, antes de dormir",
     category: "Áudios oficiais",
-    durationMin: 9,
+    durationMin: 5,
     cover: "green",
     ownerProduct: "desinchar-express-24h",
+    audioUrl: "/audios/desinchar-automassagem.mp3",
+  },
+  {
+    id: "noite-desligar",
+    type: "audio",
+    title: "Desligar",
+    subtitle: "Para ouvir já deitada, antes de dormir",
+    category: "Áudios oficiais",
+    durationMin: 14,
+    cover: "green",
+    ownerProduct: "noite-inteira-sono-40-plus",
+    audioUrl: "/audios/noite-desligar.mp3",
+  },
+  {
+    id: "noite-3h-da-manha",
+    type: "audio",
+    title: "3h da Manhã",
+    subtitle: "Para quando acordar de madrugada",
+    category: "Áudios oficiais",
+    durationMin: 11,
+    cover: "green",
+    ownerProduct: "noite-inteira-sono-40-plus",
+    audioUrl: "/audios/noite-3h-da-manha.mp3",
   },
 ];
 
