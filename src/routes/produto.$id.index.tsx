@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { ArrowRight, Check, Sparkles } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
 import { ProductSalesPage } from "@/components/sales-page";
@@ -90,6 +90,24 @@ function ProdutoPage() {
     setCheckingAccess(false);
     navigate({ to: "/produto/$id/acessar", params: { id: product.id } });
   };
+
+  // Quem já possui um produto extra não precisa ver a página de venda/descrição de novo — vai
+  // direto para a área do produto. O core continua abrindo normalmente aqui.
+  const shouldRedirectToAcessar = product.category !== "core" && productState === "acquired";
+
+  useEffect(() => {
+    if (shouldRedirectToAcessar) {
+      navigate({ to: "/produto/$id/acessar", params: { id: product.id }, replace: true });
+    }
+  }, [shouldRedirectToAcessar, navigate, product.id]);
+
+  if (shouldRedirectToAcessar) {
+    return (
+      <AppShell title={product.title} back="/biblioteca" hideMiniPlayer>
+        <p className="text-sm text-text-secondary">Abrindo…</p>
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell title={product.title} back="/biblioteca" hideMiniPlayer>

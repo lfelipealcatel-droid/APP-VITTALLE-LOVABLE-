@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Clock, Lock, Sparkles } from "lucide-react";
+import { Check, Clock, Lock, Sparkles } from "lucide-react";
 import { useState } from "react";
 import type { Product, ProductState } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
@@ -75,10 +75,9 @@ export function ProductCard({ product }: { product: Product }) {
         <p className="text-sm font-medium leading-snug">{product.benefit}</p>
         <p className="mt-1 text-[11px] uppercase tracking-wide text-text-muted">{product.durationLabel}</p>
         {productState === "acquired" ? (
-          <div className="mt-auto flex items-center justify-between pt-3">
-            <span className="text-xs text-text-secondary">{product.price ?? "Programa VITTALLE"}</span>
-            <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
-              {acquiredCta} <ArrowRight size={14} aria-hidden />
+          <div className="mt-auto pt-3">
+            <span className="flex w-full items-center justify-center gap-1.5 rounded-full bg-secondary-dark py-2 text-xs font-semibold text-white">
+              <Check size={12} aria-hidden /> {acquiredCta}
             </span>
           </div>
         ) : (
@@ -93,6 +92,20 @@ export function ProductCard({ product }: { product: Product }) {
   );
 
   if (disabled) return <div className="cursor-not-allowed">{Card}</div>;
+
+  // Quem já possui um produto extra vai direto para a área do produto; o core e os não adquiridos
+  // continuam abrindo a página do produto (/produto/$id).
+  if (productState === "acquired" && product.category !== "core") {
+    return (
+      <Link
+        to="/produto/$id/acessar"
+        params={{ id: product.id }}
+        className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl"
+      >
+        {Card}
+      </Link>
+    );
+  }
 
   return (
     <Link
