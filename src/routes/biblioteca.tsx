@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { Download, Search } from "lucide-react";
 import { useEffect } from "react";
 import { AppShell } from "@/components/app-shell";
 import { BONUSES, GUIDES, PRODUCTS, isVisibleInStore } from "@/lib/mock-data";
@@ -81,6 +81,10 @@ function Biblioteca() {
           </div>
 
           <h3 className="mb-3 text-sm font-semibold text-text-secondary">Guias práticos</h3>
+          <div className="mb-3 flex items-start gap-2 rounded-xl border border-primary-light/40 bg-primary-light/20 px-3 py-2">
+            <Download size={14} className="mt-0.5 shrink-0 text-primary-dark" aria-hidden />
+            <p className="text-xs text-text-secondary">Quer guardar algum material? Abra o app no computador e baixe o PDF.</p>
+          </div>
           <div className="mb-6 grid gap-3 sm:grid-cols-2">
             {GUIDES.map((g) => (
               <Link
