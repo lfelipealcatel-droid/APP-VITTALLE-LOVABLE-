@@ -1,8 +1,9 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Activity, BookOpen, Check, Download, FileText, Play } from "lucide-react";
+import { Activity, BookOpen, Check, FileText, Play } from "lucide-react";
 import { useState } from "react";
 import { AppShell } from "@/components/app-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
+import { SavePdf } from "@/components/save-pdf";
 import { OFFICIAL_AUDIOS, productById } from "@/lib/mock-data";
 import { ownsProduct, useAppState } from "@/lib/store";
 import { useAuth } from "@/lib/auth";
@@ -132,13 +133,7 @@ function AcessarProduto() {
             >
               <BookOpen size={18} aria-hidden /> Abrir guia
             </a>
-            <a
-              href={product.materialUrl}
-              download
-              className="mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-primary-light px-4 text-sm font-semibold text-primary-dark"
-            >
-              <Download size={16} aria-hidden /> Salvar no celular
-            </a>
+            <SavePdf url={product.materialUrl} className="mt-2" />
           </>
         ) : (
           <p className="mt-4 text-sm text-text-muted">Seu material está sendo preparado e aparecerá aqui.</p>

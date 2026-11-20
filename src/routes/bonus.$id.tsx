@@ -1,7 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { Download, FileText } from "lucide-react";
+import { FileText } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
+import { SavePdf } from "@/components/save-pdf";
 import { BONUSES, bonusById } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/bonus/$id")({
@@ -49,18 +50,8 @@ function BonusPage() {
           >
             <FileText size={16} aria-hidden /> {label}
           </Link>
-          {bonus.pdf ? (
-            <a
-              href={encodeURI(bonus.pdf)}
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-medium hover:bg-surface-2"
-            >
-              <Download size={16} aria-hidden /> Baixar PDF
-            </a>
-          ) : null}
         </div>
+        {bonus.pdf ? <SavePdf url={encodeURI(bonus.pdf)} className="mt-3" /> : null}
       </section>
 
       <div className="mt-6">
