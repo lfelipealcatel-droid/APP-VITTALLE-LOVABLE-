@@ -1059,6 +1059,7 @@ export const PRODUCTS: Product[] = [
     ],
     checkoutUrl: "https://lastlink.com/p/CB0E4DF9B/checkout-payment",
     lockedBadge: "Durma a noite inteira",
+    materialUrl: "/materiais/noite-inteira-sono-40-plus.pdf",
     shortName: "Noite Inteira",
     welcomeText: "Siga os 2 passos abaixo. Comece hoje à noite.",
     salesPage: {
