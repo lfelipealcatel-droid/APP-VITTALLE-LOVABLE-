@@ -49,14 +49,17 @@ function BonusPage() {
           >
             <FileText size={16} aria-hidden /> {label}
           </Link>
-          <button
-            type="button"
-            className="inline-flex min-h-11 cursor-not-allowed items-center gap-2 rounded-xl border border-border bg-surface-2 px-4 text-sm font-medium text-text-muted"
-            disabled
-            aria-disabled="true"
-          >
-            <Download size={16} aria-hidden /> Baixar PDF — em breve
-          </button>
+          {bonus.pdf ? (
+            <a
+              href={encodeURI(bonus.pdf)}
+              download
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-border bg-surface px-4 text-sm font-medium hover:bg-surface-2"
+            >
+              <Download size={16} aria-hidden /> Baixar PDF
+            </a>
+          ) : null}
         </div>
       </section>
 
