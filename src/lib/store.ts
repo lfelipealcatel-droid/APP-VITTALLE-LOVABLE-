@@ -24,6 +24,15 @@ export interface Measurement {
   final?: boolean;
 }
 
+export interface Checkin {
+  id: string;
+  dayId: string;
+  date: string; // ISO
+  mood: string;
+  energy: number;
+  note: string;
+}
+
 export interface OnboardingState {
   inaugural: boolean;
   absolvicao: boolean;
@@ -63,6 +72,7 @@ export interface AppState {
   mediaProgress: Record<string, number>;
   checklist: Record<string, boolean>;
   measurements: Measurement[];
+  checkins: Checkin[];
   notificationsRead: string[];
   ownedProducts: string[]; // entitlements REAIS da usuária
 
@@ -113,6 +123,7 @@ const DEFAULT_STATE: AppState = {
   mediaProgress: {},
   checklist: {},
   measurements: [],
+  checkins: [],
   notificationsRead: [],
   ownedProducts: ["plano-barriga-hormonal-40"],
   demoMode: false,
@@ -237,6 +248,18 @@ export function addMeasurement(m: Omit<Measurement, "id">) {
 }
 export function removeMeasurement(id: string) {
   setState((prev) => ({ measurements: prev.measurements.filter((m) => m.id !== id) }));
+}
+
+// No máximo 1 check-in por dia: substitui o check-in existente do mesmo dayId, ou adiciona um novo.
+export function saveCheckin(input: Omit<Checkin, "id">) {
+  setState((prev) => {
+    const existing = prev.checkins.find((c) => c.dayId === input.dayId);
+    const entry: Checkin = { id: existing?.id ?? `checkin-${Date.now()}`, ...input };
+    const checkins = existing
+      ? prev.checkins.map((c) => (c.dayId === input.dayId ? entry : c))
+      : [entry, ...prev.checkins];
+    return { checkins };
+  });
 }
 
 // Data local (fuso do navegador, não UTC) no formato YYYY-MM-DD — usada para saber se "já virou o

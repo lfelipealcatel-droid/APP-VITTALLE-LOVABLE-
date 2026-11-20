@@ -1,10 +1,10 @@
 import { createFileRoute, notFound, useNavigate } from "@tanstack/react-router";
 import { Check, HeartHandshake } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { AppShell } from "@/components/app-shell";
 import { DAYS } from "@/lib/mock-data";
-import { isDayActivityDone, setDayActivity, useAppState } from "@/lib/store";
+import { isDayActivityDone, saveCheckin, setDayActivity, useAppState } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/checkin/$dia")({
@@ -34,23 +34,41 @@ const MOODS = [
   { id: "animada", label: "Animada" },
 ] as const;
 
+function moodLabel(id: string) {
+  return MOODS.find((m) => m.id === id)?.label ?? id;
+}
+
 function CheckinPage() {
   const { day } = Route.useLoaderData();
   const [state] = useAppState();
   const navigate = useNavigate();
   const alreadyDone = isDayActivityDone(state, day.id, "checkin");
+  const dayId = String(day.id);
 
   const [mood, setMood] = useState<string>("");
   const [energy, setEnergy] = useState(3);
   const [note, setNote] = useState("");
 
+  // Preenche o formulário assim que o check-in já salvo deste dia chegar da hidratação do estado.
+  useEffect(() => {
+    const existing = state.checkins.find((c) => c.dayId === dayId);
+    if (existing) {
+      setMood(existing.mood);
+      setEnergy(existing.energy);
+      setNote(existing.note);
+    }
+  }, [state.checkins, dayId]);
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    saveCheckin({ dayId, date: new Date().toISOString(), mood, energy, note });
     setDayActivity(day.id, "checkin", true);
     toast.success("Check-in registrado");
     if (typeof window !== "undefined" && window.history.length > 1) window.history.back();
     else navigate({ to: "/jornada/$dia", params: { dia: String(day.id) } });
   };
+
+  const history = [...state.checkins].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
     <AppShell title="Check-in" subtitle={`Dia ${day.id}`} back={true}>
@@ -107,6 +125,27 @@ function CheckinPage() {
           <Check size={16} aria-hidden /> {alreadyDone ? "Salvar novamente" : "Salvar check-in"}
         </button>
       </form>
+
+      {history.length > 0 ? (
+        <>
+          <h3 className="mb-3 mt-8 text-sm font-semibold text-text-secondary">Histórico</h3>
+          <ul className="grid gap-2">
+            {history.map((c) => (
+              <li key={c.id} className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-4">
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-medium">
+                    {new Date(c.date).toLocaleDateString("pt-BR")} · Dia {c.dayId}
+                  </p>
+                  <p className="text-xs text-text-secondary">
+                    {moodLabel(c.mood)} · Energia {c.energy}/5
+                  </p>
+                  {c.note ? <p className="mt-1 text-xs text-text-secondary">{c.note}</p> : null}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
     </AppShell>
   );
 }
