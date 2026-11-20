@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, FileText } from "lucide-react";
 import { AppShell } from "@/components/app-shell";
 import { MediaPlaceholder } from "@/components/media-placeholder";
+import { SavePdf } from "@/components/save-pdf";
 import { guideById } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/guia/$id/material")({
@@ -57,6 +58,8 @@ function MaterialGuia() {
             </p>
           </article>
         </div>
+
+        {guide.pdf ? <SavePdf url={encodeURI(guide.pdf)} className="mt-6" /> : null}
       </section>
 
       <div className="mt-4">
