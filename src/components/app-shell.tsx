@@ -4,7 +4,6 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { BottomNav } from "./bottom-nav";
 import { DemoBadge } from "./demo-badge";
-import { MiniAudioPlayer } from "./mini-audio-player";
 
 interface AppShellProps {
   children: ReactNode;
@@ -14,6 +13,8 @@ interface AppShellProps {
   right?: ReactNode;
   variant?: "default" | "editorial" | "transparent" | "minimal";
   hideNav?: boolean;
+  // O mini player de áudio do protótipo foi removido; a prop fica só para não quebrar as rotas que
+  // ainda a passam — hoje não tem mais efeito.
   hideMiniPlayer?: boolean;
   className?: string;
 }
@@ -26,7 +27,6 @@ export function AppShell({
   right,
   variant = "default",
   hideNav,
-  hideMiniPlayer,
   className,
 }: AppShellProps) {
   const backTo = back === true ? undefined : back;
@@ -97,7 +97,6 @@ export function AppShell({
         {children}
       </main>
 
-      {!hideMiniPlayer && <MiniAudioPlayer />}
       {!hideNav && <BottomNav />}
     </div>
   );
