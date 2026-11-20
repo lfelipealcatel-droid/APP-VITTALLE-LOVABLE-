@@ -1,7 +1,6 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import { guideById } from "@/lib/mock-data";
-import { SavePdf } from "@/components/save-pdf";
 
 export const Route = createFileRoute("/guia/$id_/pdf")({
   loader: ({ params }) => {
@@ -56,10 +55,6 @@ function GuiaPdfPage() {
           <ExternalLink size={16} aria-hidden />
         </a>
       </header>
-
-      <div className="shrink-0 border-b border-border bg-background px-3 py-2.5">
-        <SavePdf url={pdfUrl} />
-      </div>
 
       <div className="min-h-0 flex-1">
         {/* <object> usa somente recursos nativos do navegador: quando o navegador não sabe renderizar
